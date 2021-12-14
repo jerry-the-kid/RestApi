@@ -1,0 +1,13 @@
+Khởi tạo : git init
+Kết nối : git remote add origin https://github.com/jerry-the-kid/RestApi.
+
+Đổi sang nhánh main : git checkout main
+
+Add tất cả Thay đổi : git add -A
+Commit : git commit -m'Initial start'
+
+
+Đẩy file lên : git push origin main
+Kéo file về : git push origin main
+gi
+Fetch brach from github : git fetch --all
