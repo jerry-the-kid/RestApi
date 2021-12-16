@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="styles.css">
     <title>Trưởng phòng</title>
 </head>
 <body>
@@ -30,7 +30,8 @@
                     <a class="nav-link" href="phong_ban_list.html">Phòng ban</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="truong_phong.html">Trưởng phòng<span class="sr-only">(current)</span></a>
+                    <a class="nav-link active" href="truong_phong.html">Trưởng phòng<span
+                            class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="taikhoan.html">Tài khoản</a>
@@ -73,11 +74,12 @@
     <div class="row mt-5">
 
         <div class="col-12 table-responsive">
-            <table class="table rounded" style="min-width: 600px;">
+            <table class="table rounded" style="min-width: 750px;">
                 <thead>
                 <tr>
                     <th scope="col">Mã Phòng Ban</th>
                     <th scope="col">Mã Nhân Viên</th>
+                    <th scope="col">Tên Phòng Ban</th>
                     <th scope="col">Tên Trưởng Phòng</th>
                     <th scope="col">Tác vụ</th>
                 </tr>
@@ -86,11 +88,16 @@
                 <tr>
                     <td>PB1</td>
                     <td>NV2</td>
+                    <td>Phòng Đại Học</td>
                     <td>Jacob</td>
                     <td>
-                        <a href="#" class="text-primary" style="text-decoration: none">Cập nhật</a>
+                        <button class="text-primary" style="border: none; background-color: inherit; cursor: pointer"
+                                type="button" data-toggle="modal" data-target="#changeModal">
+                            Cập nhật
+                        </button>
                         |
-                        <button href="#" class="text-primary"
+                        <button class="text-primary"
+
                                 style="border: none; background-color: inherit; cursor: pointer">Xóa
                         </button>
                     </td>
@@ -98,11 +105,16 @@
                 <tr>
                     <td>PB2</td>
                     <td>NV4</td>
+                    <td>Phòng Giáo Dục</td>
                     <td>Tuấn Hưng</td>
                     <td>
-                        <a href="#" class="text-primary" style="text-decoration: none">Cập nhật</a>
+                        <button class="text-primary" style="border: none; background-color: inherit; cursor: pointer"
+                                type="button" data-toggle="modal" data-target="#changeModal">
+                            Cập nhật
+                        </button>
                         |
-                        <button href="#" class="text-primary"
+                        <button class="text-primary"
+
                                 style="border: none; background-color: inherit; cursor: pointer">Xóa
                         </button>
                     </td>
@@ -111,11 +123,16 @@
                 <tr>
                     <td>PB3</td>
                     <td>NV2</td>
+                    <td>Phòng Thể Chất</td>
                     <td>Thu hiền</td>
                     <td>
-                        <a href="#" class="text-primary" style="text-decoration: none">Cập nhật</a>
+                        <button class="text-primary" style="border: none; background-color: inherit; cursor: pointer"
+                                type="button" data-toggle="modal" data-target="#changeModal">
+                            Cập nhật
+                        </button>
                         |
-                        <button href="#" class="text-primary"
+                        <button class="text-primary"
+
                                 style="border: none; background-color: inherit; cursor: pointer">Xóa
                         </button>
                     </td>
@@ -123,6 +140,36 @@
                 </tbody>
             </table>
 
+        </div>
+    </div>
+</div>
+
+<div class="modal fade px-0" id="changeModal" tabindex="-1" role="dialog" aria-labelledby="changeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changeModalLabel">Thay đổi trưởng phòng <span>PB001</span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="truongPhong">Trưởng phòng</label>
+                    <select class="form-control" id="truongPhong">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-success">Reset</button>
+            </div>
         </div>
     </div>
 </div>

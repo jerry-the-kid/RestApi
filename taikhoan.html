@@ -10,6 +10,7 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <title>Trưởng phòng</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <!--Nav bar-->
@@ -86,6 +87,7 @@
                     <td>vietlatui</td>
                     <td>
                         <button href="#" class="text-primary"
+                                type="button" data-toggle="modal" data-target="#resetModal"
                                 style="border: none; background-color: inherit; cursor: pointer">Reset mật khẩu
                         </button>
                     </td>
@@ -96,6 +98,7 @@
                     <td>vietlatui</td>
                     <td>
                         <button href="#" class="text-primary"
+                                type="button" data-toggle="modal" data-target="#resetModal"
                                 style="border: none; background-color: inherit; cursor: pointer">Reset mật khẩu
                         </button>
                     </td>
@@ -107,6 +110,7 @@
                     <td>vietlatui</td>
                     <td>
                         <button href="#" class="text-primary"
+                                type="button" data-toggle="modal" data-target="#resetModal"
                                 style="border: none; background-color: inherit; cursor: pointer">Reset mật khẩu
                         </button>
                     </td>
@@ -129,11 +133,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Bạn có chắc muốn xóa nhân viên tên <span class="font-weight-bold">Văn A</span> ?</p>
+                <p>Bạn có chắc muốn reset mật khẩu của <span class="font-weight-bold">Văn A</span> ?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Thoát</button>
-                <button type="button" class="btn btn-danger">Xóa</button>
+                <button type="button" class="btn btn-success">Reset</button>
             </div>
         </div>
     </div>
