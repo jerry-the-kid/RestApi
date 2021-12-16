@@ -8,9 +8,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <title>Hello, world!</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
+    <title>Trưởng phòng</title>
 </head>
 <body>
 <!--Nav bar-->
@@ -24,14 +23,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="them_nhanvien.html">Nhân viên<span class="sr-only">(current)</span></a>
+                <li class="nav-item ">
+                    <a class="nav-link" href="nhanvien_list.html">Nhân viên</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="phong_ban_list.html">Phòng ban</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="truong_phong.html">Trưởng phòng</a>
+                    <a class="nav-link active" href="truong_phong.html">Trưởng phòng<span
+                            class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="taikhoan.html">Tài khoản</a>
@@ -57,7 +57,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12 mb-4 align-items-center justify-content-end">
-            <h3 class="font-weight-bold">Danh Sách Nhân Viên</h3>
+            <h3 class="font-weight-bold">Danh Sách Trưởng Phòng</h3>
         </div>
     </div>
     <div class="row">
@@ -68,68 +68,71 @@
             </form>
         </div>
         <div class="col-12 col-md-4 d-flex align-items-center justify-content-end">
-            <a class="btn btn-success" href="them_nhanvien.html"> Thêm nhân viên</a>
+            <button class="btn btn-success">Thêm Trưởng Phòng</button>
         </div>
     </div>
     <div class="row mt-5">
 
         <div class="col-12 table-responsive">
-            <table class="table rounded" style="min-width: 700px;">
+            <table class="table rounded" style="min-width: 750px;">
                 <thead>
                 <tr>
-                    <th scope="col">Mã nhân viên</th>
-                    <th scope="col">Họ tên</th>
-                    <th scope="col">Phòng ban</th>
-                    <th scope="col">Chức vụ</th>
+                    <th scope="col">Mã Phòng Ban</th>
+                    <th scope="col">Mã Nhân Viên</th>
+                    <th scope="col">Tên Phòng Ban</th>
+                    <th scope="col">Tên Trưởng Phòng</th>
                     <th scope="col">Tác vụ</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td>NV1</td>
-                    <td>Văn Anh</td>
-                    <td>Phòng giáo dục</td>
-                    <td>Admin</td>
-                    <td>
-                        <a href="#" class="text-primary" style="text-decoration: none">Chi tiết</a>
-                        |
-                        <a href="#" class="text-primary" style="text-decoration: none">Cập nhật</a>
-                        |
-                        <button href="#" class="text-primary"
-                                type="button" data-toggle="modal" data-target="#deletedModal"
-                                style="border: none; background-color: inherit; cursor: pointer">Xóa
-                        </button>
-                    </td>
-                </tr>
-                <tr>
+                    <td>PB1</td>
                     <td>NV2</td>
-                    <td>Văn Mạnh</td>
-                    <td>Phòng đào tạo</td>
-                    <td>Trưởng phòng</td>
+                    <td>Phòng Đại Học</td>
+                    <td>Jacob</td>
                     <td>
-                        <a href="#" class="text-primary" style="text-decoration: none">Chi tiết</a>
+                        <button class="text-primary" style="border: none; background-color: inherit; cursor: pointer"
+                                type="button" data-toggle="modal" data-target="#changeModal">
+                            Cập nhật
+                        </button>
                         |
-                        <a href="#" class="text-primary" style="text-decoration: none">Cập nhật</a>
+                        <button class="text-primary"
+
+                                style="border: none; background-color: inherit; cursor: pointer">Xóa
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>PB2</td>
+                    <td>NV4</td>
+                    <td>Phòng Giáo Dục</td>
+                    <td>Tuấn Hưng</td>
+                    <td>
+                        <button class="text-primary" style="border: none; background-color: inherit; cursor: pointer"
+                                type="button" data-toggle="modal" data-target="#changeModal">
+                            Cập nhật
+                        </button>
                         |
-                        <button href="#" class="text-primary"
-                                type="button" data-toggle="modal" data-target="#deletedModal"
+                        <button class="text-primary"
+
                                 style="border: none; background-color: inherit; cursor: pointer">Xóa
                         </button>
                     </td>
                 </tr>
                 <tr>
                 <tr>
-                    <td>NV3</td>
-                    <td>Văn Chung</td>
-                    <td>Phòng đào tạo</td>
-                    <td>Nhân viên</td>
+                    <td>PB3</td>
+                    <td>NV2</td>
+                    <td>Phòng Thể Chất</td>
+                    <td>Thu hiền</td>
                     <td>
-                        <a href="#" class="text-primary" style="text-decoration: none">Chi tiết</a>
+                        <button class="text-primary" style="border: none; background-color: inherit; cursor: pointer"
+                                type="button" data-toggle="modal" data-target="#changeModal">
+                            Cập nhật
+                        </button>
                         |
-                        <a href="#" class="text-primary" style="text-decoration: none">Cập nhật</a>
-                        |
-                        <button href="#" class="text-primary"
-                                type="button" data-toggle="modal" data-target="#deletedModal"
+                        <button class="text-primary"
+
                                 style="border: none; background-color: inherit; cursor: pointer">Xóa
                         </button>
                     </td>
@@ -141,28 +144,35 @@
     </div>
 </div>
 
-
-<!-- Modal-->
-<div class="modal fade px-0" id="deletedModal" tabindex="-1" role="dialog" aria-labelledby="deletedModalLabel" aria-hidden="true">
+<div class="modal fade px-0" id="changeModal" tabindex="-1" role="dialog" aria-labelledby="changeModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deletedModalLabel">Xóa nhân viên</h5>
+                <h5 class="modal-title" id="changeModalLabel">Thay đổi trưởng phòng <span>PB001</span></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-              <p>Bạn có chắc muốn xóa nhân viên tên <span class="font-weight-bold">Văn A</span> ?</p>
+                <div class="form-group">
+                    <label for="truongPhong">Trưởng phòng</label>
+                    <select class="form-control" id="truongPhong">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Thoát</button>
-                <button type="button" class="btn btn-danger">Xóa</button>
+                <button type="button" class="btn btn-success">Reset</button>
             </div>
         </div>
     </div>
 </div>
-
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -8,8 +8,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles.css">
+
     <title>Trưởng phòng</title>
+    <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
 <!--Nav bar-->
@@ -30,11 +31,10 @@
                     <a class="nav-link" href="phong_ban_list.html">Phòng ban</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="truong_phong.html">Trưởng phòng<span
-                            class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="truong_phong.html">Trưởng phòng</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="taikhoan.html">Tài khoản</a>
+                    <a class="nav-link active" href="taikhoan.html">Tài khoản<span class="sr-only">(current)</span></a>
                 </li>
             </ul>
             <div class="dropdown show ml-auto">
@@ -57,7 +57,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12 mb-4 align-items-center justify-content-end">
-            <h3 class="font-weight-bold">Danh Sách Trưởng Phòng</h3>
+            <h3 class="font-weight-bold">Danh Sách Tài Khoản</h3>
         </div>
     </div>
     <div class="row">
@@ -67,73 +67,51 @@
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
-        <div class="col-12 col-md-4 d-flex align-items-center justify-content-end">
-            <button class="btn btn-success">Thêm Trưởng Phòng</button>
-        </div>
     </div>
     <div class="row mt-5">
 
-        <div class="col-12 table-responsive">
-            <table class="table rounded" style="min-width: 750px;">
+        <div class="col-md-8 col-12 table-responsive">
+            <table class="table rounded">
                 <thead>
                 <tr>
-                    <th scope="col">Mã Phòng Ban</th>
-                    <th scope="col">Mã Nhân Viên</th>
-                    <th scope="col">Tên Phòng Ban</th>
-                    <th scope="col">Tên Trưởng Phòng</th>
+                    <th scope="col">Mã nhân viên</th>
+                    <th scope="col">Tên nhân viên</th>
+                    <th scope="col">Username</th>
                     <th scope="col">Tác vụ</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td>PB1</td>
-                    <td>NV2</td>
-                    <td>Phòng Đại Học</td>
-                    <td>Jacob</td>
+                    <td>NV1</td>
+                    <td>Đức Việt</td>
+                    <td>vietlatui</td>
                     <td>
-                        <button class="text-primary" style="border: none; background-color: inherit; cursor: pointer"
-                                type="button" data-toggle="modal" data-target="#changeModal">
-                            Cập nhật
-                        </button>
-                        |
-                        <button class="text-primary"
-
-                                style="border: none; background-color: inherit; cursor: pointer">Xóa
+                        <button href="#" class="text-primary"
+                                type="button" data-toggle="modal" data-target="#resetModal"
+                                style="border: none; background-color: inherit; cursor: pointer">Reset mật khẩu
                         </button>
                     </td>
                 </tr>
                 <tr>
-                    <td>PB2</td>
-                    <td>NV4</td>
-                    <td>Phòng Giáo Dục</td>
-                    <td>Tuấn Hưng</td>
+                    <td>NV2</td>
+                    <td>Đức Việt</td>
+                    <td>vietlatui</td>
                     <td>
-                        <button class="text-primary" style="border: none; background-color: inherit; cursor: pointer"
-                                type="button" data-toggle="modal" data-target="#changeModal">
-                            Cập nhật
-                        </button>
-                        |
-                        <button class="text-primary"
-
-                                style="border: none; background-color: inherit; cursor: pointer">Xóa
+                        <button href="#" class="text-primary"
+                                type="button" data-toggle="modal" data-target="#resetModal"
+                                style="border: none; background-color: inherit; cursor: pointer">Reset mật khẩu
                         </button>
                     </td>
                 </tr>
                 <tr>
                 <tr>
-                    <td>PB3</td>
-                    <td>NV2</td>
-                    <td>Phòng Thể Chất</td>
-                    <td>Thu hiền</td>
+                    <td>NV3</td>
+                    <td>Đức Việt</td>
+                    <td>vietlatui</td>
                     <td>
-                        <button class="text-primary" style="border: none; background-color: inherit; cursor: pointer"
-                                type="button" data-toggle="modal" data-target="#changeModal">
-                            Cập nhật
-                        </button>
-                        |
-                        <button class="text-primary"
-
-                                style="border: none; background-color: inherit; cursor: pointer">Xóa
+                        <button href="#" class="text-primary"
+                                type="button" data-toggle="modal" data-target="#resetModal"
+                                style="border: none; background-color: inherit; cursor: pointer">Reset mật khẩu
                         </button>
                     </td>
                 </tr>
@@ -144,27 +122,18 @@
     </div>
 </div>
 
-<div class="modal fade px-0" id="changeModal" tabindex="-1" role="dialog" aria-labelledby="changeModalLabel"
-     aria-hidden="true">
+<!-- Modal-->
+<div class="modal fade px-0" id="resetModal" tabindex="-1" role="dialog" aria-labelledby="resetModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="changeModalLabel">Thay đổi trưởng phòng <span>PB001</span></h5>
+                <h5 class="modal-title" id="resetModalLabel">Xóa nhân viên</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <label for="truongPhong">Trưởng phòng</label>
-                    <select class="form-control" id="truongPhong">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                </div>
+                <p>Bạn có chắc muốn reset mật khẩu của <span class="font-weight-bold">Văn A</span> ?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Thoát</button>
