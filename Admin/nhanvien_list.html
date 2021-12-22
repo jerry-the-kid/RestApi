@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Danh Sách Nhân Viên</title>
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
@@ -87,56 +87,8 @@
                     <th scope="col">Tác vụ</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>NV1</td>
-                    <td>Văn Anh</td>
-                    <td>Phòng giáo dục</td>
-                    <td>Admin</td>
-                    <td>
-                        <a href="thongtin_nhan_vien.html" class="text-primary" style="text-decoration: none">Chi tiết</a>
-                        |
-                        <a href="#" class="text-primary" style="text-decoration: none">Cập nhật</a>
-                        |
-                        <button href="#" class="text-primary"
-                                type="button" data-toggle="modal" data-target="#deletedModal"
-                                style="border: none; background-color: inherit; cursor: pointer">Xóa
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>NV2</td>
-                    <td>Văn Mạnh</td>
-                    <td>Phòng đào tạo</td>
-                    <td>Trưởng phòng</td>
-                    <td>
-                        <a href="thongtin_nhan_vien.html" class="text-primary" style="text-decoration: none">Chi tiết</a>
-                        |
-                        <a href="#" class="text-primary" style="text-decoration: none">Cập nhật</a>
-                        |
-                        <button href="#" class="text-primary"
-                                type="button" data-toggle="modal" data-target="#deletedModal"
-                                style="border: none; background-color: inherit; cursor: pointer">Xóa
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                <tr>
-                    <td>NV3</td>
-                    <td>Văn Chung</td>
-                    <td>Phòng đào tạo</td>
-                    <td>Nhân viên</td>
-                    <td>
-                        <a href="#" class="text-primary" style="text-decoration: none">Chi tiết</a>
-                        |
-                        <a href="#" class="text-primary" style="text-decoration: none">Cập nhật</a>
-                        |
-                        <button href="#" class="text-primary"
-                                type="button" data-toggle="modal" data-target="#deletedModal"
-                                style="border: none; background-color: inherit; cursor: pointer">Xóa
-                        </button>
-                    </td>
-                </tr>
+                <tbody id="table-body">
+                    <!-- data goes here -->
                 </tbody>
             </table>
 
@@ -169,10 +121,7 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
@@ -180,4 +129,39 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 </body>
+
+<script>
+    const loadData = function () {
+        $.get('http://localhost/final/API/get-all-employees.php').done(function (respone) {
+            const {data} = respone;
+            $('#table-body').html('');
+            data.forEach((info) => {
+                $('#table-body').append(
+                    `<tr>
+                        <td>NV${info.MA_NV}</td>
+                        <td>${info.HO_TEN}</td>
+                        <td>${info.TEN_PB}</td>
+                        <td>${info.CHUC_VU}</td>
+                        <td>
+                            <a href="#" class="text-primary" style="text-decoration: none">Chi tiết</a>
+                            |
+                            <a href="#" class="text-primary" style="text-decoration: none">Cập nhật</a>
+                            |
+                            <button href="#" class="text-primary"
+                                    type="button" data-toggle="modal" data-target="#deletedModal"
+                                    style="border: none; background-color: inherit; cursor: pointer">Xóa
+                            </button>
+                        </td>
+                    </tr>`
+                );
+            });
+        });
+    }
+
+    $(document).ready(function () {
+        console.log("hey")
+        loadData();
+    });
+</script>
+
 </html>

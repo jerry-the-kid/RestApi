@@ -180,23 +180,25 @@
             const {data} = respone;
             $('#table-body').html('');
             data.forEach((info) => {
-                $('#table-body').append(`<tr>
-                    <td>PB${info.MA_PHONG_BAN}</td>
-                    <td>NV${info.MA_NV}</td>
-                    <td>${info.TEN_PB}</td>
-                    <td>${info.HO_TEN}</td>
-                    <td>
-                        <button class="text-primary btn-change" style="border: none; background-color: inherit; cursor: pointer"
-                                type="button" data-toggle="modal" data-target="#changeModal" data-nv='${info.MA_NV}' data-pb ='${info.MA_PHONG_BAN}'>
-                            Cập nhật
-                        </button>
-                        |
-                        <button class="text-primary"
+                $('#table-body').append(`
+                    <tr>
+                        <td>PB${info.MA_PHONG_BAN}</td>
+                        <td>NV${info.MA_NV}</td>
+                        <td>${info.TEN_PB}</td>
+                        <td>${info.HO_TEN}</td>
+                        <td>
+                            <button class="text-primary btn-change" style="border: none; background-color: inherit; cursor: pointer"
+                                    type="button" data-toggle="modal" data-target="#changeModal" data-nv='${info.MA_NV}' data-pb ='${info.MA_PHONG_BAN}'>
+                                Cập nhật
+                            </button>
+                            |
+                            <button class="text-primary"
 
-                                style="border: none; background-color: inherit; cursor: pointer">Xóa
-                        </button>
-                    </td>
-                </tr>`);
+                                    style="border: none; background-color: inherit; cursor: pointer">Xóa
+                            </button>
+                        </td>
+                    </tr>`
+                );
             });
         });
     }

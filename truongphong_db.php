@@ -1,7 +1,7 @@
 <?php
 require_once('db.php');
 function getTeamEmployee($departmentID)
-{
+{ 
 }
 
 function getInfoTeamLeader()
