@@ -4,7 +4,7 @@ function getConnection(){
     $host = '127.0.0.1';
     $user = 'root';
     $pass = '';
-    $db = 'products_crud';
+    $db = 'company manager';
 
     $conn = new mysqli($host, $user, $pass, $db);
 
