@@ -4,7 +4,7 @@ function getTeamEmployee($departmentID)
 {
 }
 
-function getAllTeamLead()
+function getInfoTeamLeader()
 {
     $coon = getConnection();
     $sql = 'select DISTINCT pb.MA_PHONG_BAN, TP.MA_NV, TEN_PB, u.HO_TEN
@@ -14,10 +14,39 @@ function getAllTeamLead()
     where tp.MA_NV = ui.MA_NV';
     $stm = $coon->prepare($sql);
     if (!$stm->execute()) {
-        die(0);
+        return 0;
     }
     $result = $stm->get_result();
-    print_r($result->fetch_all(MYSQLI_ASSOC));
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
 
+function getTeamLeadByDepartment($department)
+{
+    $coon = getConnection();
+    $sql = 'SELECT MA_NV, HO_TEN
+    FROM user
+    JOIN user_info ui on user.MA_USER = ui.MA_USER
+    WHERE MA_PHONG_BAN = ?';
+    $stm = $coon->prepare($sql);
+    $stm->bind_param('i', $department);
+    if (!$stm->execute()) {
+        return 0;
+    }
+    $result = $stm->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
 
+function getDepartmentToCreate()
+{
+    $coon = getConnection();
+    $sql = 'SELECT MA_PHONG_BAN, TEN_PB
+    FROM phong_ban
+    WHERE MA_PHONG_BAN NOT IN (SELECT MA_PHONG_BAN
+    FROM truong_phong)';
+    $stm = $coon->prepare($sql);
+    if (!$stm->execute()) {
+        return 0;
+    }
+    $result = $stm->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
 }

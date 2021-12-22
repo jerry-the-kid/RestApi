@@ -87,59 +87,7 @@
                     <th scope="col">Tác vụ</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>PB1</td>
-                    <td>NV2</td>
-                    <td>Phòng Đại Học</td>
-                    <td>Jacob</td>
-                    <td>
-                        <button class="text-primary" style="border: none; background-color: inherit; cursor: pointer"
-                                type="button" data-toggle="modal" data-target="#changeModal">
-                            Cập nhật
-                        </button>
-                        |
-                        <button class="text-primary"
-
-                                style="border: none; background-color: inherit; cursor: pointer">Xóa
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>PB2</td>
-                    <td>NV4</td>
-                    <td>Phòng Giáo Dục</td>
-                    <td>Tuấn Hưng</td>
-                    <td>
-                        <button class="text-primary" style="border: none; background-color: inherit; cursor: pointer"
-                                type="button" data-toggle="modal" data-target="#changeModal">
-                            Cập nhật
-                        </button>
-                        |
-                        <button class="text-primary"
-
-                                style="border: none; background-color: inherit; cursor: pointer">Xóa
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                <tr>
-                    <td>PB3</td>
-                    <td>NV2</td>
-                    <td>Phòng Thể Chất</td>
-                    <td>Thu hiền</td>
-                    <td>
-                        <button class="text-primary" style="border: none; background-color: inherit; cursor: pointer"
-                                type="button" data-toggle="modal" data-target="#changeModal">
-                            Cập nhật
-                        </button>
-                        |
-                        <button class="text-primary"
-
-                                style="border: none; background-color: inherit; cursor: pointer">Xóa
-                        </button>
-                    </td>
-                </tr>
+                <tbody id="table-body">
                 </tbody>
             </table>
 
@@ -152,7 +100,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="changeModalLabel">Thay đổi trưởng phòng <span>PB001</span></h5>
+                <h5 class="modal-title" id="changeModalLabel">Thay đổi trưởng phòng <span class="modal-change__name">PB001</span></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -160,12 +108,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="truongPhong">Trưởng phòng</label>
-                    <select class="form-control" id="truongPhong">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                    <select class="form-control" name="truongPhong" id="truongPhong_change">
                     </select>
                 </div>
             </div>
@@ -222,14 +165,58 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+
+<script>
+    const loadData = function () {
+        $.get('http://localhost/final/API/get_all_teamLeaders.php').done(function (respone) {
+            const {data} = respone;
+            $('#table-body').html('');
+            data.forEach((info) => {
+                $('#table-body').append(`<tr>
+                    <td>PB${info.MA_PHONG_BAN}</td>
+                    <td>NV${info.MA_NV}</td>
+                    <td>${info.TEN_PB}</td>
+                    <td>${info.HO_TEN}</td>
+                    <td>
+                        <button class="text-primary btn-change" style="border: none; background-color: inherit; cursor: pointer"
+                                type="button" data-toggle="modal" data-target="#changeModal" data-nv='${info.MA_NV}' data-pb ='${info.MA_PHONG_BAN}'>
+                            Cập nhật
+                        </button>
+                        |
+                        <button class="text-primary"
+
+                                style="border: none; background-color: inherit; cursor: pointer">Xóa
+                        </button>
+                    </td>
+                </tr>`);
+            });
+        });
+    }
+
+
+    $(document).ready(function () {
+        loadData();
+        $('#table-body').on('click', function (e) {
+            const btn = e.target.closest('.btn-change');
+            const {pb, nv} = btn.dataset;
+            $('.modal-change__name').html(`PB${pb}`);
+            $('#truongPhong_change').html('');
+            $.post('http://localhost/final/API/get_tLeader_byDp.php', {id: pb}).done(function (response) {
+                const {data} = response;
+                console.log(data);
+                data.forEach((info) => {
+                    $('#truongPhong_change').append(`<option ${nv == info.MA_NV ? 'selected' : ''} value="${info.MA_NV}">NV${info.MA_NV} - ${info.HO_TEN}</option>`)
+                });
+            });
+        });
+    });
+</script>
 </body>
 </html>

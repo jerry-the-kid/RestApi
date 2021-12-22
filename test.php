@@ -2,4 +2,4 @@
 
 require_once ('truongphong_db.php');
 
-getAllTeamLead();
+print_r(getDepartmentToCreate());
