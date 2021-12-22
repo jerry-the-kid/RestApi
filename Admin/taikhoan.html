@@ -83,8 +83,9 @@
                     <th scope="col">Tác vụ</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
+                <tbody id="table-body">
+                    <!-- data goes here -->
+                <!-- <tr>
                     <td>NV1</td>
                     <td>Đức Việt</td>
                     <td>vietlatui</td>
@@ -117,7 +118,7 @@
                                 style="border: none; background-color: inherit; cursor: pointer">Reset mật khẩu
                         </button>
                     </td>
-                </tr>
+                </tr> -->
                 </tbody>
             </table>
 
@@ -148,9 +149,7 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
@@ -158,4 +157,33 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 </body>
+
+<script>
+    const loadData = function () {
+        $.get('http://localhost/final/API/get-all-accounts.php').done(function (respone) {
+            const {data} = respone;
+            $('#table-body').html('');
+            data.forEach((info) => {
+                $('#table-body').append(
+                    `<tr>
+                        <td>NV${info.MA_NV}</td>
+                        <td>${info.HO_TEN}</td>
+                        <td>${info.USER_NAME}</td>
+                        <td>
+                            <button href="#" class="text-primary"
+                                    type="button" data-toggle="modal" data-target="#resetModal"
+                                    style="border: none; background-color: inherit; cursor: pointer">Reset mật khẩu
+                            </button>
+                        </td>
+                    </tr>`
+                );
+            });
+        });
+    }
+
+    $(document).ready(function () {
+        loadData();
+    });
+</script>
+
 </html>

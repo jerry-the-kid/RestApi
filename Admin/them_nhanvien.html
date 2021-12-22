@@ -67,16 +67,17 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <form>
+            <form method="post" enctype="multipart/form-data" action="http://localhost/final/API/add-employee.php"> 
+                <!-- form is here -->
                 <div class="form-group">
                     <label for="exampleFormControlFile1">Ảnh đại diện</label>
-                    <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                    <input name="image" type="file" class="form-control-file" id="exampleFormControlFile1">
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="name">Họ tên</label>
-                        <input name="name" type="text" class="form-control" id="name" placeholder="Họ và tên">
+                        <input name="hoTen" type="text" class="form-control" id="name" placeholder="Họ và tên">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="phone">Phone number</label>
@@ -85,43 +86,40 @@
                 </div>
                 <div class="form-group">
                     <label for="inputAddress">Địa chỉ</label>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="Đường, phố, tỉnh">
+                    <input name="address" type="text" class="form-control" id="inputAddress" placeholder="Đường, phố, tỉnh">
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4 col-6">
                         <label for="birthdate">Ngày sinh</label>
-                        <input type="date" class="form-control" id="birthdate">
+                        <input name="ngaySinh" type="date" class="form-control" id="birthdate">
                     </div>
                     <div class="form-group col-md-2 col-6">
                         <label for="gender">Giới tính</label>
-                        <select class="form-control" id="gender">
+                        <select name="gioiTinh" class="form-control" id="gender">
                             <option>Male</option>
                             <option>Female</option>
                         </select>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="email">Email</label>
-                        <input type="text" class="form-control" id="email" placeholder="xyz@gmail.com">
+                        <input name="email" type="text" class="form-control" id="email" placeholder="xyz@gmail.com">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-6">
-                        <label for="inputCity">Username</label>
-                        <input type="text" class="form-control" id="inputCity">
+                        <label for="username">Username</label>
+                        <input name="username" type="text" class="form-control" id="username">
                     </div>
                     <div class="form-group col-6">
                         <label for="Department">Phòng ban</label>
-                        <select id="Department" class="form-control">
-                            <option selected>Option 1</option>
-                            <option>Option 2</option>
-                            <option>Option 3</option>
-                            <option>Option 4</option>
+                        <select name="phongBan" id="Department" class="form-control">
+                            <!-- Add option phong ban vào đây -->
                         </select>
                     </div>
 
                 </div>
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-success">Lưu thông tin</button>
+                    <button type="submit" class="btn btn-success" id="saveBtn">Lưu thông tin</button>
                 </div>
             </form>
         </div>
@@ -131,9 +129,7 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
@@ -141,4 +137,37 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 </body>
+
+<script>
+    const loadOption = function () {
+        $.get('http://localhost/final/API/get-all-department-name.php').done(function (respone) {
+            const {data} = respone;
+            data.forEach((info) => {
+                    $('#Department').append(`<option>${info.TEN_PB}</option>`)
+                });
+        });
+    }
+
+    $(document).ready(function () {
+        loadOption();
+
+        $("#saveBtn").click(function(event) {
+            let file = $('#exampleFormControlFile1').get(0).files.length
+            let hoTen = $("#name").val();
+            let phone = $("#phone").val();
+            let address = $("#inputAddress").val();
+            let ngaySinh = $("#birthdate").val();
+            let email = $("#email").val();
+            let username = $("#username").val();
+
+            if(file === 0 || hoTen === '' || phone === '' || address === '' || ngaySinh === '' ||
+                email === '' || username === '')
+            {
+                event.preventDefault();
+                alert("Dữ liệu không hợp lệ");
+            }
+        });
+    });
+</script>
+
 </html>
