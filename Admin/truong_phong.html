@@ -212,6 +212,21 @@
         $('.alert-danger').fadeOut(2500);
     }
 
+    const loadingAvailableEmployee = function (target, id){
+        $.post('http://localhost/final/API/get_tLeader_byDp.php', {id : id}).done(function (response){
+            target.html('');
+            if(response.code === 2) {
+                target.attr('disabled', true);
+            }else if(response.code === 0){
+                const {data} = response;
+                data.forEach(el => {
+                    target.attr('disabled', false);
+                    target.append(`<option value="${el.Ma_NV}">${el.HO_TEN}</option>`)
+                });
+            }
+
+        });
+    }
 
 
 
@@ -226,22 +241,24 @@
                 if(response.code === 2){
                     phongBanAdd.attr('disabled', true);
                     phongBanAdd.append('<option>Không còn phòng ban cần thêm</option>')
+                    truongPhongAdd.attr('disabled', true);
                 }if(response.code === 0){
                     phongBanAdd.attr('disabled', false);
                     const {data} = response;
                     data.forEach(el => {
                         phongBanAdd.append(`<option value="${el.MA_PHONG_BAN}">${el.TEN_PB}</option>`)
                     });
-                    $.post('http://localhost/final/API/get_tLeader_byDp.php', {id : phongBanAdd.val()}).done(function (response){
-                        const {data} = response;
-                        truongPhongAdd.attr('disabled', false);
-                        data.forEach(el => {
-                            truongPhongAdd.append(`<option value="${el.Ma_NV}">${el.HO_TEN}</option>`)
-                        });
-                    });
+                    loadingAvailableEmployee(truongPhongAdd, phongBanAdd.val());
                 }
             });
         });
+
+
+        $('#phongBan__add').on('change', function (){
+            loadingAvailableEmployee($('#truongPhong__add'), $('#phongBan__add').val());
+        });
+
+
 
         $('.btn-updated-leader').on('click', function (){
             const currentLeader = $('#truongPhong_change').val();
