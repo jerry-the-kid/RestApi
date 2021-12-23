@@ -59,6 +59,9 @@
 <!--Container-->
 <div class="container">
     <div class="row">
+        <div class="container" id="alert-container">
+
+        </div>
         <div class="col-12 mb-4 align-items-center justify-content-end">
             <h3 class="font-weight-bold">Danh Sách Trưởng Phòng</h3>
         </div>
@@ -71,7 +74,7 @@
             </form>
         </div>
         <div class="col-12 col-md-4 d-flex align-items-center justify-content-end">
-            <button class="btn btn-success">Thêm Trưởng Phòng</button>
+            <button class="btn btn-success" id="btn-adding"  data-toggle="modal" data-target="#addTruongPhong">Thêm Trưởng Phòng</button>
         </div>
     </div>
     <div class="row mt-5">
@@ -108,26 +111,25 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="truongPhong">Trưởng phòng</label>
+                    <label for="truongPhong_change">Trưởng phòng</label>
                     <select class="form-control" name="truongPhong" id="truongPhong_change">
                     </select>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Thoát</button>
-                <button type="button" class="btn btn-success">Reset</button>
+                <button type="button" class="btn btn-success btn-updated-leader" data-dismiss="modal">Cập nhật</button>
             </div>
         </div>
     </div>
 </div>
 
 <!--Modal cập nhật-->
-<div class="modal fade" id="updatedModal" tabindex="-1" role="dialog" aria-labelledby="updatedModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="addTruongPhong" tabindex="-1" role="dialog" aria-labelledby="addTruongPhongLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="updatedModalLabel">Cập nhật phòng ban</h5>
+                <h5 class="modal-title" id="addTruongPhongLabel">Thêm Trưởng Phòng</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -135,29 +137,20 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="modal-update__maphong" class="col-form-label">Tên phòng ban:</label>
-                        <input class="form-control" id="modal-update__maphong"/>
+                        <label for="phongBan__add">Phòng Ban</label>
+                        <select class="form-control" id="phongBan__add">
+                        </select>
                     </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-6">
-                            <label for="modal-update__mapb" class="col-form-label">Mã phòng ban:</label>
-                            <input type="text" class="form-control" id="modal-update__mapb">
-                        </div>
-                        <div class="form-group col-6">
-                            <label for="modal-update__sophong" class="col-form-label">Số phòng:</label>
-                            <input type="text" class="form-control" id="modal-update__sophong">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Mô tả:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
+                    <div class="form-group" >
+                        <label for="truongPhong__add">Trưởng Phòng</label>
+                        <select class="form-control" id="truongPhong__add" disabled>
+                        </select>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Thoát</button>
-                <button type="button" class="btn btn-success">Cập nhật</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Send message</button>
             </div>
         </div>
     </div>
@@ -203,17 +196,80 @@
         });
     }
 
+    const alertSuccess = function (message){
+        const alert = `<div class="alert alert-success" role="alert">
+         ${message}
+         </div>`;
+        $('#alert-container').append(alert);
+        $('.alert-success').fadeOut(2500);
+    }
+
+    const alertDanger = function (message){
+        const alert = `<div class="alert alert-danger" role="alert">
+         ${message}
+         </div>`;
+        $('#alert-container').append(alert);
+        $('.alert-danger').fadeOut(2500);
+    }
+
+
+
 
     $(document).ready(function () {
+        let currentUpdateDepartment;
+
+        $('#btn-adding').on('click', function (){
+            const phongBanAdd =  $('#phongBan__add');
+            phongBanAdd.html('');
+            const truongPhongAdd = $('#truongPhong__add');
+            $.getJSON('http://localhost/final/API/get_dp_no_leader.php').done(function (response) {
+                if(response.code === 2){
+                    phongBanAdd.attr('disabled', true);
+                    phongBanAdd.append('<option>Không còn phòng ban cần thêm</option>')
+                }if(response.code === 0){
+                    phongBanAdd.attr('disabled', false);
+                    const {data} = response;
+                    data.forEach(el => {
+                        phongBanAdd.append(`<option value="${el.MA_PHONG_BAN}">${el.TEN_PB}</option>`)
+                    });
+                    $.post('http://localhost/final/API/get_tLeader_byDp.php', {id : phongBanAdd.val()}).done(function (response){
+                        const {data} = response;
+                        truongPhongAdd.attr('disabled', false);
+                        data.forEach(el => {
+                            truongPhongAdd.append(`<option value="${el.Ma_NV}">${el.HO_TEN}</option>`)
+                        });
+                    });
+                }
+            });
+        });
+
+        $('.btn-updated-leader').on('click', function (){
+            const currentLeader = $('#truongPhong_change').val();
+            const data = {id : currentLeader, pb: currentUpdateDepartment}
+            $.post('http://localhost/final/API/update_teamLeaders.php', data).done(function (response) {
+                console.log(response);
+                if(response.code === 0){
+                    alertSuccess(response.message);
+                    loadData();
+                } else if(response.code === 4){
+                    return;
+                } else {
+                    alertDanger(response.message);
+                };
+            });
+        });
+
+
         loadData();
         $('#table-body').on('click', function (e) {
             const btn = e.target.closest('.btn-change');
             const {pb, nv} = btn.dataset;
+            if(!btn) return;
+            currentUpdateDepartment = pb;
             $('.modal-change__name').html(`PB${pb}`);
             $('#truongPhong_change').html('');
             $.post('http://localhost/final/API/get_tLeader_byDp.php', {id: pb}).done(function (response) {
                 const {data} = response;
-                console.log(data);
                 data.forEach((info) => {
                     $('#truongPhong_change').append(`<option ${nv == info.MA_NV ? 'selected' : ''} value="${info.MA_NV}">NV${info.MA_NV} - ${info.HO_TEN}</option>`)
                 });

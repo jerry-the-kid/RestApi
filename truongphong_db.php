@@ -1,9 +1,5 @@
 <?php
 require_once('db.php');
-function getTeamEmployee($departmentID)
-{ 
-}
-
 function getInfoTeamLeader()
 {
     $coon = getConnection();
@@ -49,4 +45,18 @@ function getDepartmentToCreate()
     }
     $result = $stm->get_result();
     return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+function updateTeamLeader($id, $pb){
+    $conn = getConnection();
+    $sql = 'UPDATE truong_phong
+    SET MA_NV = ?
+    WHERE MA_PHONG_BAN = ?';
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('ii', $id, $pb);
+    $stm->execute();
+    if($stm->affected_rows == 1){
+        return 1;
+    }
+    return  0;
 }
