@@ -85,7 +85,7 @@
                     <th scope="col">Tác vụ</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="table-body">
                 <tr>
                     <td>PB1</td>
                     <td>Phòng khảo thí</td>
@@ -214,14 +214,51 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+<script>
+    const renderTable = function (data) {
+        $('#table-body').html('');
+        console.log(data);
+        data.forEach((info) => {
+            $('#table-body').append(`
+                     <tr>
+                    <td>PB${info.MA_PHONG_BAN}</td>
+                    <td>${info.TEN_PB}</td>
+                    <td>${info.SO_PHONG}</td>
+                    <td>
+                        <a href="phong_ban_info.html" class="text-primary" style="text-decoration: none">Chi tiết</a>
+                        |
+                        <button href="#" class="text-primary"
+                                type="button" data-toggle="modal" data-target="#updatedModal"
+                                style="border: none; background-color: inherit; cursor: pointer">Cập nhật
+                        </button>
+                        |
+                        <button href="#" class="text-primary"
+                                type="button" data-toggle="modal" data-target="#deletedModal"
+                                style="border: none; background-color: inherit; cursor: pointer">Xóa
+                        </button>
+                    </td>
+                </tr>`
+            );
+        });
+    }
+
+
+    const loadData = function () {
+        $.get('http://localhost/final/API/get_all_departments.php').done(function (respone) {
+            const {data} = respone;
+            renderTable(data);
+        });
+    }
+    $(document).ready(function () {
+        loadData();
+    });
+</script>
 </body>
 </html>

@@ -1,3 +1,3 @@
 <?php
-require_once ('truongphong_db.php');
-addTeamLeader(4, 2);
+require_once ('phongban_db.php');
+print_r(getInfoDepartment(1));
