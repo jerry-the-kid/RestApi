@@ -66,8 +66,10 @@
         </div>
     </div>
     <div class="row">
+        <div class="container col-12" id="alert-container"></div>
+
         <div class="col-12">
-            <form method="post" enctype="multipart/form-data" action="http://localhost/final/API/add-employee.php"> 
+            <form method="post" enctype="multipart/form-data" onsubmit="return false"> 
                 <!-- form is here -->
                 <div class="form-group">
                     <label for="exampleFormControlFile1">Ảnh đại diện</label>
@@ -139,6 +141,22 @@
 </body>
 
 <script>
+    const alertSuccess = function (message) {
+        const alert = `<div class="alert alert-success" role="alert">
+         ${message}
+         </div>`;
+        $('#alert-container').append(alert);
+        $('.alert-success').fadeOut(3500);
+    }
+
+    const alertDanger = function (message) {
+        const alert = `<div class="alert alert-danger" role="alert">
+         ${message}
+         </div>`;
+        $('#alert-container').append(alert);
+        $('.alert-danger').fadeOut(3500);
+    }
+
     const loadOption = function () {
         $.get('http://localhost/final/API/get-all-department-name.php').done(function (respone) {
             const {data} = respone;
@@ -152,7 +170,7 @@
         loadOption();
 
         $("#saveBtn").click(function(event) {
-            let file = $('#exampleFormControlFile1').get(0).files.length
+            let isFileNull = $('#exampleFormControlFile1').get(0).files.length
             let hoTen = $("#name").val();
             let phone = $("#phone").val();
             let address = $("#inputAddress").val();
@@ -160,11 +178,46 @@
             let email = $("#email").val();
             let username = $("#username").val();
 
-            if(file === 0 || hoTen === '' || phone === '' || address === '' || ngaySinh === '' ||
+            if(isFileNull === 0 || hoTen === '' || phone === '' || address === '' || ngaySinh === '' ||
                 email === '' || username === '')
             {
-                event.preventDefault();
-                alert("Dữ liệu không hợp lệ");
+                alertDanger("Dữ liệu không được để trống");
+            }
+            else{
+                let isSuccess = 0;
+                let data = new FormData();
+                data.append("image", $('#exampleFormControlFile1').get(0).files[0]);
+                data.append("hoTen", hoTen);
+                data.append("phone", phone);
+                data.append("address", address);
+                data.append("ngaySinh", ngaySinh);
+                data.append("email", email);
+                data.append("username", username)
+                data.append("phongBan", $("#Department").val())
+                data.append("gioiTinh", $("#gender").val())
+
+                let xhr = new XMLHttpRequest();
+
+                xhr.open("POST", "http://localhost/final/API/add-employee.php", true);
+                xhr.send(data);
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == XMLHttpRequest.DONE) {
+                        const respone = JSON.parse(xhr.response);
+
+                        if(respone.code == 0){
+                            alertSuccess("Thêm nhân viên thành công");
+                            $('#exampleFormControlFile1').val("")
+                            $("#name").val("");
+                            $("#phone").val("");
+                            $("#inputAddress").val("");
+                            $("#birthdate").val("");
+                            $("#email").val("");
+                            $("#username").val("");
+                        }
+                        else alertDanger("Thêm nhân viên không thành công");
+                    }
+                }
             }
         });
     });

@@ -95,7 +95,7 @@ function add_user_info($MA_NV, $username, $maphongban)
     return 0;
 }
 
-function getMaPhongBangByName($tenPhongBan)
+function getMaPhongBanByName($tenPhongBan)
 {
     $conn = getConnection();
 

@@ -1,6 +1,7 @@
 <?php
 require_once('./template.php');
 require_once('../giamdoc_db.php');
+error_reporting(0);
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     http_response_code(405);
@@ -44,7 +45,7 @@ if (isset($_POST['hoTen']) && isset($_POST['phone']) && isset($_POST['address'])
 
         $id = add_user($hoTen, $imagePath, $address, $phone, $ngaySinh, $gioiTinh, $email);
 
-        $data = getMaPhongBangByName($phongBan);
+        $data = getMaPhongBanByName($phongBan);
         add_user_info($id, $username, $data[0]['MA_PHONG_BAN']);
 
         success_response(1, "success");
