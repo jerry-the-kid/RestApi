@@ -55,6 +55,20 @@ function updateDepartment($mapb, $ten, $mota, $sophong){
     return  0;
 }
 
+function getDepartment($dp){
+    $coon = getConnection();
+    $sql = 'SELECT ten_pb, mo_ta, so_phong
+    FROM phong_ban
+    where MA_PHONG_BAN = ?';
+    $stm = $coon->prepare($sql);
+    $stm->bind_param('i', $dp);
+    if (!$stm->execute()) {
+        return 0;
+    }
+    $result = $stm->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
 
 function deleteDepartment($mapb){
     $conn = getConnection();

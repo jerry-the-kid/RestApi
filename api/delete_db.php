@@ -12,5 +12,5 @@ $mapb = isset($_POST['id']) ? $_POST['id'] : null;
 if(!$mapb) error_response(2, 'Mã phòng ban ban còn thiếu. Vui lòng nhập');
 
 $data = deleteDepartment($mapb);
-if(!$data) error_response(3, 'Xóa thất bại.');
+if(!$data) error_response(3, 'Xóa thất bại. Phòng ban có nhân viên đang hoạt động');
 success_response($mapb, "Phòng ban PB$mapb được xóa thành công.");

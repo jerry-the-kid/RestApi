@@ -1,3 +1,3 @@
 <?php
 require_once ('phongban_db.php');
-print_r(deleteDepartment(12));
+print_r(getDepartment(2));

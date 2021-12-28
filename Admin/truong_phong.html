@@ -335,7 +335,6 @@
                 id: +truongPhongAdd.val()
             };
             if (!truongPhongAdd.val()) {
-                console.log('Hello')
                 $('#alert-modal-container').append(`<div class="alert alert-danger alert-dismissible fade show" role="alert" id="modal-alert">
                             <strong>Không thể thêm</strong> Phòng ban không có nhân viên, Hãy nhân viên thêm mới.
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -348,7 +347,6 @@
             $.post('http://localhost/final/API/addTeamLeader.php', data).done(function (res) {
                 $('#addTruongPhong').modal('hide');
                 loadData();
-                console.log(res);
                 alertSuccess(res.message);
             });
 
