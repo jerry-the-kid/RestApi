@@ -28,3 +28,43 @@ function getInfoDepartment($pb){
     if(!$result) return 0;
     return $result;
 }
+
+function addDepartment($ten, $mota, $sophong){
+    $coon = getConnection();
+    $sql = "INSERT INTO phong_ban (TEN_PB, MO_TA, SO_PHONG)
+    VALUES (?, ?, ?)";
+    $stm = $coon->prepare($sql);
+    $stm->bind_param('sss', $ten , $mota, $sophong);
+    if(!$stm->execute()){
+        return  0;
+    }
+    return 1;
+}
+
+function updateDepartment($mapb, $ten, $mota, $sophong){
+    $conn = getConnection();
+    $sql = 'UPDATE phong_ban
+    SET TEN_PB = ?, MO_TA = ?, SO_PHONG = ?
+    WHERE MA_PHONG_BAN = ?;';
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('sssi', $ten, $mota, $sophong, $mapb);
+    $stm->execute();
+    if($stm->affected_rows == 1){
+        return 1;
+    }
+    return  0;
+}
+
+
+function deleteDepartment($mapb){
+    $conn = getConnection();
+    $sql = 'DELETE FROM phong_ban
+    WHERE MA_PHONG_BAN = ?;';
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('i', $mapb);
+    $stm->execute();
+    if($stm->affected_rows == 1){
+        return 1;
+    }
+    return  0;
+}
