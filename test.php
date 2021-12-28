@@ -1,3 +1,3 @@
 <?php
-require_once('./truongphong_db.php');
-print_r(getDepartmentToCreate());
+require_once ('truongphong_db.php');
+addTeamLeader(4, 2);

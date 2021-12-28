@@ -60,3 +60,28 @@ function updateTeamLeader($id, $pb){
     }
     return  0;
 }
+
+
+function addTeamLeader($pb, $id){
+    $conn = getConnection();
+    $sql = "INSERT INTO truong_phong (MA_PHONG_BAN, MA_NV) VALUES (?, ?)";
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('ii', $pb, $id);
+    if(!$stm->execute()){
+        return 0;
+    }
+    return 1;
+}
+
+function deletedTruongPhong($pb){
+    $conn = getConnection();
+    $sql = 'DELETE FROM truong_phong
+    WHERE MA_PHONG_BAN = ?';
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('i', $pb);
+    $stm->execute();
+    if($stm->affected_rows == 1){
+        return 1;
+    }
+    return  0;
+}
