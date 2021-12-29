@@ -166,9 +166,7 @@
         });
     }
 
-    $(document).ready(function () {
-        loadOption();
-
+    const addEmployee = function () {
         $("#saveBtn").click(function(event) {
             let isFileNull = $('#exampleFormControlFile1').get(0).files.length
             let hoTen = $("#name").val();
@@ -220,6 +218,11 @@
                 }
             }
         });
+    }
+
+    $(document).ready(function () {
+        loadOption();
+        addEmployee();
     });
 </script>
 

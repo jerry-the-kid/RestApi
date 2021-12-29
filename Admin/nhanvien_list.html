@@ -58,6 +58,8 @@
 
 <!--Container-->
 <div class="container">
+    <div class="container col-12" id="alert-container"></div>
+
     <div class="row">
         <div class="col-12 mb-4 align-items-center justify-content-end">
             <h3 class="font-weight-bold">Danh Sách Nhân Viên</h3>
@@ -97,7 +99,7 @@
 </div>
 
 
-<!-- Modal-->
+<!-- Delete Modal-->
 <div class="modal fade px-0" id="deletedModal" tabindex="-1" role="dialog" aria-labelledby="deletedModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -108,11 +110,11 @@
                 </button>
             </div>
             <div class="modal-body">
-              <p>Bạn có chắc muốn xóa nhân viên tên <span class="font-weight-bold">Văn A</span> ?</p>
+              <p>Bạn có chắc muốn xóa nhân viên tên <span class="font-weight-bold" id="employeeName">Văn A</span> ?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Thoát</button>
-                <button type="button" class="btn btn-danger">Xóa</button>
+                <button type="button" class="btn btn-danger" id="deleteConfirm">Xóa</button>
             </div>
         </div>
     </div>
@@ -131,6 +133,22 @@
 </body>
 
 <script>
+    const alertSuccess = function (message) {
+        const alert = `<div class="alert alert-success" role="alert">
+         ${message}
+         </div>`;
+        $('#alert-container').append(alert);
+        $('.alert-success').fadeOut(3500);
+    }
+
+    const alertDanger = function (message) {
+        const alert = `<div class="alert alert-danger" role="alert">
+         ${message}
+         </div>`;
+        $('#alert-container').append(alert);
+        $('.alert-danger').fadeOut(3500);
+    }
+
     const loadData = function () {
         $.get('http://localhost/final/API/get-all-employees.php').done(function (respone) {
             const {data} = respone;
@@ -149,7 +167,8 @@
                             |
                             <button href="#" class="text-primary"
                                     type="button" data-toggle="modal" data-target="#deletedModal"
-                                    style="border: none; background-color: inherit; cursor: pointer">Xóa
+                                    style="border: none; background-color: inherit; cursor: pointer"
+                                    employeeId="${info.MA_NV}" employeeName="${info.HO_TEN}" id="btn-delete">Xóa
                             </button>
                         </td>
                     </tr>`
@@ -158,8 +177,31 @@
         });
     }
 
+    const deleteEmployee = function(){
+        $(document).on ("click", "#btn-delete", function () {
+            const id = $(this).attr('employeeId');
+            const name = $(this).attr('employeeName');
+
+            $("#employeeName").text(name);
+
+            $(document).on ("click", "#deleteConfirm", function () {
+                $.post('http://localhost/final/API/delete-employee.php', {id: id}).done(function (response) {
+                    if (response.code == 0) {
+                        alertSuccess(response.message);
+                        $('.modal').modal('hide');
+                        loadData();
+                    } 
+                    else {
+                        alertDanger(response.message);
+                    }
+                });
+            });
+        });
+    }
+
     $(document).ready(function () {
         loadData();
+        deleteEmployee();
     });
 </script>
 
