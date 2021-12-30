@@ -25,10 +25,13 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Task<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="task_list.html">Task<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Canceled Task</a>
+                    <a class="nav-link" href="cancel_task_list.html">Canceled Task</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="completed_task_list.html">Completed Task</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Đơn nghỉ</a>
@@ -67,7 +70,7 @@
             </form>
         </div>
         <div class="col-12 col-md-4 d-flex align-items-center justify-content-end">
-            <a class="btn btn-success" href="them_nhanvien.html">Tạo task</a>
+            <button class="btn btn-success" data-toggle="modal" data-target="#createTaskModal">Tạo task</button>
         </div>
     </div>
 
@@ -106,9 +109,9 @@
                     <td>NV01 - Tuấn Tú</td>
                     <td><span class="badge badge-success p-2">New</span></td>
                     <td>20/11/2021</td>
-                    <td><a href="#" class="text-primary" style="text-decoration: none">Chi tiết</a>
+                    <td><a href="new_task_info.html" class="text-primary" style="text-decoration: none">Chi tiết</a>
                         |
-                        <button href="#" class="text-primary"
+                        <button class="text-primary"
                                 type="button" data-toggle="modal" data-target="#deletedModal"
                                 style="border: none; background-color: inherit; cursor: pointer">Hủy
                         </button>
@@ -119,7 +122,7 @@
                     <td>NV01 - Tuấn Tú</td>
                     <td><span class="badge badge-primary p-2">In progress</span></td>
                     <td>20/11/2021</td>
-                    <td><a href="#" class="text-primary" style="text-decoration: none">Chi tiết</a>
+                    <td><a href="inprogress_task.html" class="text-primary" style="text-decoration: none">Chi tiết</a>
                     </td>
                 </tr>
                 <tr>
@@ -127,7 +130,7 @@
                     <td>NV01 - Tuấn Tú</td>
                     <td><span class="badge badge-warning p-2">Waiting</span></td>
                     <td>20/11/2021</td>
-                    <td><a href="#" class="text-primary" style="text-decoration: none">Chi tiết</a>
+                    <td><a href="waiting_task.html" class="text-primary" style="text-decoration: none">Chi tiết</a>
                     </td>
                 </tr>
 
@@ -161,6 +164,54 @@
     </div>
 </div>
 
+<div class="modal fade" id="createTaskModal" tabindex="-1" role="dialog" aria-labelledby="createTaskModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createTaskModalLabel">Tạo task</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Tiêu đề</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Nhân viên giao</label>
+                        <select class="form-control" id="exampleFormControlSelect1">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Mô tả</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">File đính kèm</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="inputGroupFile01">
+                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -173,8 +224,11 @@
         crossorigin="anonymous"></script>
 </body>
 
-<script>
-
+<script type="application/javascript">
+    $('input[type="file"]').change(function (e) {
+        var fileName = e.target.files[0].name;
+        $('.custom-file-label').html(fileName);
+    });
 </script>
 
 </html>
