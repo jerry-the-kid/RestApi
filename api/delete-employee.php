@@ -16,13 +16,17 @@
             error_response(1, 'Invalid input');
         }
 
+        if(isTeamLeader($id)){
+            error_response(1, "Không thể xóa trưởng phòng");
+        }
+
         $user_info = getUserInfoAndAvatarPathById($id)[0];
 
         delete_user_info($user_info["MA_NV"]);
         delete_user($user_info["MA_NV"]);
         delete_account($user_info["USER_NAME"]);
 
-        rrmdir($user_info["AVATAR_PATH"]);
+        rrmdir(dirname($user_info["AVATAR_PATH"]));
 
         success_response(true, "Xóa thành công");
     }

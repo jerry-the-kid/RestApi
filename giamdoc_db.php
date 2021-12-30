@@ -159,4 +159,19 @@
         return 0;
     }
 
+    function isTeamLeader($id){
+        $conn = getConnection();
+        $sql = "SELECT * FROM truong_phong
+                WHERE truong_phong.MA_NV = $id";
+        $stm = $conn->prepare($sql);
+        if (!$stm->execute()) {
+            return 0;
+        }
+        $result = $stm->get_result();
+
+        if($result->num_rows > 0){
+            return TRUE;
+        }
+        else return FALSE;
+    }
 ?>
