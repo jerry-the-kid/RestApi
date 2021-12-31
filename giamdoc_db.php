@@ -74,7 +74,7 @@
         $sql = 'INSERT INTO `user` (`HO_TEN`, `AVATAR_PATH`, `ADDRESS`, `PHONE`, `ngay_sinh`, `gioi_tinh`, `email`) 
                     VALUES(?, ?, ?, ?, ?, ?, ?)';
         $stm = $conn->prepare($sql);
-        $stm->bind_param('sssssis', $hoTen, $avatar, $address, $phone, $ngaySinh, $gioiTinh, $email);
+        $stm->bind_param('sssssss', $hoTen, $avatar, $address, $phone, $ngaySinh, $gioiTinh, $email);
         $stm->execute();
         if ($stm->affected_rows == 1) {
             return $stm->insert_id;
@@ -173,5 +173,21 @@
             return TRUE;
         }
         else return FALSE;
+    }
+
+    function getEmployeeDetail($id){
+        $conn = getConnection();
+
+        $sql = "SELECT user.HO_TEN, user.AVATAR_PATH, user.ADDRESS, user.PHONE, user.ngay_sinh, user.gioi_tinh, user.email, 
+                account.USER_NAME, user_info.MA_PHONG_BAN 
+                FROM user, account, user_info
+                WHERE user.MA_USER = $id AND user.MA_USER = user_info.MA_NV AND account.USER_NAME = user_info.USER_NAME";
+
+        $stm = $conn->prepare($sql);
+        if (!$stm->execute()) {
+            return 0;
+        }
+        $result = $stm->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 ?>

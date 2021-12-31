@@ -161,9 +161,11 @@
                         <td>${info.TEN_PB}</td>
                         <td>${info.CHUC_VU}</td>
                         <td>
-                            <a href="#" class="text-primary" style="text-decoration: none">Chi tiết</a>
+                            <a href="#" class="text-primary" style="text-decoration: none" id="detail"
+                            employeeId="${info.MA_NV}">Chi tiết</a>
                             |
-                            <a href="#" class="text-primary" style="text-decoration: none">Cập nhật</a>
+                            <a href="#" class="text-primary" style="text-decoration: none" id="update"
+                            employeeId="${info.MA_NV}">Cập nhật</a>
                             |
                             <button href="#" class="text-primary"
                                     type="button" data-toggle="modal" data-target="#deletedModal"
@@ -200,9 +202,31 @@
         });
     }
 
+    const employeeDetail = function(){
+        $(document).on ("click", "#detail", function () {
+            window.location.href = "thongtin_nhan_vien.html";
+
+
+        });
+    }
+
+    const updateEmployee = function(){
+        $(document).on ("click", "#update", function () {
+            // $(function() {
+            //     $.session.set("selectedEmployeeId", $(this).attr('employeeId'));
+            // });
+
+            // console.log($.session.get("selectedEmployeeId"));
+
+            window.location.href = "chinhsua_nhanvien.html?id=" + $(this).attr('employeeId');
+        });
+    }
+
     $(document).ready(function () {
         loadData();
         deleteEmployee();
+        employeeDetail();
+        updateEmployee();
     });
 </script>
 
