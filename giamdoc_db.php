@@ -26,7 +26,7 @@
     {
         $conn = getConnection();
 
-        $sql = "SELECT phong_ban.TEN_PB 
+        $sql = "SELECT phong_ban.MA_PHONG_BAN, phong_ban.TEN_PB 
                     FROM phong_ban";
 
         $stm = $conn->prepare($sql);
@@ -190,4 +190,6 @@
         $result = $stm->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    
 ?>

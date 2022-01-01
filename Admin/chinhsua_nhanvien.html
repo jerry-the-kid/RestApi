@@ -71,9 +71,12 @@
                 <div class="form-group">
                     <label for="exampleFormControlFile1">Ảnh đại diện</label>
                     <div>
-                        <img src="http://placehold.it/200x200" class="img-fluid mb-2" alt="Responsive image">
+                        <img src="" width="240px" height="240px" class="img-responsive mb-2" alt="" id="avatar">
                     </div>
-                    <input name="image" type="file" class="form-control-file" id="exampleFormControlFile1">
+                    
+                    <input name="image" type="file" class="form-control-file" id="exampleFormControlFile1" style="display:none">
+                    <button type="button" class="btn btn-secondary btn-sm mr-2" id="chooseFile">Choose File</button>
+                    <span id="fileName">Không có avatar</span>
 
                 </div>
 
@@ -142,6 +145,8 @@
 </body>
 
 <script>
+    let phongBanList = [];
+
     const alertSuccess = function (message) {
         const alert = `<div class="alert alert-success" role="alert">
          ${message}
@@ -161,6 +166,7 @@
     const loadOption = function () {
         $.get('http://localhost/final/API/get-all-department-name.php').done(function (respone) {
             const {data} = respone;
+            phongBanList = data;
             data.forEach((info) => {
                     $('#Department').append(`<option>${info.TEN_PB}</option>`)
                 });
@@ -181,14 +187,26 @@
             $("#birthdate").val(employee.ngay_sinh);
             $("#email").val(employee.email);
             $("#username").val(employee.USER_NAME);
+            $("#avatar").attr("src",employee.AVATAR_PATH);
 
-            if(employee.gioi_tinh == 1){
-
+            if(employee.gioi_tinh == 0){
+                $("#gender").val('Female')
             }
+
+            phongBanList.forEach((info) => {
+                if(info.MA_PHONG_BAN == employee.MA_PHONG_BAN){
+                    $("#Department").val(info.TEN_PB);
+                }
+            });
+
+            let fileNameIndex = employee.AVATAR_PATH.lastIndexOf("/") + 1;
+            let filename = employee.AVATAR_PATH.substr(fileNameIndex);
+
+            $("#fileName").text(filename);
         });
     }
 
-    const addEmployee = function () {
+    const updateEmployee = function () {
         $("#saveBtn").click(function(event) {
             let isFileNull = $('#exampleFormControlFile1').get(0).files.length
             let hoTen = $("#name").val();
@@ -204,7 +222,6 @@
                 alertDanger("Dữ liệu không được để trống");
             }
             else{
-                let isSuccess = 0;
                 let data = new FormData();
                 data.append("image", $('#exampleFormControlFile1').get(0).files[0]);
                 data.append("hoTen", hoTen);
@@ -242,10 +259,26 @@
         });
     }
 
+    const selectFile = function(){
+        $("#chooseFile").click(function(event) {
+            $('#exampleFormControlFile1').trigger('click');
+            $("#exampleFormControlFile1").on("change", function() {
+                let filename = $('input[type=file]').val().split('\\').pop();
+                $("#fileName").text(filename);
+
+                const [file] = exampleFormControlFile1.files
+                if (file) {
+                    $("#avatar").attr("src", URL.createObjectURL(file));
+                }
+            });
+        }); 
+    }
+
     $(document).ready(function () {
         loadOption();
         fillData();
-        addEmployee();
+        selectFile();
+        updateEmployee();
     });
 </script>
 
