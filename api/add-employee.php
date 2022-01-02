@@ -26,14 +26,14 @@
             error_response(1, 'Invalid input');
         }
 
-        if (!is_dir('../images')) {
-            mkdir('../images');
+        if (!is_dir('../image')) {
+            mkdir('../image');
         }
 
         $image = isset($_FILES['image']) ? $_FILES['image'] : null;
         $imagePath = '';
         // if ($image && $image['tmp_name']) {
-        $imagePath = '../images/' . randomString(8) . '/' . $image['name'];
+        $imagePath = '../image/' . randomString(8) . '/' . $image['name'];
         mkdir(dirname($imagePath));
 
         if (move_uploaded_file($_FILES["image"]["tmp_name"], $imagePath)) {

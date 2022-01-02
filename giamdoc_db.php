@@ -191,5 +191,61 @@
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    
+    function is_activated($id){
+        $conn = getConnection();
+        $sql = "SELECT account.ACTIVE 
+                FROM account, user_info 
+                WHERE account.USER_NAME = user_info.USER_NAME AND user_info.MA_NV = $id";
+        $stm = $conn->prepare($sql);
+        if (!$stm->execute()) {
+            return 0;
+        }
+        $result = $stm->get_result();
+        $row = $result->fetch_assoc();
+
+        if($row['ACTIVE'] == 1){
+            return TRUE;
+        }
+        else return FALSE;
+    }
+
+    function update_account_if_not_activated($oldUsername, $newUsername){
+        $conn = getConnection();
+        $sql = "UPDATE account
+                SET USER_NAME = '$newUsername', PASSWORD = '$newUsername'
+                WHERE USER_NAME = '$oldUsername'";
+        $stm = $conn->prepare($sql);
+        $stm->execute();
+        if ($stm->affected_rows == 1) {
+            return 1;
+        }
+        return 0;
+    }
+
+    function update_account_if_activated($oldUsername, $newUsername){
+        $conn = getConnection();
+        $sql = "UPDATE account
+                SET USER_NAME = '$newUsername'
+                WHERE USER_NAME = '$oldUsername'";
+        $stm = $conn->prepare($sql);
+        $stm->execute();
+        if ($stm->affected_rows == 1) {
+            return 1;
+        }
+        return 0;
+    }
+
+    function update_user($id, $hoTen, $avatar, $address, $phone, $ngaySinh, $gioiTinh, $email){
+        $conn = getConnection();
+        $sql = "UPDATE user
+                SET HO_TEN = '$hoTen', AVATAR_PATH = '$avatar', ADDRESS = '$address', PHONE = '$phone'
+                ngay_sinh = '$ngaySinh', gioi_tinh = $gioiTinh, email = '$email'
+                WHERE MA_USER = $id";
+        $stm = $conn->prepare($sql);
+        $stm->execute();
+        if ($stm->affected_rows == 1) {
+            return 1;
+        }
+        return 0;
+    }
 ?>

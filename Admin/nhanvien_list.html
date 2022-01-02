@@ -212,12 +212,6 @@
 
     const updateEmployee = function(){
         $(document).on ("click", "#update", function () {
-            // $(function() {
-            //     $.session.set("selectedEmployeeId", $(this).attr('employeeId'));
-            // });
-
-            // console.log($.session.get("selectedEmployeeId"));
-
             window.location.href = "chinhsua_nhanvien.html?id=" + $(this).attr('employeeId');
         });
     }

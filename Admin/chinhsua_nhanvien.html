@@ -216,13 +216,48 @@
             let email = $("#email").val();
             let username = $("#username").val();
 
-            if(isFileNull === 0 || hoTen === '' || phone === '' || address === '' || ngaySinh === '' ||
+            if(hoTen === '' || phone === '' || address === '' || ngaySinh === '' ||
                 email === '' || username === '')
             {
                 alertDanger("Dữ liệu không được để trống");
             }
-            else{
+            else if(isFileNull === 0){
+                let url = window.location.href;
+                let id = url.split('id=').pop();
+
                 let data = new FormData();
+                data.append("id", id);
+                data.append("hoTen", hoTen);
+                data.append("phone", phone);
+                data.append("address", address);
+                data.append("ngaySinh", ngaySinh);
+                data.append("email", email);
+                data.append("username", username)
+                data.append("phongBan", $("#Department").val())
+                data.append("gioiTinh", $("#gender").val())
+
+                let xhr = new XMLHttpRequest();
+
+                xhr.open("POST", "http://localhost/final/API/update-employee.php", true);
+                xhr.send(data);
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == XMLHttpRequest.DONE) {
+                        const respone = JSON.parse(xhr.response);
+
+                        if(respone.code == 0){
+                            alertSuccess("Cập nhật nhân viên thành công");
+                        }
+                        else alertDanger("Cập nhật nhân viên không thành công");
+                    }
+                }
+            }
+            else{
+                let url = window.location.href;
+                let id = url.split('id=').pop();
+
+                let data = new FormData();
+                data.append("id", id)
                 data.append("image", $('#exampleFormControlFile1').get(0).files[0]);
                 data.append("hoTen", hoTen);
                 data.append("phone", phone);
@@ -235,24 +270,19 @@
 
                 let xhr = new XMLHttpRequest();
 
-                xhr.open("POST", "http://localhost/final/API/add-employee.php", true);
+                xhr.open("POST", "http://localhost/final/API/update-employee.php", true);
                 xhr.send(data);
 
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == XMLHttpRequest.DONE) {
                         const respone = JSON.parse(xhr.response);
 
+                        console.log(respone);
+
                         if(respone.code == 0){
-                            alertSuccess("Thêm nhân viên thành công");
-                            $('#exampleFormControlFile1').val("")
-                            $("#name").val("");
-                            $("#phone").val("");
-                            $("#inputAddress").val("");
-                            $("#birthdate").val("");
-                            $("#email").val("");
-                            $("#username").val("");
+                            alertSuccess("Cập nhật nhân viên thành công");
                         }
-                        else alertDanger("Thêm nhân viên không thành công");
+                        else alertDanger("Cập nhật nhân viên không thành công");
                     }
                 }
             }
