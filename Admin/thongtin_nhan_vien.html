@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>Thông tin phòng ban</title>
+    <title>Thông tin nhân viên</title>
 </head>
 <body>
 <!--Nav bar-->
@@ -67,9 +67,9 @@
     </div>
     <div class="row rounded p-4">
         <div class="col-4 bg-light py-4 rounded d-flex align-items-center justify-content-center flex-column">
-            <img src="../image/longtrong.jpg" alt="avatar" style="display: block; height: 150px; border-radius: 50%;">
-            <h5 class="font-weight-bold mt-4">Long Trọng</h5>
-            <p class="font-weight-light">Trưởng phòng phòng ban cơ khí</p>
+            <img id="avatar" src="" alt="Không nhận được avatar xin hãy cập nhật avatar" width="150px" style="display: block; height: 150px; border-radius: 50%;">
+            <h5 class="font-weight-bold mt-4" id="name"></h5>
+            <p class="font-weight-light" id="role">Trưởng phòng phòng ban cơ khí</p>
         </div>
 
         <div class="col-8 border-left bg-light py-4 rounded">
@@ -78,32 +78,29 @@
 
                 <tr>
                     <td class="font-weight-bold">Username</td>
-                    <td colspan="4">longtrong123</td>
+                    <td colspan="4" id="username"></td>
                 </tr>
                 <tr>
                     <td class="font-weight-bold">Mã NV</td>
-                    <td>NV1</td>
+                    <td id="manv"></td>
                     <td class="font-weight-bold">Mã PB</td>
-                    <td>PB1</td>
+                    <td id="mapb"></td>
                 </tr>
                 <tr>
                     <td class="font-weight-bold">Ngày sinh</td>
-                    <td>20/11/2000</td>
+                    <td id="ngaySinh"></td>
                     <td class="font-weight-bold">Giới tính</td>
-                    <td>Nam</td>
+                    <td id="gender"></td>
                 </tr>
                 <tr>
                     <td class="font-weight-bold">Email</td>
-                    <td>@twitter</td>
+                    <td id="email"></td>
                     <td class="font-weight-bold" >SĐT</td>
-                    <td>0892314144</td>
+                    <td id="phone"></td>
                 </tr>
                 <tr>
                     <td class="font-weight-bold">Địa chỉ</td>
-                    <td colspan="4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium amet, aperiam aspernatur
-                        consequatur, deleniti dolor ea eaque eum fugit ipsa ipsum magnam, odio perspiciatis porro quia
-                        quis sit voluptate. Recusandae!
-                    </td>
+                    <td colspan="4" id="address"></td>
                 </tr>
                 </tbody>
             </table>
@@ -114,14 +111,72 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+
+<script>
+    const fillData = function(){
+        let id = getUrlParameter('id');
+        let role = getUrlParameter('role');
+
+        $.get('http://localhost/final/API/get-employee-detail.php', {id: id}).done(function (respone) {
+            const employee = respone['data'][0];
+
+            $('#avatar').attr('src', employee.AVATAR_PATH);
+            $("#name").text(employee.HO_TEN);
+            $("#role").text(role);
+            $("#username").text((employee.USER_NAME));
+            $("#manv").text("NV" + id)
+            $("#mapb").text("PB" + employee.MA_PHONG_BAN);
+            $("#ngaySinh").text(dateFormat(employee.ngay_sinh));
+
+            if(employee.gioi_tinh == 0){
+                $("#gender").text("Nữ");
+            }
+            else $("#gender").text("Nam");
+
+            $("#email").text(employee.email);
+            $("#phone").text(employee.PHONE);
+            $("#address").text(employee.ADDRESS);
+        });
+    }
+
+    function dateFormat(date){
+        let dateObj = new Date(date);
+        let month = dateObj.getUTCMonth() + 1;
+        let day = dateObj.getUTCDate();
+        let year = dateObj.getUTCFullYear();
+
+        newdate = day + "/" + month + "/" + year;
+        return newdate;
+    }
+
+    function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+        return false;
+    };
+
+    $(document).ready(function () {
+        fillData();
+    });
+
+
+</script>
 </body>
 </html>
