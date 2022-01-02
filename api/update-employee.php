@@ -37,11 +37,16 @@
             mkdir('../image');
         }
 
+        $old_user_info = getUserInfoAndAvatarPathById($id)[0];
+
+        if($username != $old_user_info["USER_NAME"] && is_username_existed($username)){
+            error_response(1, 'Username đã tồn tại, xin chọn cái khác hoặc giữ cái cũ');
+        }
+
         if(isset($_FILES['image'])){
             $image = $_FILES['image'];
             $imagePath = '../image/' . randomString(8) . '/' . $image['name'];
 
-            $old_user_info = getUserInfoAndAvatarPathById($id)[0];
             delete_user_info($id);
             rrmdir(dirname($old_user_info["AVATAR_PATH"]));
 
@@ -65,7 +70,6 @@
             }
         }
         else{
-            $old_user_info = getUserInfoAndAvatarPathById($id)[0];
             delete_user_info($id);
 
             if(is_activated($id)){

@@ -26,13 +26,15 @@
             error_response(1, 'Invalid input');
         }
 
+        if(is_username_existed($username)){
+            error_response(1, 'User name đã tồn tại');
+        }
+
         if (!is_dir('../image')) {
             mkdir('../image');
         }
 
         $image = isset($_FILES['image']) ? $_FILES['image'] : null;
-        $imagePath = '';
-        // if ($image && $image['tmp_name']) {
         $imagePath = '../image/' . randomString(8) . '/' . $image['name'];
         mkdir(dirname($imagePath));
 
@@ -53,12 +55,6 @@
             http_response_code(400);
             error_response(1, 'Something went wrong with file row 53');
         }
-        // }
-        // else{
-        //     http_response_code(400);
-        //     error_response(1, 'Something went wrong with file row 58');
-        // }
-
     }
     else{
         http_response_code(400);

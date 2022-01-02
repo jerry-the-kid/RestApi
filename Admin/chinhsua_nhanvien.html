@@ -248,7 +248,9 @@
                         if(respone.code == 0){
                             alertSuccess("Cập nhật nhân viên thành công");
                         }
-                        else alertDanger("Cập nhật nhân viên không thành công");
+                        else{             
+                            alertDanger(respone.message);
+                        }
                     }
                 }
             }

@@ -211,8 +211,9 @@
 
     function update_account_if_not_activated($oldUsername, $newUsername){
         $conn = getConnection();
+        $password = password_hash($newUsername, PASSWORD_DEFAULT);
         $sql = "UPDATE account
-                SET USER_NAME = '$newUsername', PASSWORD = '$newUsername'
+                SET USER_NAME = '$newUsername', PASSWORD = '$password'
                 WHERE USER_NAME = '$oldUsername'";
         $stm = $conn->prepare($sql);
         $stm->execute();
@@ -247,5 +248,22 @@
             return 1;
         }
         return 0;
+    }
+
+    function is_username_existed($username){
+        $conn = getConnection();
+        $sql = "SELECT *
+                FROM account
+                WHERE account.USER_NAME = '$username'";
+        $stm = $conn->prepare($sql);
+        if (!$stm->execute()) {
+            return 0;
+        }
+        $result = $stm->get_result();
+
+        if($result->num_rows > 0){
+            return TRUE;
+        }
+        else return FALSE;
     }
 ?>
