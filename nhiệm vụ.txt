@@ -26,3 +26,24 @@ Bonus :
 
 
 Web random user nếu cần : https://www.random-name-generator.com/
+________________________________________________________________________________________________________________
+
+- Download file, upload file
+
+Trưởng Phòng :
+0. Tạo task
+1. Render New, Inprogress, Waiting, Reject
+2. Render Cancel task, xem chi tiết, xóa tất cả, xóa
+3. Render Completed task, xem chi tiết
+4. New : Hủy task new, Cập nhật task,xem chi tiết.
+5. In progress : xem chi tiết
+6. Waiting : Reject/Completed.
+7. Rejected : Xem chi tiết.
+
+Nhân viên :
+1. Render task New, Inprogress, Waiting, Reject
+2. New : Xem chi tiết, Start task(chuyển sang inprogress)
+3. Inprogress : Xem chi tiết, Nộp file, Tải file
+4. Waiting : Xem chi tiết
+5. Inprogress : Xem chi tiết, Nộp file, Cập nhật..
+6. Render task completed, Xem chi tiết
