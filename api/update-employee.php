@@ -73,7 +73,7 @@
             }
             else update_account_if_not_activated($old_user_info["USER_NAME"], $username);
 
-            // update_user($id, $hoTen, $old_user_info["AVATAR_PATH"], $address, $phone, $ngaySinh, $gioiTinh, $email);
+            update_user($id, $hoTen, $old_user_info["AVATAR_PATH"], $address, $phone, $ngaySinh, $gioiTinh, $email);
 
             $data = getMaPhongBanByName($phongBan);
             add_user_info($id, $username, $data[0]['MA_PHONG_BAN']);

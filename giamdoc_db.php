@@ -238,7 +238,7 @@
     function update_user($id, $hoTen, $avatar, $address, $phone, $ngaySinh, $gioiTinh, $email){
         $conn = getConnection();
         $sql = "UPDATE user
-                SET HO_TEN = '$hoTen', AVATAR_PATH = '$avatar', ADDRESS = '$address', PHONE = '$phone'
+                SET HO_TEN = '$hoTen', AVATAR_PATH = '$avatar', ADDRESS = '$address', PHONE = '$phone',
                 ngay_sinh = '$ngaySinh', gioi_tinh = $gioiTinh, email = '$email'
                 WHERE MA_USER = $id";
         $stm = $conn->prepare($sql);
