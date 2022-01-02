@@ -231,4 +231,71 @@
     });
 </script>
 
+<script>
+    $(document).ready(function () {
+        loadProduct();
+    });
+
+    
+    function loadProduct(){
+        $.post("http://localhost:81/final/api/get_task.php",{id : 14}, function(data, status) {
+            data.data.forEach((task) => {
+                let tableRow = $('<tr> <td>'+ task.TIEU_DE +'</td> <td>NV'+ task.MA_NGUOI_NHAN +' - '+ task.HO_TEN +'</td> <td><span class="'+ check(task.STATUS) +'">'+ task.STATUS +'</span></td> <td>'+ convert(task.DEADLINE) +'</td> <td><a href="'+ link(task.STATUS) +'" class="text-primary" style="text-decoration: none">Chi tiết</a> '+ buttonDlt(task.STATUS) +'</td> </tr>');
+                tableRow.attr('task-info', JSON.stringify(task))
+                $('.table').append(tableRow);
+            })
+        },"json");
+    }
+
+    function buttonDlt(status){
+        if (status == "New"){
+            return '| <button class="text-primary" type="button" data-toggle="modal" data-target="#deletedModal" style="border: none; background-color: inherit; cursor: pointer">Hủy </button>';
+        }
+        else {
+            return '';
+        }
+    }
+    
+    function check(status){
+        if (status == "New"){
+            return "badge badge-success p-2";
+        }
+        else if (status == "In progress"){
+            return "badge badge-primary p-2";
+        }
+        else if (status == "Waiting"){
+            return "badge badge-warning p-2";
+        }
+        else if (status == "Rejected"){
+            return "badge badge-danger p-2";
+        }
+    }
+
+    function link(status){
+        if (status == "New"){
+            return "new_task_info.html";
+        }
+        else if (status == "In progress"){
+            return "inprogress_task.html";
+        }
+        else if (status == "Waiting"){
+            return "waiting_task.html";
+        }
+        else if (status == "Rejected"){
+            return "reject_task.html";
+        }
+    }
+
+    function convert(time){
+        if (time == null){
+            return null;
+        }
+        else {
+            var date = time;
+            var readable_date = new Date(date).toLocaleDateString();
+            return readable_date;
+        }
+    }
+</script>
+
 </html>
