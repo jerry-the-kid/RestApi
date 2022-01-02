@@ -91,7 +91,7 @@
                 <tr>
                     <td>Testing sản phẩm</td>
                     <td>NV01 - Tuấn Tú</td>
-                    <td><span class="badge badge-secondary p-2">Cancel</span></td>
+                    <td><span class="badge badge-secondary p-2">Canceled</span></td>
                     <td>20/11/2021</td>
                     <td><a href="cancel_task.html" class="text-primary" style="text-decoration: none">Chi tiết</a>
                     </td>
@@ -99,7 +99,7 @@
                 <tr>
                     <td>Testing sản phẩm</td>
                     <td>NV01 - Tuấn Tú</td>
-                    <td><span class="badge badge-secondary p-2">Cancel</span></td>
+                    <td><span class="badge badge-secondary p-2">Canceled</span></td>
                     <td>20/11/2021</td>
                     <td><a href="cancel_task.html" class="text-primary" style="text-decoration: none">Chi tiết</a>
                     </td>
@@ -134,7 +134,31 @@
 </body>
 
 <script>
+    $(document).ready(function () {
+        loadProduct();
+    });
 
+    
+    function loadProduct(){
+        $.post("http://localhost:81/final/api/get_canceled_task.php",{id : 14}, function(data, status) {
+            data.data.forEach((task) => {
+                let tableRow = $('<tr> <td>'+ task.TIEU_DE +'</td> <td>NV'+ task.MA_NGUOI_NHAN +' - '+ task.HO_TEN +'</td> <td><span class="badge badge-secondary p-2">'+ task.STATUS +'</span></td> <td>'+ convert(task.DEADLINE) +'</td> <td><a href="cancel_task.html" class="text-primary" style="text-decoration: none">Chi tiết</a> </td> </tr>');
+                tableRow.attr('task-info', JSON.stringify(task))
+                $('.table').append(tableRow);
+            })
+        },"json");
+    }
+    
+    function convert(time){
+        if (time == null){
+            return null;
+        }
+        else {
+            var date = time;
+            var readable_date = new Date(date).toLocaleDateString();
+            return readable_date;
+        }
+    }
 </script>
 
 </html>
