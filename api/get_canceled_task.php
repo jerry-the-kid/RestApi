@@ -1,6 +1,6 @@
 <?php
     require_once ('./template.php');
-    require_once ('../render_canceled_task_db.php');
+    require_once ('../render_task_db.php');
 
     if($_SERVER['REQUEST_METHOD'] != 'POST'){
         http_response_code(405);
@@ -11,6 +11,6 @@
 
     if(!$id) error_response(1, 'ID không tồn tại');
 
-    $task = get_task($id);
+    $task = get_cancel_task_employee($id);
     success_response($task, 'Đọc sản phẩm thành công');
 ?>

@@ -11,6 +11,6 @@
 
     if(!$id) error_response(1, 'ID không tồn tại');
 
-    $task = get_task($id);
+    $task = get_task_employee($id);
     success_response($task, 'Đọc sản phẩm thành công');
 ?>

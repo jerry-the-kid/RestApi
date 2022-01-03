@@ -99,38 +99,7 @@
                 </tr>
                 </thead>
                 <tbody id="table-body">
-                <tr>
-                    <td>Testing sản phẩm</td>
-                    <td>NV01 - Tuấn Tú</td>
-                    <td><span class="badge badge-success p-2">New</span></td>
-                    <td>20/11/2021</td>
-                    <td><a href="new_task_info.html" class="text-primary" style="text-decoration: none">Chi tiết</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Testing sản phẩm</td>
-                    <td>NV01 - Tuấn Tú</td>
-                    <td><span class="badge badge-primary p-2">In progress</span></td>
-                    <td>20/11/2021</td>
-                    <td><a href="inprogress_task.html" class="text-primary" style="text-decoration: none">Chi tiết</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Testing sản phẩm</td>
-                    <td>NV01 - Tuấn Tú</td>
-                    <td><span class="badge badge-warning p-2">Waiting</span></td>
-                    <td>20/11/2021</td>
-                    <td><a href="waiting_task.html" class="text-primary" style="text-decoration: none">Chi tiết</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Testing sản phẩm</td>
-                    <td>NV01 - Tuấn Tú</td>
-                    <td><span class="badge badge-danger p-2">Rejected</span></td>
-                    <td>20/11/2021</td>
-                    <td><a href="reject_task.html" class="text-primary" style="text-decoration: none">Chi tiết</a>
-                    </td>
-                </tr>
+
                 </tbody>
             </table>
 
@@ -236,7 +205,8 @@
 
     
     function loadProduct(){
-        $.post("http://localhost:81/final/api/get_task.php",{id : 14}, function(data, status) {
+        $.post("http://localhost/final/api/get_task.php",{id : 14}, function(data, status) {
+            $('.table-body').html('');
             data.data.forEach((task) => {
                 let tableRow = $('<tr> <td>'+ task.TIEU_DE +'</td> <td>NV'+ task.MA_NGUOI_NHAN +' - '+ task.HO_TEN +'</td> <td><span class="'+ check(task.STATUS) +'">'+ task.STATUS +'</span></td> <td>'+ convert(task.DEADLINE) +'</td> <td><a href="'+ link(task.STATUS) +'" class="text-primary" style="text-decoration: none">Chi tiết</a> </td> </tr>');
                 tableRow.attr('task-info', JSON.stringify(task))
