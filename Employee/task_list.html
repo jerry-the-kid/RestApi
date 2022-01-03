@@ -230,18 +230,18 @@
         }
     }
 
-    function link(status){
+    function link(status, task_id){
         if (status == "New"){
-            return "new_task_info.html";
+            return `new_task_info.html?task=${task_id}`;
         }
         else if (status == "In progress"){
-            return "inprogress_task.html";
+            return `inprogress_task.html?task=${task_id}`;
         }
         else if (status == "Waiting"){
-            return "waiting_task.html";
+            return `waiting_task.html?task=${task_id}`;
         }
         else if (status == "Rejected"){
-            return "reject_task.html";
+            return `reject_task.html?task=${task_id}`;
         }
     }
 
