@@ -59,7 +59,7 @@
 <div class="container">
     <div class="row mb-2 flex-column-reverse flex-md-row">
         <div class="col-md-6 col-12 mb-4 align-items-center justify-content-end">
-            <h2 class="font-weight-bold text-left">Testing sản phẩm</h2>
+            <h2 class="font-weight-bold text-left" id="title">Tiêu đề</h2>
         </div>
         <div class="col-md-6 col-12 mb-4 d-flex justify-content-end">
             <button class="btn btn-light">Trở về danh sách</button>
@@ -67,42 +67,38 @@
     </div>
     <div class="row p-4 bg-light rounded">
         <div class="col-12 d-flex align-items-center justify-content-between">
-            <p class="mb-0">Nguyễn Thái Duy • 18/12</p>
+            <p class="mb-0" id="tleadName">Tên người giao</p>
             <span class="badge badge-warning px-3 py-2">Waiting</span>
         </div>
         <div class="col-12 mt-3 d-flex align-items-center justify-content-between">
-            <p class="mb-0">Đánh giá ___</p>
-            <p class="mb-0">Hạn nộp 25/12</p>
+            <p class="mb-0"></p>
+            <p class="mb-0" id="deadline">deadline</p>
         </div>
         <div style="margin : 30px 16px; border-bottom: 1px solid black; width: 100%"></div>
-        <div class="col-12">
-            Mô tả : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam
-            quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam
-            voluptates! Distinctio nisi omnis recusandae. Aperiam atque ea, eius est minus molestiae, nobis officiis
-            praesentium provident quas qui quisquam, ratione suscipit vitae.
+        <div class="col-12" id="description">
+            Mô tả :
         </div>
         <div class="mt-4 col-md-8 col-lg-6">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center">File 1
+            <ul class="list-group list-group-flush" id="supportFolderList">
+                <!-- <li class="list-group-item d-flex justify-content-between align-items-center">File 1
                     <button class="btn btn-primary btn-sm">Download</button>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">File 2
                     <button class="btn btn-primary btn-sm">Download</button>
-                </li>
-                <li class="list-group-item text-center">
+                </li> -->
+                <!-- <li class="list-group-item text-center">
                     <a href="">Download All <i class="ml-2 fas fa-download"></i></a>
-                </li>
+                </li> -->
             </ul>
         </div>
         <div class="mt-4 col-md-4 col-lg-6">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Phần nộp công việc</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
+                    <p class="card-text" id="messageEmployee">Không có lời nhắn</p>
                     <div class="d-flex justify-content-between">
-                        <p class="card-text mb-0">Note.pdf</p>
-                        <button class="btn btn-primary btn-sm">Download</button>
+                        <p class="card-text mb-0" id="submitFolder">Không thấy file</p>
+                        <button class="btn btn-primary btn-sm" id="downloadSubmitFile">Download</button>
                     </div>
                 </div>
             </div>
@@ -203,6 +199,115 @@
     $('input[type="file"]').change(function (e) {
         var fileName = e.target.files[0].name;
         $('.custom-file-label').html(fileName);
+    });
+
+    function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+        return false;
+    }
+
+    function dateFormat(date){
+        let dateObj = new Date(date);
+        let month = dateObj.getUTCMonth() + 1;
+        let day = dateObj.getUTCDate();
+        let hours = dateObj.getHours();
+        let minute = dateObj.getMinutes();
+
+        newdate = day + "/" + month + " - " + hours + ":" + minute;
+        return newdate;
+    }
+
+    const fillData = function(){
+        let taskId = getUrlParameter('task');
+
+        $.get('http://localhost/final/API/get-task.php', {id: taskId}).done(function (respone) {
+            let taskInfo = respone.data[0];
+
+            $("#title").text(taskInfo.TIEU_DE);
+            $("#tleadName").text(taskInfo.HO_TEN);
+            $("#deadline").text("Hạn nộp: " + dateFormat(taskInfo.DEADLINE));
+            $("#description").append(taskInfo.MO_TA);
+
+            if(taskInfo.message_employee){
+                $("#messageEmployee").text(taskInfo.message_employee);
+            }
+
+            let fileNameIndex = taskInfo.SUBMIT_FOLDER_PATH.lastIndexOf("/") + 1;
+            let filename = taskInfo.SUBMIT_FOLDER_PATH.substr(fileNameIndex);
+
+            $("#submitFolder").text(filename);
+
+            $('#supportFolderList').html('');
+
+            let supportFileList = taskInfo.SUPPORT_FOLDER_PATH.split("+");
+            let submitFileList = taskInfo.SUBMIT_FOLDER_PATH.split("+");
+
+            $.each(supportFileList, function( index, value ) {
+                let fileNameIndex = value.lastIndexOf("/") + 1;
+                let filename = value.substr(fileNameIndex);
+
+                $('#supportFolderList').append(
+                    `<li class="list-group-item d-flex justify-content-between align-items-center">${filename}
+                        <button class="btn btn-primary btn-sm" id="file${index}">Download</button>
+                    </li>`);
+            });
+
+            $('#supportFolderList').append(
+                `<li class="list-group-item text-center">
+                    <a href="#" id="downloadAll">Download All <i class="ml-2 fas fa-download"></i></a>
+                </li>`);
+
+            downloadSupportFile(supportFileList);
+            downloadSubmitFile(submitFileList);
+        });
+    }
+
+    const downloadSupportFile = function(supportFileList){
+        $(document).on ("click", "#downloadAll," + "button[id^=" + "file" + "]", function (event) {
+            if(this.id == 'downloadAll'){
+                event.preventDefault();
+
+                $.each(supportFileList, function( index, value ) {
+                    window.open(addDotToPathIfNeeded(value));
+                });
+            }
+            else{
+                event.preventDefault();
+
+                let fileIndex = this.id.substr(4);
+                window.open(addDotToPathIfNeeded(supportFileList[fileIndex]));
+            }
+        });
+    }
+    
+    const downloadSubmitFile = function(submitFileList){
+        $(document).on ("click", "#downloadSubmitFile", function (event) {
+            event.preventDefault();
+
+
+        });
+    }
+
+    function addDotToPathIfNeeded(path){
+        if(path.substring(0, 3) != '../'){
+            return "../" + path;
+        }
+        else return path;
+    }
+
+    $(document).ready(function () {
+        fillData();
     });
 </script>
 
