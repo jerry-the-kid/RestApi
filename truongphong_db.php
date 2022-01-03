@@ -85,3 +85,18 @@ function deletedTruongPhong($pb){
     }
     return  0;
 }
+
+function getEmployeeByTeamLead($id){
+    $coon = getConnection();
+    $sql = 'SELECT HO_TEN, ui.MA_NV
+    from truong_phong tp join user_info ui using (MA_PHONG_BAN)
+    join user u on ui.MA_USER = u.MA_USER
+    where tp.MA_NV = ? and ui.MA_NV != ?';
+    $stm = $coon->prepare($sql);
+    $stm->bind_param('ii', $id, $id);
+    if (!$stm->execute()) {
+        return 0;
+    }
+    $result = $stm->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+}

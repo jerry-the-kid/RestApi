@@ -1,3 +1,3 @@
 <?php
-require_once ('render_task_db.php');
-print_r(get_task_teamLead(3));
+require_once ('task_db.php');
+print_r(createNewTask(49, 3, 14));
