@@ -117,7 +117,7 @@
 
     
     function loadProduct(){
-        $.post("http://localhost/final/api/get_canceled_task.php",{id : 14}, function(data, status) {
+        $.post("http://localhost/final/api/get_cancel_task_tLead.php",{id : 3}, function(data, status) {
             $('#table-body').html('');
             data.data.forEach((task) => {
                 let tableRow = $('<tr> <td>'+ task.TIEU_DE +'</td> <td>NV'+ task.MA_NGUOI_NHAN +' - '+ task.HO_TEN +'</td> <td><span class="badge badge-secondary p-2">'+ task.STATUS +'</span></td> <td>'+ convert(task.DEADLINE) +'</td> <td><a href="cancel_task.html" class="text-primary" style="text-decoration: none">Chi tiết</a> </td> </tr>');
@@ -132,8 +132,8 @@
             return null;
         }
         else {
-            var date = time;
-            var readable_date = new Date(date).toLocaleDateString();
+            const date = time;
+            const readable_date = new Date(date).toLocaleDateString();
             return readable_date;
         }
     }

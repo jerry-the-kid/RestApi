@@ -238,7 +238,8 @@
 
     
     function loadProduct(){
-        $.post("http://localhost:81/final/api/get_task.php",{id : 14}, function(data, status) {
+        $('#table-body').html('');
+        $.post("http://localhost/final/api/get_task_teamLead.php",{id : 3}, function(data, status) {
             data.data.forEach((task) => {
                 let tableRow = $('<tr> <td>'+ task.TIEU_DE +'</td> <td>NV'+ task.MA_NGUOI_NHAN +' - '+ task.HO_TEN +'</td> <td><span class="'+ check(task.STATUS) +'">'+ task.STATUS +'</span></td> <td>'+ convert(task.DEADLINE) +'</td> <td><a href="'+ link(task.STATUS) +'" class="text-primary" style="text-decoration: none">Chi tiết</a> '+ buttonDlt(task.STATUS) +'</td> </tr>');
                 tableRow.attr('task-info', JSON.stringify(task))
