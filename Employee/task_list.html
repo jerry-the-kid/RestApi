@@ -205,7 +205,7 @@
 
     
     function loadProduct(){
-        $.post("http://localhost/final/api/get_task.php",{id : 14}, function(data, status) {
+        $.post("http://localhost/final/api/get_task_employee.php",{id : 14}, function(data, status) {
             $('.table-body').html('');
             data.data.forEach((task) => {
                 let tableRow = $('<tr> <td>'+ task.TIEU_DE +'</td> <td>NV'+ task.MA_NGUOI_NHAN +' - '+ task.HO_TEN +'</td> <td><span class="'+ check(task.STATUS) +'">'+ task.STATUS +'</span></td> <td>'+ convert(task.DEADLINE) +'</td> <td><a href="'+ link(task.STATUS) +'" class="text-primary" style="text-decoration: none">Chi tiết</a> </td> </tr>');
