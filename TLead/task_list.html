@@ -242,8 +242,9 @@
     function loadProduct(){
         $('#table-body').html('');
         $.post("http://localhost/final/api/get_task_teamLead.php",{id : user_id}, function(data, status) {
+            console.log(data);
             data.data.forEach((task) => {
-                let tableRow = $('<tr> <td>'+ task.TIEU_DE +'</td> <td>NV'+ task.MA_NGUOI_NHAN +' - '+ task.HO_TEN +'</td> <td><span class="'+ check(task.STATUS) +'">'+ task.STATUS +'</span></td> <td>'+ convert(task.DEADLINE) +'</td> <td><a href="'+ link(task.STATUS) +'" class="text-primary" style="text-decoration: none">Chi tiết</a> '+ buttonDlt(task.STATUS) +'</td> </tr>');
+                let tableRow = $('<tr> <td>'+ task.TIEU_DE +'</td> <td>NV'+ task.MA_NGUOI_NHAN +' - '+ task.HO_TEN +'</td> <td><span class="'+ check(task.STATUS) +'">'+ task.STATUS +'</span></td> <td>'+ convert(task.DEADLINE) +'</td> <td><a href="'+ link(task.STATUS, task.TASK_ID) +'" class="text-primary" style="text-decoration: none">Chi tiết</a> '+ buttonDlt(task.STATUS) +'</td> </tr>');
                 tableRow.attr('task-info', JSON.stringify(task))
                 $('.table').append(tableRow);
             })
@@ -274,18 +275,18 @@
         }
     }
 
-    function link(status){
+    function link(status, task_id){
         if (status == "New"){
-            return "new_task_info.html";
+            return `new_task_info.html?task=${task_id}`;
         }
         else if (status == "In progress"){
-            return "inprogress_task.html";
+            return `inprogress_task.html?task=${task_id}`;
         }
         else if (status == "Waiting"){
-            return "waiting_task.html";
+            return `waiting_task.html?task=${task_id}`;
         }
         else if (status == "Rejected"){
-            return "reject_task.html";
+            return `reject_task.html?task=${task_id}`;
         }
     }
 
@@ -373,7 +374,6 @@
                 alertFormDanger('.alert-modal-container', 'Vui lòng nhập mô tả task.');
                 describeText.focus();
             } else  {
-                // console.log(taskName.val(), deadLine.val(), nhanVien.val(), describeText.val(), file.val());
                 const form = $('#createTaskForm')[0];
                 const formData = new FormData(form);
                 formData.append("sender", user_id);
