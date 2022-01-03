@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 02, 2022 at 03:34 AM
+-- Generation Time: Jan 03, 2022 at 02:17 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -116,56 +116,58 @@ CREATE TABLE `task` (
   `MO_TA` text DEFAULT NULL,
   `DEADLINE` datetime DEFAULT NULL,
   `SUPPORT_FOLDER_PATH` text DEFAULT NULL,
-  `SUBMIT_FOLDER_PATH` text DEFAULT NULL
+  `SUBMIT_FOLDER_PATH` text DEFAULT NULL,
+  `message_employee` text DEFAULT NULL,
+  `message_tlead` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `task`
 --
 
-INSERT INTO `task` (`TASK_ID`, `TIEU_DE`, `MO_TA`, `DEADLINE`, `SUPPORT_FOLDER_PATH`, `SUBMIT_FOLDER_PATH`) VALUES
-(1, 'Kế hoạch dự án công nghệ thông tin cho công ty', 'Trong kế hoạch phải cho thấy hiểu rõ mục tiêu, chi phí làm việc cũng như nguồn nhân lực cho phòng công nghệ thông tin cần bổ sung', '2022-01-10 15:00:00', 'file_gui/kg8I5lFSnN/huongdanne.txt', NULL),
-(2, 'Thống kê báo cáo doanh thu', 'Trong báo cáo phải có phân tích nghiệp vụ và đồ thị doanh thu trong năm 2021', NULL, NULL, NULL),
-(3, 'Bảng kế hoạch công việc năm 2022', 'Trong bảng kế hoạch phải có chi tiết thời gian, địa điểm và xây dựng trước kịch bản công việc', NULL, NULL, NULL),
-(4, 'Thống kê nhân sự mới của các trường đại học', 'Nghiên cứu, phân tích kĩ những sinh viên có thành tích tốt và các dự án sinh viên đó tham gia', '2022-01-07 08:00:00', 'file_gui/yanYfyHe3M/data.csv', NULL),
-(5, 'Kế hoạch tiếp thị sản phẩm', 'Có kế hoạch cụ thể cho dự án tiếp thị sản phẩm mới, lên ý tưởng cụ thể', NULL, NULL, NULL),
-(6, 'Bảng phân tích thị trường năm 2022', 'Thu thập thông tin tình hình các doanh nghiệp khác và ngành nào hay sản phẩm nào đang có xu hướng phát triển mạnh mẽ trong năm nay', NULL, NULL, NULL),
-(7, 'Ứng dụng điểm danh bằng Trí Tuệ Nhân Tạo', 'Nhận diện khuôn mặt và ghi nhận điểm danh cho nhân viên công ty', NULL, NULL, NULL),
-(8, 'Tạo trang web tiếp thị sản phẩm', 'Trang web có phân quyền truy cập cho nhân viên và cho khách hàng riêng', '2022-01-08 15:00:00', 'file_gui/9CWtqp2XsH/demo.zip', NULL),
-(9, 'Phiếu thu chi trong ngày của việc marketing', 'Phải có thông tin chi tiết những khoảng chi tiêu cho việc marketing trong ngày', NULL, NULL, NULL),
-(10, 'Thống kê lại các văn bản pháp luật của công ty', 'Trong bản thống kê phải có ghi rõ ngày tháng cũng như chi tiết từng loại văn bản', NULL, NULL, NULL),
-(11, 'Bảng kế hoạch tuyển dụng', 'Có ngày tháng, địa điểm tuyển dụng rõ ràng và cả chi phí cụ thể cho ngày tuyển dụng', '2022-01-05 11:59:00', 'file_gui/A3kynytwAq/baoCao.docx', NULL),
-(12, 'Báo cáo công việc tiếp thị tháng 12', 'Chỉ chú trọng kết quả', NULL, NULL, NULL),
-(13, 'Bảng phân tích thị trường năm 2022', 'Thu thập thông tin tình hình các doanh nghiệp khác và ngành nào hay sản phẩm nào đang có xu hướng phát triển mạnh mẽ trong năm nay', NULL, NULL, NULL),
-(14, 'Nghiên cứu mô hình đề xuất sản phẩm', 'Đề xuất sản phẩm theo đánh giá của người dùng', NULL, NULL, NULL),
-(15, 'Xây dựng ứng dụng di động để bán sản phẩm', 'Ứng dụng dễ nhìn, đầy đủ các chức năng', '2022-02-10 12:00:00', 'file_gui/3e636mEz02/test.js', NULL),
-(16, 'Bảng phát lương cho nhân viên', 'Chỉ cần có tên nhân viên, số tiền họ nhận được và tiền thưởng', NULL, NULL, NULL),
-(17, 'Làm một bảng hợp đồng buôn bán ở lề đường', 'Yêu cầu có đầy đủ thông tin theo quy định của phường, xã', NULL, NULL, NULL),
-(18, 'Lên danh sách nhân sự có nhu cầu nghỉ việc', 'Có đầy đủ thông tin, lí do họ muốn nghỉ việc', '2022-01-20 15:00:00', 'file_gui/A3kynytwAq/baoCao.docx', NULL),
-(19, 'Lên kế hoạch cho chương trình tiếp thị sản phẩm ng', 'Có địa điểm cụ thể, lí do chọn địa điểm đó và kế hoạch hoàn chỉnh cho chương trình tiếp thị', NULL, NULL, NULL),
-(20, 'Lên kế hoạch buôn bán ngoài lề đường cho bộ phận t', 'Nêu rõ cách thức bán hàng, văn phong cũng như kiến nghị địa điểm bán hàng.', NULL, NULL, NULL),
-(21, 'Nghiên cứu mã vạch riêng cho sản phẩm công ty', 'Mã vạch phải rõ ràng, dễ quét để trích xuất thông tin', NULL, NULL, NULL),
-(22, 'Kế hoạch dự án công nghệ thông tin tháng 1', 'Trong kế hoạch phải cho thấy hiểu rõ mục tiêu, chi phí làm việc cũng như nguồn nhân lực cho phòng công nghệ thông tin cần bổ sung', '2022-01-01 08:33:31', 'file_gui/AuM2eW7ygj/baocao.docx', 'file_nop/Lsmzh1u6wQ/Bacon.zip'),
-(23, 'Thống kê báo cáo doanh thu tháng 12', 'Trong báo cáo phải có phân tích nghiệp vụ và đồ thị doanh thu tháng 12', NULL, NULL, NULL),
-(24, 'Bảng kế hoạch công việc cho tháng 1', 'Trong bảng kế hoạch phải có chi tiết thời gian, địa điểm và xây dựng trước kịch bản công việc', NULL, NULL, NULL),
-(25, 'Thống kê nhân sự mới vào công ty', 'Nghiên cứu, phân tích kĩ những sinh viên có thành tích tốt và các dự án sinh viên đó tham gia', '2022-02-20 15:30:00', 'file_gui/IaYAlpc84n/document.pdf', 'file_nop/F4UYIr02D8/Lab01.zip'),
-(26, 'Kế hoạch tiếp thị sản phẩm tháng 1', 'Có kế hoạch cụ thể cho dự án tiếp thị sản phẩm mới, lên ý tưởng cụ thể', NULL, '', NULL),
-(27, 'Bảng phân tích thị trường tháng 1', 'Thu thập thông tin tình hình các doanh nghiệp khác và ngành nào hay sản phẩm nào đang có xu hướng phát triển mạnh mẽ trong năm nay', NULL, NULL, NULL),
-(28, 'Ứng dụng trao đổi văn bản riêng cho công ty', 'Có đầy đủ chức năng như zalo', NULL, NULL, NULL),
-(29, 'Ứng dụng xử lí tự động đóng gói hàng hóa', 'Chương trình phải biết phân biệt các mặt hàng khác nhau.', '2022-01-04 15:00:00', 'file_gui/XIaKJYV81g/test_1.zip+file_gui/C1rXOk2stK/huongdanne.txt', 'file_nop/9Neey26yUL/MC001.zip'),
-(30, 'Báo cáo kinh phí của dự án ứng dụng xử lí tự động ', 'Trong báo cáo phải có chi tiết việc thu phí cho nhân viên, điện và cả các máy móc', NULL, NULL, NULL),
-(31, 'Làm giấy tờ mua đất làm nhà máy công nghiệp', 'Chỉ cần có đầy đủ thông tin theo quy định pháp luật', NULL, NULL, NULL),
-(32, 'Báo cáo nhân sự đi thực tập ở nước ngoài', 'Nêu thành tích, khả năng phát triển cũng như các dự án mà nhân sự đó tham gia', '2022-04-06 00:00:00', 'file_gui/isUPVSCAiE/demo.rar', 'file_nop/WuedeDYo8O/baocao.docx'),
-(33, 'Báo cáo chương trình tiếp thị tháng 12', 'Có thông tin cụ thể của dự án tiếp thị sản phẩm, ý tưởng cụ thể và kết quả đạt được', NULL, NULL, NULL),
-(34, 'Báo cáo kế hoạch kinh doanh mặt hàng tiêu dùng', 'Đầy đủ thông tin và đặt biệt kết quả đạt được, lợi nhuận', NULL, NULL, NULL),
-(35, 'Nghiên cứu kĩ thuật bảo quản mặt hàng tiêu dùng', 'Tuân thủ theo quy định của Bộ y tế', NULL, NULL, NULL),
-(36, 'Kế hoạch dự án công nghệ thông tin tháng 12', 'Trong kế hoạch phải cho thấy hiểu rõ mục tiêu, chi phí làm việc cũng như nguồn nhân lực cho phòng công nghệ thông tin cần bổ sung', '2022-01-20 23:59:00', 'file_gui/Dhwh2w1xjl/baoCao.pdf', 'file_nop/gu2aWSSR6z/Lab02.zip'),
-(37, 'Thống kê báo cáo doanh thu tháng 11', 'Trong báo cáo phải có phân tích nghiệp vụ và đồ thị doanh thu tháng 11', NULL, NULL, NULL),
-(38, 'Bảng kế hoạch công việc cho tháng 12', 'Trong bảng kế hoạch phải có chi tiết thời gian, địa điểm và xây dựng trước kịch bản công việc', NULL, NULL, NULL),
-(39, 'Thống kê nhân sự xuất sắc tháng 11', 'Số dự án mà nhân sự đó tham gia cũng như lợi ích mà nó đem lại', '2022-01-02 08:00:51', 'file_gui/9K9uulMJRu/danhsach.csv', 'file_nop/HGz2MDHWqm/seven11.zip'),
-(40, 'Kế hoạch tiếp thị sản phẩm tháng 12', 'Có kế hoạch cụ thể cho dự án tiếp thị sản phẩm mới, lên ý tưởng cụ thể', NULL, NULL, NULL),
-(41, 'Bảng phân tích thị trường tháng 12', 'Thu thập thông tin tình hình các doanh nghiệp khác và ngành nào hay sản phẩm nào đang có xu hướng phát triển mạnh mẽ trong năm nay', NULL, NULL, NULL),
-(42, 'Nghiên cứu cách đo lường hạn sử dụng cho sản phẩm', 'Áp dụng các công nghệ hiện đại để nghiên cứu và có một bài phân tích cho công ty mang lên báo nghiên cứu khoa học', NULL, NULL, NULL);
+INSERT INTO `task` (`TASK_ID`, `TIEU_DE`, `MO_TA`, `DEADLINE`, `SUPPORT_FOLDER_PATH`, `SUBMIT_FOLDER_PATH`, `message_employee`, `message_tlead`) VALUES
+(1, 'Kế hoạch dự án công nghệ thông tin cho công ty', 'Trong kế hoạch phải cho thấy hiểu rõ mục tiêu, chi phí làm việc cũng như nguồn nhân lực cho phòng công nghệ thông tin cần bổ sung', '2022-01-10 15:00:00', 'file_gui/kg8I5lFSnN/huongdanne.txt', NULL, NULL, NULL),
+(2, 'Thống kê báo cáo doanh thu', 'Trong báo cáo phải có phân tích nghiệp vụ và đồ thị doanh thu trong năm 2021', NULL, NULL, NULL, NULL, NULL),
+(3, 'Bảng kế hoạch công việc năm 2022', 'Trong bảng kế hoạch phải có chi tiết thời gian, địa điểm và xây dựng trước kịch bản công việc', NULL, NULL, NULL, NULL, NULL),
+(4, 'Thống kê nhân sự mới của các trường đại học', 'Nghiên cứu, phân tích kĩ những sinh viên có thành tích tốt và các dự án sinh viên đó tham gia', '2022-01-07 08:00:00', 'file_gui/yanYfyHe3M/data.csv', NULL, NULL, NULL),
+(5, 'Kế hoạch tiếp thị sản phẩm', 'Có kế hoạch cụ thể cho dự án tiếp thị sản phẩm mới, lên ý tưởng cụ thể', NULL, NULL, NULL, NULL, NULL),
+(6, 'Bảng phân tích thị trường năm 2022', 'Thu thập thông tin tình hình các doanh nghiệp khác và ngành nào hay sản phẩm nào đang có xu hướng phát triển mạnh mẽ trong năm nay', NULL, NULL, NULL, NULL, NULL),
+(7, 'Ứng dụng điểm danh bằng Trí Tuệ Nhân Tạo', 'Nhận diện khuôn mặt và ghi nhận điểm danh cho nhân viên công ty', NULL, NULL, NULL, NULL, NULL),
+(8, 'Tạo trang web tiếp thị sản phẩm', 'Trang web có phân quyền truy cập cho nhân viên và cho khách hàng riêng', '2022-01-08 15:00:00', 'file_gui/9CWtqp2XsH/demo.zip', NULL, NULL, NULL),
+(9, 'Phiếu thu chi trong ngày của việc marketing', 'Phải có thông tin chi tiết những khoảng chi tiêu cho việc marketing trong ngày', NULL, NULL, NULL, NULL, NULL),
+(10, 'Thống kê lại các văn bản pháp luật của công ty', 'Trong bản thống kê phải có ghi rõ ngày tháng cũng như chi tiết từng loại văn bản', NULL, NULL, NULL, NULL, NULL),
+(11, 'Bảng kế hoạch tuyển dụng', 'Có ngày tháng, địa điểm tuyển dụng rõ ràng và cả chi phí cụ thể cho ngày tuyển dụng', '2022-01-05 11:59:00', 'file_gui/A3kynytwAq/baoCao.docx', NULL, NULL, NULL),
+(12, 'Báo cáo công việc tiếp thị tháng 12', 'Chỉ chú trọng kết quả', NULL, NULL, NULL, NULL, NULL),
+(13, 'Bảng phân tích thị trường năm 2022', 'Thu thập thông tin tình hình các doanh nghiệp khác và ngành nào hay sản phẩm nào đang có xu hướng phát triển mạnh mẽ trong năm nay', NULL, NULL, NULL, NULL, NULL),
+(14, 'Nghiên cứu mô hình đề xuất sản phẩm', 'Đề xuất sản phẩm theo đánh giá của người dùng', NULL, NULL, NULL, NULL, NULL),
+(15, 'Xây dựng ứng dụng di động để bán sản phẩm', 'Ứng dụng dễ nhìn, đầy đủ các chức năng', '2022-02-10 12:00:00', 'file_gui/3e636mEz02/test.js', NULL, NULL, NULL),
+(16, 'Bảng phát lương cho nhân viên', 'Chỉ cần có tên nhân viên, số tiền họ nhận được và tiền thưởng', NULL, NULL, NULL, NULL, NULL),
+(17, 'Làm một bảng hợp đồng buôn bán ở lề đường', 'Yêu cầu có đầy đủ thông tin theo quy định của phường, xã', NULL, NULL, NULL, NULL, NULL),
+(18, 'Lên danh sách nhân sự có nhu cầu nghỉ việc', 'Có đầy đủ thông tin, lí do họ muốn nghỉ việc', '2022-01-20 15:00:00', 'file_gui/A3kynytwAq/baoCao.docx', NULL, NULL, NULL),
+(19, 'Lên kế hoạch cho chương trình tiếp thị sản phẩm ng', 'Có địa điểm cụ thể, lí do chọn địa điểm đó và kế hoạch hoàn chỉnh cho chương trình tiếp thị', NULL, NULL, NULL, NULL, NULL),
+(20, 'Lên kế hoạch buôn bán ngoài lề đường cho bộ phận t', 'Nêu rõ cách thức bán hàng, văn phong cũng như kiến nghị địa điểm bán hàng.', NULL, NULL, NULL, NULL, NULL),
+(21, 'Nghiên cứu mã vạch riêng cho sản phẩm công ty', 'Mã vạch phải rõ ràng, dễ quét để trích xuất thông tin', NULL, NULL, NULL, NULL, NULL),
+(22, 'Kế hoạch dự án công nghệ thông tin tháng 1', 'Trong kế hoạch phải cho thấy hiểu rõ mục tiêu, chi phí làm việc cũng như nguồn nhân lực cho phòng công nghệ thông tin cần bổ sung', '2022-01-01 08:33:31', 'file_gui/AuM2eW7ygj/baocao.docx', 'file_nop/Lsmzh1u6wQ/Bacon.zip', NULL, NULL),
+(23, 'Thống kê báo cáo doanh thu tháng 12', 'Trong báo cáo phải có phân tích nghiệp vụ và đồ thị doanh thu tháng 12', NULL, NULL, NULL, NULL, NULL),
+(24, 'Bảng kế hoạch công việc cho tháng 1', 'Trong bảng kế hoạch phải có chi tiết thời gian, địa điểm và xây dựng trước kịch bản công việc', NULL, NULL, NULL, NULL, NULL),
+(25, 'Thống kê nhân sự mới vào công ty', 'Nghiên cứu, phân tích kĩ những sinh viên có thành tích tốt và các dự án sinh viên đó tham gia', '2022-02-20 15:30:00', 'file_gui/IaYAlpc84n/document.pdf', 'file_nop/F4UYIr02D8/Lab01.zip', NULL, NULL),
+(26, 'Kế hoạch tiếp thị sản phẩm tháng 1', 'Có kế hoạch cụ thể cho dự án tiếp thị sản phẩm mới, lên ý tưởng cụ thể', NULL, '', NULL, NULL, NULL),
+(27, 'Bảng phân tích thị trường tháng 1', 'Thu thập thông tin tình hình các doanh nghiệp khác và ngành nào hay sản phẩm nào đang có xu hướng phát triển mạnh mẽ trong năm nay', NULL, NULL, NULL, NULL, NULL),
+(28, 'Ứng dụng trao đổi văn bản riêng cho công ty', 'Có đầy đủ chức năng như zalo', NULL, NULL, NULL, NULL, NULL),
+(29, 'Ứng dụng xử lí tự động đóng gói hàng hóa', 'Chương trình phải biết phân biệt các mặt hàng khác nhau.', '2022-01-04 15:00:00', 'file_gui/XIaKJYV81g/test_1.zip+file_gui/C1rXOk2stK/huongdanne.txt', 'file_nop/9Neey26yUL/MC001.zip', NULL, NULL),
+(30, 'Báo cáo kinh phí của dự án ứng dụng xử lí tự động ', 'Trong báo cáo phải có chi tiết việc thu phí cho nhân viên, điện và cả các máy móc', NULL, NULL, NULL, NULL, NULL),
+(31, 'Làm giấy tờ mua đất làm nhà máy công nghiệp', 'Chỉ cần có đầy đủ thông tin theo quy định pháp luật', NULL, NULL, NULL, NULL, NULL),
+(32, 'Báo cáo nhân sự đi thực tập ở nước ngoài', 'Nêu thành tích, khả năng phát triển cũng như các dự án mà nhân sự đó tham gia', '2022-04-06 00:00:00', 'file_gui/isUPVSCAiE/demo.rar', 'file_nop/WuedeDYo8O/baocao.docx', NULL, NULL),
+(33, 'Báo cáo chương trình tiếp thị tháng 12', 'Có thông tin cụ thể của dự án tiếp thị sản phẩm, ý tưởng cụ thể và kết quả đạt được', NULL, NULL, NULL, NULL, NULL),
+(34, 'Báo cáo kế hoạch kinh doanh mặt hàng tiêu dùng', 'Đầy đủ thông tin và đặt biệt kết quả đạt được, lợi nhuận', NULL, NULL, NULL, NULL, NULL),
+(35, 'Nghiên cứu kĩ thuật bảo quản mặt hàng tiêu dùng', 'Tuân thủ theo quy định của Bộ y tế', NULL, NULL, NULL, NULL, NULL),
+(36, 'Kế hoạch dự án công nghệ thông tin tháng 12', 'Trong kế hoạch phải cho thấy hiểu rõ mục tiêu, chi phí làm việc cũng như nguồn nhân lực cho phòng công nghệ thông tin cần bổ sung', '2022-01-20 23:59:00', 'file_gui/Dhwh2w1xjl/baoCao.pdf', 'file_nop/gu2aWSSR6z/Lab02.zip', NULL, NULL),
+(37, 'Thống kê báo cáo doanh thu tháng 11', 'Trong báo cáo phải có phân tích nghiệp vụ và đồ thị doanh thu tháng 11', NULL, NULL, NULL, NULL, NULL),
+(38, 'Bảng kế hoạch công việc cho tháng 12', 'Trong bảng kế hoạch phải có chi tiết thời gian, địa điểm và xây dựng trước kịch bản công việc', NULL, NULL, NULL, NULL, NULL),
+(39, 'Thống kê nhân sự xuất sắc tháng 11', 'Số dự án mà nhân sự đó tham gia cũng như lợi ích mà nó đem lại', '2022-01-02 08:00:51', 'file_gui/9K9uulMJRu/danhsach.csv', 'file_nop/HGz2MDHWqm/seven11.zip', NULL, NULL),
+(40, 'Kế hoạch tiếp thị sản phẩm tháng 12', 'Có kế hoạch cụ thể cho dự án tiếp thị sản phẩm mới, lên ý tưởng cụ thể', NULL, NULL, NULL, NULL, NULL),
+(41, 'Bảng phân tích thị trường tháng 12', 'Thu thập thông tin tình hình các doanh nghiệp khác và ngành nào hay sản phẩm nào đang có xu hướng phát triển mạnh mẽ trong năm nay', NULL, NULL, NULL, NULL, NULL),
+(42, 'Nghiên cứu cách đo lường hạn sử dụng cho sản phẩm', 'Áp dụng các công nghệ hiện đại để nghiên cứu và có một bài phân tích cho công ty mang lên báo nghiên cứu khoa học', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -409,7 +411,7 @@ ALTER TABLE `don_nghi`
 -- AUTO_INCREMENT for table `phong_ban`
 --
 ALTER TABLE `phong_ban`
-  MODIFY `MA_PHONG_BAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `MA_PHONG_BAN` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `task`
