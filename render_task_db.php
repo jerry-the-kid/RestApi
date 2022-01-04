@@ -121,5 +121,20 @@ function reject_task($taskId, $deadline, $supportFile, $tleadMessage){
     return 1;
 }
 
+function complete_task($taskId, $completeStatus){
+    $conn = getConnection();
+
+    $sql = "UPDATE task_info
+            SET task_info.STATUS = 'Completed', task_info.COMPLETE_STATUS = '$completeStatus'
+            WHERE TASK_ID = $taskId";
+
+    $stm = $conn->prepare($sql);
+    if (!$stm->execute()) {
+        return 0;
+    }
+
+    return 1;
+}
+
 
 ?>

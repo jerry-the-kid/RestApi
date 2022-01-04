@@ -167,6 +167,7 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="container col-12" id="alert-container"></div>
                 <form>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Đánh giá</label>
@@ -180,7 +181,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Lưu</button>
+                <button type="button" class="btn btn-success" id="btnComplete">Lưu</button>
             </div>
         </div>
     </div>
@@ -356,7 +357,6 @@
 
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == XMLHttpRequest.DONE) {
-                        console.log(xhr.response);
                         const respone = JSON.parse(xhr.response);
 
                         if(respone.code == 0){
@@ -381,7 +381,6 @@
 
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == XMLHttpRequest.DONE) {
-                        console.log(xhr.response);
                         const respone = JSON.parse(xhr.response);
 
                         if(respone.code == 0){
@@ -391,6 +390,21 @@
                     }
                 }
             }
+        });
+    }
+
+    const complete = function(){
+        $(document).on("click", "#btnComplete", function(event){
+            let taskId = getUrlParameter('task');
+            let completeStatus = $("#exampleFormControlSelect1").val();
+
+            $.post('http://localhost/final/API/complete-task.php', {id: taskId, completeStatus: completeStatus})
+            .done(function (respone) {
+                if(respone.code == 0){
+                    window.location.href = "completed_task_list.html";
+                }
+                else alertDanger(respone.message);
+            });
         });
     }
 
@@ -410,6 +424,7 @@
     $(document).ready(function () {
         fillData();
         reject();
+        complete();
     });
 </script>
 
