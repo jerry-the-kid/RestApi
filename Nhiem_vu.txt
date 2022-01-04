@@ -1,0 +1,15 @@
+- Login vào đúng các vị trí (trưởng phòng -> trưởng phòng, nhân viên -> nhân vien,..)
+- Lưu lại các session['id'], session['chuc_vu'], session['ten'] có thể thêm nếu nghĩ là cần.
+- Khi chức vụ khác vào trang khác. Ví dụ như trưởng phòng vào trang 'Employee/...' thì xem session['chuc_vu'] không phải
+là trưởng phòng thì có header về trang Login.
+- Khi active = 0 thì header về trang Newpwd để thêm pwd mới và xong có thể header login để đăng nhập lại.
+
+- Xử lý form :
+Login : username và pwd ko hợp lệ => Báo lỗi.
+Ko nhập pwd hay username => Báo lỗi và focus
+
+Reset : Giống trên.
+So sánh 2 cái pwd mới và pwd nhập lại != nhau => Báo lỗi
+
+Có thể xét pwd > n kí tự.
+Có thể tùy biến nếu cảm thấy hợp lý.
