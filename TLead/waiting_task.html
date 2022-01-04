@@ -61,7 +61,7 @@
         <div class="col-md-6 col-12 mb-4 align-items-center justify-content-end">
             <h2 class="font-weight-bold text-left" id="title">Tiêu đề</h2>
         </div>
-        <div class="col-md-6 col-12 mb-4 d-flex justify-content-end">
+        <div class="col-md-6 col-12 mb-4 d-flex justify-content-end align-items-center">
             <button class="btn btn-light">Trở về danh sách</button>
         </div>
     </div>
@@ -71,7 +71,7 @@
             <span class="badge badge-warning px-3 py-2">Waiting</span>
         </div>
         <div class="col-12 mt-3 d-flex align-items-center justify-content-between">
-            <p class="mb-0"></p>
+            <p class="mb-0" id="dateCreate"></p>
             <p class="mb-0" id="deadline">deadline</p>
         </div>
         <div style="margin : 30px 16px; border-bottom: 1px solid black; width: 100%"></div>
@@ -112,6 +112,7 @@
     </div>
 </div>
 
+<!-- Reject Modal -->
 <div class="modal fade" id="rejectedModal" tabindex="-1" role="dialog" aria-labelledby="rejectedModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -123,6 +124,8 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="container col-12" id="alert-container"></div>
+
                 <form>
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Message</label>
@@ -145,7 +148,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Rejected</button>
+                <button type="button" class="btn btn-danger" id="btnReject">Rejected</button>
             </div>
         </div>
     </div>
@@ -217,15 +220,40 @@
         return false;
     }
 
-    function dateFormat(date){
+    function dateFormatForDeadLine(date){
         let dateObj = new Date(date);
-        let month = dateObj.getUTCMonth() + 1;
-        let day = dateObj.getUTCDate();
+        let month = dateObj.getMonth() + 1;
+        let day = dateObj.getDate();
         let hours = dateObj.getHours();
         let minute = dateObj.getMinutes();
 
         newdate = day + "/" + month + " - " + hours + ":" + minute;
         return newdate;
+    }
+
+    function dateFormatForCreate(date){
+        let dateObj = new Date(date);
+        let month = dateObj.getMonth() + 1;
+        let day = dateObj.getDate();
+
+        newdate = day + "/" + month;
+        return newdate;
+    }
+
+    const alertSuccess = function (message) {
+        const alert = `<div class="alert alert-success" role="alert">
+         ${message}
+         </div>`;
+        $('#alert-container').append(alert);
+        $('.alert-success').fadeOut(3500);
+    }
+
+    const alertDanger = function (message) {
+        const alert = `<div class="alert alert-danger" role="alert">
+         ${message}
+         </div>`;
+        $('#alert-container').append(alert);
+        $('.alert-danger').fadeOut(3500);
     }
 
     const fillData = function(){
@@ -236,22 +264,24 @@
 
             $("#title").text(taskInfo.TIEU_DE);
             $("#tleadName").text(taskInfo.HO_TEN);
-            $("#deadline").text("Hạn nộp: " + dateFormat(taskInfo.DEADLINE));
+            $("#dateCreate").text("Ngày tạo: " + dateFormatForCreate(taskInfo.DATE_CREATE));
+            $("#deadline").text("Hạn nộp: " + dateFormatForDeadLine(taskInfo.DEADLINE));
             $("#description").append(taskInfo.MO_TA);
 
             if(taskInfo.message_employee){
                 $("#messageEmployee").text(taskInfo.message_employee);
             }
 
-            let fileNameIndex = taskInfo.SUBMIT_FOLDER_PATH.lastIndexOf("/") + 1;
-            let filename = taskInfo.SUBMIT_FOLDER_PATH.substr(fileNameIndex);
+            let submitFileList = taskInfo.SUBMIT_FOLDER_PATH.split("+");
+
+            let fileNameIndex = submitFileList[submitFileList.length - 1].lastIndexOf("/") + 1;
+            let filename = submitFileList[submitFileList.length - 1].substr(fileNameIndex);
 
             $("#submitFolder").text(filename);
 
             $('#supportFolderList').html('');
 
             let supportFileList = taskInfo.SUPPORT_FOLDER_PATH.split("+");
-            let submitFileList = taskInfo.SUBMIT_FOLDER_PATH.split("+");
 
             $.each(supportFileList, function( index, value ) {
                 let fileNameIndex = value.lastIndexOf("/") + 1;
@@ -295,8 +325,79 @@
         $(document).on ("click", "#downloadSubmitFile", function (event) {
             event.preventDefault();
 
-
+            let fileLastIndex = submitFileList.length - 1;
+            window.open(addDotToPathIfNeeded(submitFileList[fileLastIndex]));
         });
+    }
+
+    const reject = function(){
+        $(document).on("click", "#btnReject", function(event){
+            let isFileExisted = $('#inputGroupFile01').get(0).files.length;
+
+            if($("#message-text").val() == ''){
+                alertDanger("Không được để message trống");
+            }
+            else if($("#date").val() == ''){
+                alertDanger("Hãy chọn ngày gia hạn");
+            }
+            else if(isFileExisted){
+                let taskId = getUrlParameter('task');
+
+                let data = new FormData();
+                data.append("file", $('#inputGroupFile01').get(0).files[0]);
+                data.append("id", taskId);
+                data.append("tleadMessage", $("#message-text").val());
+                data.append("deadline",dateFormatForInput($("#date").val()));
+
+                let xhr = new XMLHttpRequest();
+
+                xhr.open("POST", "http://localhost/final/API/reject-task.php", true);
+                xhr.send(data);
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == XMLHttpRequest.DONE) {
+                        console.log(xhr.response);
+                        const respone = JSON.parse(xhr.response);
+
+                        if(respone.code == 0){
+                            window.location.href = "reject_task.html?task=" + taskId;
+                        }
+                        else alertDanger(respone.message);
+                    }
+                }
+            }
+            else{
+                let taskId = getUrlParameter('task');
+
+                let data = new FormData();
+                data.append("id", taskId);
+                data.append("tleadMessage", $("#message-text").val());
+                data.append("deadline", dateFormatForInput($("#date").val()));
+
+                let xhr = new XMLHttpRequest();
+
+                xhr.open("POST", "http://localhost/final/API/reject-task.php", true);
+                xhr.send(data);
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == XMLHttpRequest.DONE) {
+                        console.log(xhr.response);
+                        const respone = JSON.parse(xhr.response);
+
+                        if(respone.code == 0){
+                            window.location.href = "reject_task.html?task=" + taskId;
+                        }
+                        else alertDanger(respone.message);
+                    }
+                }
+            }
+        });
+    }
+
+    function dateFormatForInput(date){
+        let temp = date.split("T");
+
+        return temp[0] + " " + temp[1] + ":00";
     }
 
     function addDotToPathIfNeeded(path){
@@ -308,6 +409,7 @@
 
     $(document).ready(function () {
         fillData();
+        reject();
     });
 </script>
 

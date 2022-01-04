@@ -85,6 +85,41 @@ function get_task($taskId){
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 
+function reject_task($taskId, $deadline, $supportFile, $tleadMessage){
+    $conn = getConnection();
+
+    $sql = "";
+
+    if(empty($supportFile)){
+        $sql = "UPDATE task
+                SET DEADLINE = '$deadline', message_tlead = '$tleadMessage'
+                WHERE TASK_ID = $taskId";
+    }
+    else{
+        $newSupportFile = "+" . $supportFile;
+
+        $sql = "UPDATE task
+                SET DEADLINE = '$deadline', SUPPORT_FOLDER_PATH = concat(SUPPORT_FOLDER_PATH, '$newSupportFile'),
+                message_tlead = '$tleadMessage'
+                WHERE TASK_ID = $taskId";
+    }
+    
+    $stm = $conn->prepare($sql);
+    if (!$stm->execute()) {
+        return 0;
+    }
+
+    $sql = "UPDATE task_info
+            SET task_info.STATUS = 'Rejected'
+            WHERE TASK_ID = $taskId";
+
+    $stm = $conn->prepare($sql);
+    if (!$stm->execute()) {
+        return 0;
+    }
+
+    return 1;
+}
 
 
 ?>
