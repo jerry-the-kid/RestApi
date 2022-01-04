@@ -112,7 +112,7 @@
                     <td>NV01 - Tuấn Tú</td>
                     <td><span class="badge badge-success p-2">New</span></td>
                     <td>20/11/2021</td>
-                    <td><a href="new_task_info.html" class="text-primary" style="text-decoration: none">Chi tiết</a>
+                    <td><a href="new_task_info.php" class="text-primary" style="text-decoration: none">Chi tiết</a>
                         |
                         <button class="text-primary"
                                 type="button" data-toggle="modal" data-target="#deletedModal"
@@ -277,7 +277,7 @@
 
     function link(status, task_id){
         if (status == "New"){
-            return `new_task_info.html?task=${task_id}`;
+            return `new_task_info.php?task=${task_id}`;
         }
         else if (status == "In progress"){
             return `inprogress_task.html?task=${task_id}`;

@@ -71,7 +71,7 @@ function get_completed_task_Tlead($id){
 
 function get_task($taskId){
     $conn = getConnection();
-    $sql = "SELECT user.HO_TEN, task.TIEU_DE, task.MO_TA, task.DEADLINE, task.SUPPORT_FOLDER_PATH, task.SUBMIT_FOLDER_PATH, task.message_employee,
+    $sql = "SELECT user.HO_TEN, task.TIEU_DE, task.MO_TA, task.DEADLINE, task.DATE_CREATE  ,task.SUPPORT_FOLDER_PATH, task.SUBMIT_FOLDER_PATH, task.message_employee,
             task.message_tlead
             FROM task, user, task_info
             WHERE task.TASK_ID = task_info.TASK_ID AND user.MA_USER = task_info.MA_NGUOI_GIAO AND task.TASK_ID = $taskId";
@@ -84,5 +84,7 @@ function get_task($taskId){
 
     return $result->fetch_all(MYSQLI_ASSOC);
 }
+
+
 
 ?>
