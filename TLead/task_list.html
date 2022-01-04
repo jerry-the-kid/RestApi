@@ -377,11 +377,6 @@
                 const form = $('#createTaskForm')[0];
                 const formData = new FormData(form);
                 formData.append("sender", user_id);
-                for (const value of formData.values()) {
-                    console.log(value);
-                }
-
-
                 $.ajax({
                     type: "POST",
                     enctype: 'multipart/form-data',
