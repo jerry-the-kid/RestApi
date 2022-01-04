@@ -47,3 +47,6 @@ Nhân viên :
 4. Waiting : Xem chi tiết
 5. Inprogress : Xem chi tiết, Nộp file, Cập nhật..
 6. Render task completed, Xem chi tiết
+
+
+_note : Hủy ở task list, Create task thêm badge, chuyển trưởng phòng khi đã giao task
