@@ -57,37 +57,28 @@
 <!--Container-->
 <div class="container">
     <div class="row mb-2 flex-column-reverse flex-md-row">
-        <div class="col-md-6 col-12 mb-4 align-items-center justify-content-end">
-            <h2 class="font-weight-bold text-left">Testing sản phẩm</h2>
+        <div class="col-md-6 col-12 mb-4 align-items-center justify-content-end pr-3">
+            <h2 class="font-weight-bold text-left" id="tieu-de">Testing sản phẩm</h2>
         </div>
-        <div class="col-md-6 col-12 mb-4 d-flex justify-content-end">
+        <div class="col-md-6 col-12 mb-4 d-flex justify-content-end align-items-center">
             <button class="btn btn-light">Trở về danh sách</button>
         </div>
     </div>
     <div class="row p-4 bg-light rounded">
         <div class="col-12 d-flex align-items-center justify-content-between">
-            <p class="mb-0">Nguyễn Thái Duy • 18/12</p>
+            <p class="mb-0"><span id="name">Nguyễn Thái Duy</span> • <span id="date-created">18/12</span></p>
             <span class="badge badge-success px-3 py-2">New</span>
         </div>
         <div class="col-12 mt-3 d-flex align-items-center justify-content-between">
             <p class="mb-0">Đánh giá ___</p>
-            <p class="mb-0">Hạn nộp 25/12</p>
+            <p class="mb-0">Hạn nộp : <span id="deadline">25/12</span></p>
         </div>
         <div style="margin : 30px 16px; border-bottom: 1px solid black; width: 100%"></div>
         <div class="col-12">
-            Mô tả : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam
-            quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam
-            voluptates! Distinctio nisi omnis recusandae. Aperiam atque ea, eius est minus molestiae, nobis officiis
-            praesentium provident quas qui quisquam, ratione suscipit vitae.
+            Mô tả : <span id="describe"></span>
         </div>
         <div class="mt-4 col-md-8 col-lg-6">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center">File 1
-                    <button class="btn btn-primary btn-sm">Download</button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">File 2
-                    <button class="btn btn-primary btn-sm">Download</button>
-                </li>
+            <ul class="list-group list-group-flush" id="download-container">
                 <li class="list-group-item text-center">
                     <a href="">Download All <i class="ml-2 fas fa-download"></i></a>
                 </li>
@@ -99,7 +90,6 @@
         </div>
     </div>
 </div>
-
 
 
 <!-- Optional JavaScript -->
@@ -114,8 +104,44 @@
 </body>
 
 <script>
-    $(document).ready(function (){
+    const taskId = <?php echo $_GET['task']?>;
 
+    const createDateFormat = function (date, options) {
+        const locale = navigator.language;
+        return new Intl.DateTimeFormat(
+            locale,
+            options
+        ).format(new Date(date));
+    }
+
+    $(document).ready(function () {
+        const renderData = function (data) {
+            const fileHtmlMarkup = `<li class="list-group-item d-flex justify-content-between align-items-center">${data.SUPPORT_FOLDER_PATH.split('/').slice(-1)}
+                    <a href= "../api/download.php?file=${data.SUPPORT_FOLDER_PATH}" class="btn btn-primary btn-sm">Download</a>
+                </li>`;
+            $('#tieu-de').text(`${data.TIEU_DE}`);
+            $('#name').html(data.HO_TEN);
+            $('#date-created').html(createDateFormat(data.DATE_CREATE, {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }));
+            $('#deadline').html(createDateFormat(data.DEADLINE, {
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+            }));
+            $('#describe').html(data.MO_TA);
+            $('#download-container').prepend(fileHtmlMarkup);
+        }
+
+        $.get('../api/get-task.php', {id: taskId}).done(function (response) {
+            const data = response.data[0];
+            console.log(data);
+            renderData(data);
+        });
     });
 </script>
 
