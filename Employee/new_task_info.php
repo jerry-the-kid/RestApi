@@ -76,11 +76,9 @@
         </div>
         <div class="mt-4 col-md-8 col-lg-6">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center"><span id="supportfile"></span>
-                    <button class="btn btn-primary btn-sm">Download</button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center"><span id="submitfile"></span>
-                    <button class="btn btn-primary btn-sm">Download</button>
+                <li class="list-group-item d-flex justify-content-between align-items-center"><span
+                            id="supportfile"></span>
+                    <a href="#" class="btn btn-primary btn-sm link-download">Download</a>
                 </li>
                 <li class="list-group-item text-center">
                     <a href="">Download All <i class="ml-2 fas fa-download"></i></a>
@@ -88,12 +86,32 @@
             </ul>
         </div>
         <div class="mt-4 col-md-4 col-lg-6 d-flex justify-content-end align-items-end">
-            <button class="btn btn-success ml-2">Start task</button>
+            <button class="btn btn-success ml-2" data-toggle="modal" data-target="#startTaskModal">Start task</button>
         </div>
     </div>
 </div>
 
-
+<!-- Modal Start task -->
+<div class="modal fade" id="startTaskModal" tabindex="-1" role="dialog" aria-labelledby="startTaskModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="startTaskModalLabel">Bắt đầu task</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bắt đầu task ? Trạng thái task sẽ chuyển sang in progress.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success start_task_btn">Start task</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -107,52 +125,67 @@
 </body>
 
 <script>
-    $(document).ready(function () {
-        loadProduct();
-    });
+    const taskId = <?php echo $_GET['task']?>;
 
-    function loadProduct(){
-        $.post("http://localhost/final/api/get_new_task_detail.php",{id : "<?php echo $_GET['task']?>"}, function(data, status) {
-            data.data.forEach((task) => {
-                const tieude = document.getElementById('tieude');
-                tieude.innerHTML = task.TIEU_DE;
-                const hoten = document.getElementById('hoten');
-                hoten.innerHTML = task.HO_TEN;
-                const datecreate = document.getElementById('datecreate');
-                datecreate.innerHTML = convert(task.DATE_CREATE);
-                const deadline = document.getElementById('deadline');
-                deadline.innerHTML = convert(task.DEADLINE);
-                const mota = document.getElementById('mota');
-                mota.innerHTML = task.MO_TA;
-                const supportfile = document.getElementById('supportfile');
-                supportfile.innerHTML = shortcut(task.SUPPORT_FOLDER_PATH);
-                const submitfile = document.getElementById('submitfile');
-                submitfile.innerHTML = shortcut(task.SUBMIT_FOLDER_PATH);
-            })
-        },"json");
+    const createDateFormat = function (date, options) {
+        const locale = navigator.language;
+        return new Intl.DateTimeFormat(
+            locale,
+            options
+        ).format(new Date(date));
     }
 
-    function convert(time){
-        if (time == null){
-            return null;
-        }
-        else {
-            const date = time;
-            const readable_date = new Date(date).toLocaleDateString();
-            return readable_date;
-        }
+
+    function loadProduct() {
+        $.post("http://localhost/final/api/get_new_task_detail.php", {id: taskId}, function (data) {
+            let task = data.data[0];
+            const tieude = document.getElementById('tieude');
+            tieude.innerHTML = task.TIEU_DE;
+            const hoten = document.getElementById('hoten');
+            hoten.innerHTML = task.HO_TEN;
+            const datecreate = document.getElementById('datecreate');
+            datecreate.innerHTML = createDateFormat(task.DATE_CREATE, {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+            const deadline = document.getElementById('deadline');
+            deadline.innerHTML = createDateFormat(task.DEADLINE, {
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+            });
+            const mota = document.getElementById('mota');
+            mota.innerHTML = task.MO_TA;
+            const supportfile = document.getElementById('supportfile');
+            supportfile.innerHTML = shortcut(task.SUPPORT_FOLDER_PATH);
+            $('.link-download').attr('href', `../api/download.php?file=${task.SUPPORT_FOLDER_PATH}`);
+        }, "json");
     }
 
-    function shortcut(file){
-        if (file == null){
+    function shortcut(file) {
+        if (file == null) {
             return "Empty File";
-        }
-        else {
+        } else {
             let text = file;
             const myArray = text.split("/");
             return myArray[3];
         }
     }
+
+    $(document).ready(function () {
+        loadProduct();
+        $('.start_task_btn').on('click', function (){
+            $.post('../api/change_to_in_progress.php', {id : taskId}).done(function (response){
+                $('#startTaskModal').modal('hide');
+                window.location = `http://localhost/final/Employee/inprogress_task.php?task=${taskId}`;
+            });
+        });
+    });
+
+
 </script>
 
 </html>
