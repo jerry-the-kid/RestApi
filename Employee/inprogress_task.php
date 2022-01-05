@@ -79,13 +79,10 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex justify-content-between align-items-center"><span
                             id="supportfile"></span>
-                    <button class="btn btn-primary btn-sm">Download</button>
+                    <a id="link-download" href="#" class="btn btn-primary btn-sm">Download</a>
                 </li>
-                <div id="submitfile">
-
-                </div>
                 <li class="list-group-item text-center">
-                    <a href="">Download All <i class="ml-2 fas fa-download"></i></a>
+                    <a href="#">Download All <i class="ml-2 fas fa-download"></i></a>
                 </li>
             </ul>
         </div>
@@ -207,7 +204,7 @@
                 content.message = message.val();
                 $('.work-container').append(`<p class="card-text">Lời nhắn : ${content.message}</p>
                         <div class="d-flex justify-content-between">
-                            <p class="badge badge-secondary card-text mb-0">${content.fileName}</p>
+                        <p class="badge badge-secondary card-text mb-0">${content.fileName}</p>
                 </div>`);
                 $('#fileModal').modal('hide');
                 $('.btn_file').attr('disabled', true);
@@ -221,9 +218,6 @@
             const form =  $('#form_submit')[0];
             const data = new FormData(form);
             data.append('id_task', task_id);
-            for(let pair of data.entries()) {
-                console.log(pair[0]+ ', '+ pair[1]);
-            }
 
             $.ajax({
                 type: "POST",
@@ -235,11 +229,8 @@
                 cache: false,
                 timeout: 600000,
                 success: function (data) {
-                    console.log("SUCCESS : ", data);
+                    window.location = `http://localhost/final/Employee/waiting_task.html?task=${task_id}`;
                 },
-                error: function (e) {
-                    console.log("ERROR : ", e);
-                }
             });
 
         });
@@ -266,8 +257,7 @@
                 mota.innerHTML = task.MO_TA;
                 const supportfile = document.getElementById('supportfile');
                 supportfile.innerHTML = shortcut(task.SUPPORT_FOLDER_PATH);
-                const submitfile = document.getElementById('submitfile');
-                submitfile.innerHTML = shortcut(task.SUBMIT_FOLDER_PATH);
+                $('#link-download').attr('href', `../api/download.php?file=${task.SUPPORT_FOLDER_PATH}`);
             })
         }, "json");
     }
