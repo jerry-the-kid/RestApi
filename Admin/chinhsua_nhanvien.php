@@ -24,16 +24,16 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="nhanvien_list.html">Nhân viên<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="nhanvien_list.php">Nhân viên<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="phong_ban_list.html">Phòng ban</a>
+                    <a class="nav-link" href="phong_ban_list.php">Phòng ban</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="truong_phong.html">Trưởng phòng</a>
+                    <a class="nav-link" href="truong_phong.php">Trưởng phòng</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="taikhoan.html">Tài khoản</a>
+                    <a class="nav-link" href="taikhoan.php">Tài khoản</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Đơn nghỉ</a>
@@ -62,7 +62,7 @@
             <h3 class="font-weight-bold text-left">Chỉnh Sửa Nhân Viên</h3>
         </div>
         <div class="col-md-6 col-12 mb-4 d-flex justify-content-end">
-            <a href="nhanvien_list.html" class="btn btn-light d-flex align-items-center justify-content-center">Trở về danh sách</a>
+            <a href="nhanvien_list.php" class="btn btn-light d-flex align-items-center justify-content-center">Trở về danh sách</a>
         </div>
     </div>
     <div class="row">

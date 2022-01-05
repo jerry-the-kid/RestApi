@@ -25,10 +25,13 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="task_list.html">Task<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="task_list.php">Task<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="completed_task_list.html">Completed Task</a>
+                    <a class="nav-link" href="cancel_task_list.php">Canceled Task</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="completed_task_list.php">Completed Task</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Đơn nghỉ</a>
@@ -51,6 +54,9 @@
 </nav>
 
 <!--Container-->
+<div class="container" id="alert-container">
+
+</div>
 <div class="container">
     <div class="row">
         <div class="col-12 mb-4 align-items-center justify-content-end">
@@ -66,6 +72,9 @@
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
+        <div class="col-12 col-md-4 d-flex align-items-center justify-content-end">
+            <button class="btn btn-success btn-add" data-toggle="modal" data-target="#createTaskModal">Tạo task</button>
+        </div>
     </div>
 
     <div class="row mt-4">
@@ -76,10 +85,9 @@
                 </div>
                 <select class="custom-select" id="inputGroupSelect01">
                     <option>All</option>
-                    <option selected value="1">New Tasks</option>
-                    <option value="3">Rejected tasks</option>
+                    <option value="1">New Tasks</option>
                     <option value="2">Cancel Tasks</option>
-                    <option value="3">Waiting tasks</option>
+                    <option selected value="3">Waiting tasks</option>
                 </select>
             </div>
         </div>
@@ -99,7 +107,7 @@
                 </tr>
                 </thead>
                 <tbody id="table-body">
-
+                    <!-- Data goes here -->
                 </tbody>
             </table>
 
@@ -130,8 +138,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="createTaskModal" tabindex="-1" role="dialog" aria-labelledby="createTaskModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="createTaskModal" tabindex="-1" role="dialog" aria-labelledby="createTaskModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -141,39 +148,42 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="createTaskForm">
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Tiêu đề</label>
-                        <input type="text" class="form-control" id="recipient-name">
+                        <label for="task-name" class="col-form-label">Tiêu đề</label>
+                        <input name="task" type="text" class="form-control" id="task-name">
                     </div>
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Nhân viên giao</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                        <label for="deadline" class="col-form-label">Deadline:</label>
+                        <input name="deadline" type="datetime-local" id="deadline" class="form-control" >
+                    </div>
+                    <div class="form-group">
+                        <label for="createTaskNVien">Nhân viên nhận :</label>
+                        <select name="nhanvien" class="form-control" id="createTaskNVien">
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="message-text" class="col-form-label">Mô tả</label>
-                        <textarea class="form-control" id="message-text"></textarea>
+                        <label for="describe-text" class="col-form-label">Mô tả</label>
+                        <textarea name="describe" class="form-control" id="describe-text"></textarea>
                     </div>
+
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">File đính kèm</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroupFile01">
+                            <input type="file" name="file" class="custom-file-input" id="inputGroupFile01">
                             <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                         </div>
+                    </div>
+                    <div class="alert-modal-container">
+
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Create</button>
+                <button type="button" class="btn btn-primary btn-create-task">Create</button>
             </div>
         </div>
     </div>
@@ -197,24 +207,30 @@
         $('.custom-file-label').html(fileName);
     });
 </script>
-    
-<script>
-    $(document).ready(function () {
-        loadProduct();
-    });
 
-    
+<script>
+    const user_id = 3;
     function loadProduct(){
-        $.post("http://localhost/final/api/get_task_employee.php",{id : 14}, function(data, status) {
-            $('.table-body').html('');
+        $('#table-body').html('');
+        $.post("http://localhost/final/api/get_task_teamLead.php",{id : user_id}, function(data, status) {
+            console.log(data);
             data.data.forEach((task) => {
-                let tableRow = $('<tr> <td>'+ task.TIEU_DE +'</td> <td>NV'+ task.MA_NGUOI_NHAN +' - '+ task.HO_TEN +'</td> <td><span class="'+ check(task.STATUS) +'">'+ task.STATUS +'</span></td> <td>'+ convert(task.DEADLINE) +'</td> <td><a href="'+ link(task.STATUS, task.TASK_ID) +'" class="text-primary" style="text-decoration: none">Chi tiết</a> </td> </tr>');
+                let tableRow = $('<tr> <td>'+ task.TIEU_DE +'</td> <td>NV'+ task.MA_NGUOI_NHAN +' - '+ task.HO_TEN +'</td> <td><span class="'+ check(task.STATUS) +'">'+ task.STATUS +'</span></td> <td>'+ convert(task.DEADLINE) +'</td> <td><a href="'+ link(task.STATUS, task.TASK_ID) +'" class="text-primary" style="text-decoration: none">Chi tiết</a> '+ buttonDlt(task.STATUS) +'</td> </tr>');
                 tableRow.attr('task-info', JSON.stringify(task))
                 $('.table').append(tableRow);
             })
         },"json");
     }
-    
+
+    function buttonDlt(status){
+        if (status == "New"){
+            return '| <button class="text-primary" type="button" data-toggle="modal" data-target="#deletedModal" style="border: none; background-color: inherit; cursor: pointer">Hủy </button>';
+        }
+        else {
+            return '';
+        }
+    }
+
     function check(status){
         if (status == "New"){
             return "badge badge-success p-2";
@@ -238,7 +254,7 @@
             return `inprogress_task.php?task=${task_id}`;
         }
         else if (status == "Waiting"){
-            return `waiting_task.html?task=${task_id}`;
+            return `waiting_task.php?task=${task_id}`;
         }
         else if (status == "Rejected"){
             return `reject_task.php?task=${task_id}`;
@@ -255,6 +271,118 @@
             return readable_date;
         }
     }
+
+    const alertFormDanger = function (container, message) {
+        $(container).html('');
+        $(container).append(`<div class="alert alert-danger alert-dismissible fade show" role="alert" id="modal-alert">
+        ${message}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>`);
+    }
+
+    const clearElementInput = function (...elArray) {
+        elArray.forEach(el => {
+            $(el).val('');
+        })
+    };
+
+    const alertSuccess = function (message) {
+        const alert = `<div class="alert alert-success" role="alert">
+         ${message}
+         </div>`;
+        $('#alert-container').append(alert);
+        $('.alert-success').fadeOut(3500);
+    }
+
+    const alertDanger = function (message) {
+        const alert = `<div class="alert alert-danger" role="alert">
+         ${message}
+         </div>`;
+        $('#alert-container').append(alert);
+        $('.alert-danger').fadeOut(4500);
+    }
+
+
+    $(document).ready(function () {
+        loadProduct();
+        const taskName = $('#task-name');
+        const deadLine = $('#deadline');
+        const nhanVien = $('#createTaskNVien');
+        const describeText = $('#describe-text');
+        const file = $('#inputGroupFile01');
+
+        // Render select option
+        $('.btn-add').on('click', function (e){
+            clearElementInput(taskName, deadLine, nhanVien, describeText, file);
+            const selector = $('#createTaskNVien');
+            $.post('http://localhost/final/API/get_employee_by_Tlead.php', {id : user_id}).done(function (data){
+                const nhanVien = data.data;
+                if(!nhanVien) {
+                    selector.append('')
+                    selector.attr('disabled', true);
+                    return;
+                }
+                selector.attr('disabled', false);
+                selector.html('');
+                nhanVien.forEach(function (el){
+                    $('#createTaskNVien').append(`<option value="${el.MA_NV}">${el.HO_TEN} - ${el.MA_NV}</option>`);
+                });
+            });
+        });
+
+        $('.btn-create-task').on('click', function (e){
+            if(!taskName.val()){
+                alertFormDanger('.alert-modal-container', 'Tiêu đề còn thiếu. Vui lòng nhập');
+                taskName.focus();
+            } else if(!deadLine.val()){
+                alertFormDanger('.alert-modal-container', 'Hạn nộp còn thiếu. Vui lòng nhập');
+                deadLine.focus();
+            } else if (!nhanVien.val()){
+                alertFormDanger('.alert-modal-container', 'Phòng ban không có nhân viên. Vui lòng thêm');
+            } else if(!describeText.val()){
+                alertFormDanger('.alert-modal-container', 'Vui lòng nhập mô tả task.');
+                describeText.focus();
+            } else  {
+                const form = $('#createTaskForm')[0];
+                const formData = new FormData(form);
+                formData.append("sender", user_id);
+                $.ajax({
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    url: "../api/create_new_task.php",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 600000,
+                    success: function (data) {
+                        console.log("SUCCESS : ", data);
+                        $('#createTaskModal').modal('hide');
+                        alertSuccess(data.message);
+                        loadProduct();
+                    },
+                    error: function (e) {
+                        console.log("ERROR : ", e);
+                        $('#createTaskModal').modal('hide');
+                        alertDanger(e);
+                    }
+                });
+
+            }
+        });
+
+        [taskName, deadLine, nhanVien, describeText].forEach(el => {
+           el.on('input', function (){
+               $('.alert-modal-container').html('');
+           });
+        });
+
+    });
+
+
+
 </script>
 
 </html>

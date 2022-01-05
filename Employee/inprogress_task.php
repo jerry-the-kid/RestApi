@@ -27,10 +27,10 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="task_list.html">Task<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="task_list.php">Task<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="completed_task_list.html">Completed Task</a>
+                    <a class="nav-link" href="completed_task_list.php">Completed Task</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Đơn nghỉ</a>
@@ -229,7 +229,7 @@
                 cache: false,
                 timeout: 600000,
                 success: function (data) {
-                    window.location = `http://localhost/final/Employee/waiting_task.html?task=${task_id}`;
+                    window.location = `http://localhost/final/Employee/waiting_task.php?task=${task_id}`;
                 },
             });
 

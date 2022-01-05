@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>Canceled Task</title>
+    <title>Danh Sách Nhân Viên</title>
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
@@ -25,13 +25,14 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="task_list.html">Task<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="cancel_task_list.html">Canceled Task</a>
+                    <a class="nav-link" href="task_list.php">Task</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="completed_task_list.html">Completed Task</a>
+                    <a class="nav-link" href="cancel_task_list.php">Canceled Task</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="completed_task_list.php">Completed Task<span
+                            class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Đơn nghỉ</a>
@@ -57,7 +58,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12 mb-4 align-items-center justify-content-end">
-            <h3 class="font-weight-bold">Danh Sách Nhiệm Vụ Hủy</h3>
+            <h3 class="font-weight-bold">Danh Sách Nhiệm Vụ Hoàn Thành</h3>
         </div>
     </div>
 
@@ -68,9 +69,6 @@
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
-        </div>
-        <div class="col-12 col-md-4 d-flex align-items-center justify-content-end">
-            <button class="btn btn-danger" href="them_nhanvien.html">Xóa tất cả task hủy</button>
         </div>
     </div>
 
@@ -83,14 +81,13 @@
                     <th scope="col">Tiêu đề</th>
                     <th scope="col">Nhân viên phụ trách</th>
                     <th scope="col">Trạng thái</th>
+                    <th scope="col">Đánh giá</th>
                     <th scope="col">Deadline</th>
                     <th scope="col">Tác vụ</th>
                 </tr>
                 </thead>
                 <tbody id="table-body">
-                </tr>
-
-
+                    <!-- data goes here -->
                 </tbody>
             </table>
 
@@ -115,26 +112,35 @@
         loadProduct();
     });
 
-    
-    function loadProduct(){
-        $.post("http://localhost/final/api/get_cancel_task_tLead.php",{id : 3}, function(data, status) {
-            $('#table-body').html('');
+
+    function loadProduct() {
+        $('#table-body').html('');
+        $.post("http://localhost/final/api/get_completed_task_Tlead.php", {id: 3}, function (data, status) {
             data.data.forEach((task) => {
-                let tableRow = $('<tr> <td>'+ task.TIEU_DE +'</td> <td>NV'+ task.MA_NGUOI_NHAN +' - '+ task.HO_TEN +'</td> <td><span class="badge badge-secondary p-2">'+ task.STATUS +'</span></td> <td>'+ convert(task.DEADLINE) +'</td> <td><a href="cancel_task.html" class="text-primary" style="text-decoration: none">Chi tiết</a> </td> </tr>');
+                let tableRow = $('<tr> <td>' + task.TIEU_DE + '</td> <td>NV' + task.MA_NGUOI_NHAN + ' - ' + task.HO_TEN + '</td> <td><span class="badge badge-primary p-2">' + task.STATUS + '</span></td> <td><span class="' + check(task.COMPLETE_STATUS) + '">' + task.COMPLETE_STATUS + '</span></td> <td>' + convert(task.DEADLINE) + '</td> <td><a href="#chuabiet" class="text-primary" style="text-decoration: none">Chi tiết</a> </td> </tr>');
                 tableRow.attr('task-info', JSON.stringify(task))
                 $('.table').append(tableRow);
             })
-        },"json");
+        }, "json");
     }
-    
-    function convert(time){
-        if (time == null){
+
+    function convert(time) {
+        if (time == null) {
             return null;
-        }
-        else {
-            const date = time;
-            const readable_date = new Date(date).toLocaleDateString();
+        } else {
+            var date = time;
+            var readable_date = new Date(date).toLocaleDateString();
             return readable_date;
+        }
+    }
+
+    function check(completestatus) {
+        if (completestatus == "Bad") {
+            return "badge badge-danger p-2";
+        } else if (completestatus == "Ok") {
+            return "badge badge-warning p-2";
+        } else if (completestatus == "Good") {
+            return "badge badge-success p-2";
         }
     }
 </script>

@@ -26,13 +26,13 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="task_list.html">Task</a>
+                    <a class="nav-link" href="task_list.php">Task</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="cancel_task_list.html">Canceled Task<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="cancel_task_list.php">Canceled Task<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="completed_task_list.html">Completed Task</a>
+                    <a class="nav-link" href="completed_task_list.php">Completed Task</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Đơn nghỉ</a>

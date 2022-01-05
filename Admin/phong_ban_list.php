@@ -24,16 +24,16 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item ">
-                    <a class="nav-link" href="nhanvien_list.html">Nhân viên</a>
+                    <a class="nav-link" href="nhanvien_list.php">Nhân viên</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="phong_ban_list.html">Phòng ban<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="phong_ban_list.php">Phòng ban<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="truong_phong.html">Trưởng phòng</a>
+                    <a class="nav-link" href="truong_phong.php">Trưởng phòng</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="taikhoan.html">Tài khoản</a>
+                    <a class="nav-link" href="taikhoan.php">Tài khoản</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Đơn nghỉ</a>
@@ -89,61 +89,7 @@
                 </tr>
                 </thead>
                 <tbody id="table-body">
-                <tr>
-                    <td>PB1</td>
-                    <td>Phòng khảo thí</td>
-                    <td>L1.004</td>
-                    <td>
-                        <a href="phong_ban_info.html" class="text-primary" style="text-decoration: none">Chi tiết</a>
-                        |
-                        <button href="#" class="text-primary"
-                                type="button" data-toggle="modal" data-target="#updatedModal"
-                                style="border: none; background-color: inherit; cursor: pointer">Cập nhật
-                        </button>
-                        |
-                        <button href="#" class="text-primary"
-                                type="button" data-toggle="modal" data-target="#deletedModal"
-                                style="border: none; background-color: inherit; cursor: pointer">Xóa
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>PB2</td>
-                    <td>Phòng giáo dục</td>
-                    <td>L2.004</td>
-                    <td>
-                        <a href="phong_ban_info.html" class="text-primary" style="text-decoration: none">Chi tiết</a>
-                        |
-                        <button href="#" class="text-primary"
-                                type="button" data-toggle="modal" data-target="#updatedModal"
-                                style="border: none; background-color: inherit; cursor: pointer">Cập nhật
-                        </button>
-                        |
-                        <button href="#" class="text-primary"
-                                type="button" data-toggle="modal" data-target="#deletedModal"
-                                style="border: none; background-color: inherit; cursor: pointer">Xóa
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                <tr>
-                    <td>PB2</td>
-                    <td>Phòng đào tạo</td>
-                    <td>L2.004</td>
-                    <td>
-                        <a href="phong_ban_info.html" class="text-primary" style="text-decoration: none">Chi tiết</a>
-                        |
-                        <button href="#" class="text-primary"
-                                type="button" data-toggle="modal" data-target="#updatedModal"
-                                style="border: none; background-color: inherit; cursor: pointer">Cập nhật
-                        </button>
-                        |
-                        <button class="text-primary"
-                                type="button" data-toggle="modal" data-target="#deletedModal"
-                                style="border: none; background-color: inherit; cursor: pointer">Xóa
-                        </button>
-                    </td>
-                </tr>
+                    <!-- data goes here -->
                 </tbody>
             </table>
 
@@ -295,7 +241,7 @@
                     <td>${info.TEN_PB}</td>
                     <td>${info.SO_PHONG}</td>
                     <td>
-                        <a href="phong_ban_info.html" class="text-primary" style="text-decoration: none">Chi tiết</a>
+                        <a href="phong_ban_info.php" class="text-primary" style="text-decoration: none">Chi tiết</a>
                         |
                         <button href="#" class="text-primary"
                                 type="button" data-toggle="modal" data-target="#updatedModal"

@@ -25,16 +25,16 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="nhanvien_list.html">Nhân viên<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="nhanvien_list.php">Nhân viên<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="phong_ban_list.html">Phòng ban</a>
+                    <a class="nav-link" href="phong_ban_list.php">Phòng ban</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="truong_phong.html">Trưởng phòng</a>
+                    <a class="nav-link" href="truong_phong.php">Trưởng phòng</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="taikhoan.html">Tài khoản</a>
+                    <a class="nav-link" href="taikhoan.php">Tài khoản</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Đơn nghỉ</a>
@@ -73,7 +73,7 @@
             </form>
         </div>
         <div class="col-12 col-md-4 d-flex align-items-center justify-content-end">
-            <a class="btn btn-success" href="them_nhanvien.html"> Thêm nhân viên</a>
+            <a class="btn btn-success" href="them_nhanvien.php"> Thêm nhân viên</a>
         </div>
     </div>
     <div class="row mt-5">
@@ -236,13 +236,13 @@
 
     const employeeDetail = function(){
         $(document).on ("click", "#detail", function () {
-            window.location.href = "thongtin_nhan_vien.html?id=" + $(this).attr('employeeId') + "&role=" + $(this).attr('role');
+            window.location.href = "thongtin_nhan_vien.php?id=" + $(this).attr('employeeId') + "&role=" + $(this).attr('role');
         });
     }
 
     const updateEmployee = function(){
         $(document).on ("click", "#update", function () {
-            window.location.href = "chinhsua_nhanvien.html?id=" + $(this).attr('employeeId');
+            window.location.href = "chinhsua_nhanvien.php?id=" + $(this).attr('employeeId');
         });
     }
 
