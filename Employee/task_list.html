@@ -232,16 +232,16 @@
 
     function link(status, task_id){
         if (status == "New"){
-            return `new_task_info.html?task=${task_id}`;
+            return `new_task_info.php?task=${task_id}`;
         }
         else if (status == "In progress"){
-            return `inprogress_task.html?task=${task_id}`;
+            return `inprogress_task.php?task=${task_id}`;
         }
         else if (status == "Waiting"){
             return `waiting_task.html?task=${task_id}`;
         }
         else if (status == "Rejected"){
-            return `reject_task.html?task=${task_id}`;
+            return `reject_task.php?task=${task_id}`;
         }
     }
 

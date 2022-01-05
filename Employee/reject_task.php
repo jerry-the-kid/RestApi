@@ -56,34 +56,34 @@
 <div class="container">
     <div class="row mb-2 flex-column-reverse flex-md-row">
         <div class="col-md-6 col-12 mb-4 align-items-center justify-content-end">
-            <h2 class="font-weight-bold text-left">Testing sản phẩm</h2>
+            <h2 class="font-weight-bold text-left"><span id="tieude"></span></h2>
         </div>
-        <div class="col-md-6 col-12 mb-4 d-flex justify-content-end">
+        <div class="col-md-6 col-12 mb-4 d-flex justify-content-end align-items-center">
             <button class="btn btn-light">Trở về danh sách</button>
         </div>
     </div>
     <div class="row p-4 bg-light rounded">
         <div class="col-12 d-flex align-items-center justify-content-between">
-            <p class="mb-0">Nguyễn Thái Duy • 18/12</p>
-            <span class="badge badge-primary px-3 py-2">In progress</span>
+            <p class="mb-0"><span id="hoten"></span> • <span id="datecreate"></p>
+            <span class="badge badge-danger px-3 py-2">Rejected</span>
         </div>
         <div class="col-12 mt-3 d-flex align-items-center justify-content-between">
             <p class="mb-0">Đánh giá ___</p>
-            <p class="mb-0">Hạn nộp 25/12</p>
+            <p class="mb-0">Hạn nộp <span id="deadline"></span></p>
         </div>
         <div style="margin : 30px 16px; border-bottom: 1px solid black; width: 100%"></div>
         <div class="col-12">
-            Mô tả : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam
-            quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam
-            voluptates! Distinctio nisi omnis recusandae. Aperiam atque ea, eius est minus molestiae, nobis officiis
-            praesentium provident quas qui quisquam, ratione suscipit vitae.
+            Mô tả : <span id="mota"></span>
+        </div>
+        <div class="col-12  mt-2">
+            Message sau khi nộp : Ủa em ?
         </div>
         <div class="mt-4 col-md-8 col-lg-6">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center">File 1
+                <li class="list-group-item d-flex justify-content-between align-items-center"><span id="supportfile"></span>
                     <button class="btn btn-primary btn-sm">Download</button>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">File 2
+                <li class="list-group-item d-flex justify-content-between align-items-center"><span id="submitfile"></span>
                     <button class="btn btn-primary btn-sm">Download</button>
                 </li>
                 <li class="list-group-item text-center">
@@ -96,17 +96,17 @@
                 <div class="card-body">
                     <h5 class="card-title">Phần nộp công việc</h5>
 
-                    <div class="work-container mb-2">
-<!--                        <p class="card-text">Mô tả Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam-->
-<!--                            assumenda at aut consectetur culpa cupiditate debitis-->
-<!--                            vero voluptatem.</p>-->
-<!--                        <div class="d-flex justify-content-between">-->
-<!--                            <p class="card-text mb-0">Note.pdf</p>-->
-<!--                            <button class="btn btn-primary btn-sm">Download</button>-->
-<!--                        </div>-->
+                    <div class="work-container mb-4">
+                        <p class="card-text">Mô tả Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam
+                            assumenda at aut consectetur culpa cupiditate debitis
+                            vero voluptatem.</p>
+                        <div class="d-flex justify-content-between">
+                            <p class="card-text mb-0">Note.pdf</p>
+                            <button class="btn btn-primary btn-sm">Download</button>
+                        </div>
                     </div>
                     <div class="btn-container d-flex justify-content-end align-items-end">
-                        <button class="btn btn-primary mr-2" data-toggle="modal" data-target="#fileModal" >Thêm file</button>
+                        <button class="btn btn-primary mr-2"  data-toggle="modal" data-target="#fileModal" >Cập nhật file nộp</button>
                         <button class="btn btn-success" disabled>Nộp</button>
                     </div>
                 </div>
@@ -152,6 +152,7 @@
 </div>
 
 
+
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -168,6 +169,55 @@
         var fileName = e.target.files[0].name;
         $('.custom-file-label').html(fileName);
     });
+</script>
+
+<script>
+    $(document).ready(function () {
+        loadProduct();
+    });
+
+    function loadProduct(){
+        $.post("http://localhost/final/api/get_reject_task_detail.php",{id : "<?php echo $_GET['task']?>"}, function(data, status) {
+            data.data.forEach((task) => {
+                const tieude = document.getElementById('tieude');
+                tieude.innerHTML = task.TIEU_DE;
+                const hoten = document.getElementById('hoten');
+                hoten.innerHTML = task.HO_TEN;
+                const datecreate = document.getElementById('datecreate');
+                datecreate.innerHTML = task.DATE_CREATE;
+                const deadline = document.getElementById('deadline');
+                deadline.innerHTML = task.DEADLINE;
+                const mota = document.getElementById('mota');
+                mota.innerHTML = task.MO_TA;
+                const supportfile = document.getElementById('supportfile');
+                supportfile.innerHTML = shortcut(task.SUPPORT_FOLDER_PATH);
+                const submitfile = document.getElementById('submitfile');
+                submitfile.innerHTML = shortcut(task.SUBMIT_FOLDER_PATH);
+            })
+        },"json");
+    }
+
+    function convert(time){
+        if (time == null){
+            return null;
+        }
+        else {
+            const date = time;
+            const readable_date = new Date(date).toLocaleDateString();
+            return readable_date;
+        }
+    }
+
+    function shortcut(file){
+        if (file == null){
+            return "Empty File";
+        }
+        else {
+            let text = file;
+            const myArray = text.split("/");
+            return myArray[3];
+        }
+    }
 </script>
 
 </html>

@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -56,105 +55,63 @@
 <div class="container">
     <div class="row mb-2 flex-column-reverse flex-md-row">
         <div class="col-md-6 col-12 mb-4 align-items-center justify-content-end">
-            <h2 class="font-weight-bold text-left">Testing sản phẩm</h2>
+            <h2 class="font-weight-bold text-left"><span id="tieude"></span></h2>
         </div>
-        <div class="col-md-6 col-12 mb-4 d-flex justify-content-end">
+        <div class="col-md-6 col-12 mb-4 d-flex justify-content-end align-items-center">
             <button class="btn btn-light">Trở về danh sách</button>
         </div>
     </div>
     <div class="row p-4 bg-light rounded">
         <div class="col-12 d-flex align-items-center justify-content-between">
-            <p class="mb-0">Nguyễn Thái Duy • 18/12</p>
-            <span class="badge badge-danger px-3 py-2">Rejected</span>
+            <p class="mb-0"><span id="hoten"></span> • <span id="datecreate"></p>
+            <span class="badge badge-success px-3 py-2">New</span>
         </div>
         <div class="col-12 mt-3 d-flex align-items-center justify-content-between">
             <p class="mb-0">Đánh giá ___</p>
-            <p class="mb-0">Hạn nộp 25/12</p>
+            <p class="mb-0">Hạn nộp <span id="deadline"></span></p>
         </div>
         <div style="margin : 30px 16px; border-bottom: 1px solid black; width: 100%"></div>
         <div class="col-12">
-            Mô tả : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam
-            quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam
-            voluptates! Distinctio nisi omnis recusandae. Aperiam atque ea, eius est minus molestiae, nobis officiis
-            praesentium provident quas qui quisquam, ratione suscipit vitae.
-        </div>
-        <div class="col-12  mt-2">
-            Message sau khi nộp : Ủa em ?
+            Mô tả : <span id="mota"></span>
         </div>
         <div class="mt-4 col-md-8 col-lg-6">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center">File 1
-                    <button class="btn btn-primary btn-sm">Download</button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">File 2
-                    <button class="btn btn-primary btn-sm">Download</button>
+                <li class="list-group-item d-flex justify-content-between align-items-center"><span
+                            id="supportfile"></span>
+                    <a href="#" class="btn btn-primary btn-sm link-download">Download</a>
                 </li>
                 <li class="list-group-item text-center">
                     <a href="">Download All <i class="ml-2 fas fa-download"></i></a>
                 </li>
             </ul>
         </div>
-        <div class="mt-4 col-md-4 col-lg-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Phần nộp công việc</h5>
-
-                    <div class="work-container mb-4">
-                        <p class="card-text">Mô tả Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam
-                            assumenda at aut consectetur culpa cupiditate debitis
-                            vero voluptatem.</p>
-                        <div class="d-flex justify-content-between">
-                            <p class="card-text mb-0">Note.pdf</p>
-                            <button class="btn btn-primary btn-sm">Download</button>
-                        </div>
-                    </div>
-                    <div class="btn-container d-flex justify-content-end align-items-end">
-                        <button class="btn btn-primary mr-2"  data-toggle="modal" data-target="#fileModal" >Cập nhật file nộp</button>
-                        <button class="btn btn-success" disabled>Nộp</button>
-                    </div>
-                </div>
-            </div>
+        <div class="mt-4 col-md-4 col-lg-6 d-flex justify-content-end align-items-end">
+            <button class="btn btn-success ml-2" data-toggle="modal" data-target="#startTaskModal">Start task</button>
         </div>
     </div>
 </div>
 
-
-<!--Thêm file-->
-<div class="modal fade" id="fileModal" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel" aria-hidden="true">
+<!-- Modal Start task -->
+<div class="modal fade" id="startTaskModal" tabindex="-1" role="dialog" aria-labelledby="startTaskModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="fileModalLabel">Thêm file</h5>
+                <h5 class="modal-title" id="startTaskModalLabel">Bắt đầu task</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Nội dung:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Upload</span>
-                        </div>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroupFile01">
-                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                        </div>
-                    </div>
-                </form>
+                <p>Bắt đầu task ? Trạng thái task sẽ chuyển sang in progress.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
+                <button type="button" class="btn btn-success start_task_btn">Start task</button>
             </div>
         </div>
     </div>
 </div>
-
-
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -167,11 +124,68 @@
         crossorigin="anonymous"></script>
 </body>
 
-<script type="application/javascript">
-    $('input[type="file"]').change(function (e) {
-        var fileName = e.target.files[0].name;
-        $('.custom-file-label').html(fileName);
+<script>
+    const taskId = <?php echo $_GET['task']?>;
+
+    const createDateFormat = function (date, options) {
+        const locale = navigator.language;
+        return new Intl.DateTimeFormat(
+            locale,
+            options
+        ).format(new Date(date));
+    }
+
+
+    function loadProduct() {
+        $.post("http://localhost/final/api/get_new_task_detail.php", {id: taskId}, function (data) {
+            let task = data.data[0];
+            const tieude = document.getElementById('tieude');
+            tieude.innerHTML = task.TIEU_DE;
+            const hoten = document.getElementById('hoten');
+            hoten.innerHTML = task.HO_TEN;
+            const datecreate = document.getElementById('datecreate');
+            datecreate.innerHTML = createDateFormat(task.DATE_CREATE, {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+            const deadline = document.getElementById('deadline');
+            deadline.innerHTML = createDateFormat(task.DEADLINE, {
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+            });
+            const mota = document.getElementById('mota');
+            mota.innerHTML = task.MO_TA;
+            const supportfile = document.getElementById('supportfile');
+            supportfile.innerHTML = shortcut(task.SUPPORT_FOLDER_PATH);
+            $('.link-download').attr('href', `../api/download.php?file=${task.SUPPORT_FOLDER_PATH}`);
+        }, "json");
+    }
+
+    function shortcut(file) {
+        if (file == null) {
+            return "Empty File";
+        } else {
+            let text = file;
+            const myArray = text.split("/");
+            return myArray[3];
+        }
+    }
+
+    $(document).ready(function () {
+        loadProduct();
+        $('.start_task_btn').on('click', function (){
+            $.post('../api/change_to_in_progress.php', {id : taskId}).done(function (response){
+                $('#startTaskModal').modal('hide');
+                window.location = `http://localhost/final/Employee/inprogress_task.php?task=${taskId}`;
+            });
+        });
     });
+
+
 </script>
 
 </html>
