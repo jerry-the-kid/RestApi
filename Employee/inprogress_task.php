@@ -77,7 +77,8 @@
         </div>
         <div class="mt-4 col-md-8 col-lg-6">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center"><span id="supportfile"></span>
+                <li class="list-group-item d-flex justify-content-between align-items-center"><span
+                            id="supportfile"></span>
                     <button class="btn btn-primary btn-sm">Download</button>
                 </li>
                 <div id="submitfile">
@@ -93,7 +94,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Phần nộp công việc</h5>
 
-                    <div class="work-container mb-2">
+                    <div class="work-container mb-4">
                         <!--                        <p class="card-text">Mô tả Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam-->
                         <!--                            assumenda at aut consectetur culpa cupiditate debitis-->
                         <!--                            vero voluptatem.</p>-->
@@ -103,8 +104,9 @@
                         <!--                        </div>-->
                     </div>
                     <div class="btn-container d-flex justify-content-end align-items-end">
-                        <button class="btn btn-primary mr-2" data-toggle="modal" data-target="#fileModal" >Thêm file</button>
-                        <button class="btn btn-success" disabled>Nộp</button>
+                        <button class="btn btn-primary mr-2 btn_file" data-toggle="modal" data-target="#fileModal">Thêm file
+                        </button>
+                        <button class="btn btn-success btn_submit" disabled>Nộp</button>
                     </div>
                 </div>
             </div>
@@ -124,25 +126,28 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="form_submit">
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Nội dung:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
+                        <textarea name="message" class="form-control" id="message-text"></textarea>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Upload</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroupFile01">
-                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            <input type="file" name="file" class="custom-file-input" id="file_input">
+                            <label class="custom-file-label" for="file_input">Choose file</label>
                         </div>
+                    </div>
+                    <div class="alert-modal-container">
+
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
+                <button type="button" class="btn btn-primary add-file-btn">Thêm file</button>
             </div>
         </div>
     </div>
@@ -168,12 +173,86 @@
 </script>
 
 <script>
+    const task_id = <?php echo $_GET['task']?>;
+    const alertFormDanger = function (container, message) {
+        $(container).html('');
+        $(container).append(`<div class="alert alert-danger alert-dismissible fade show" role="alert" id="modal-alert">
+        ${message}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>`);
+    }
+
+
     $(document).ready(function () {
+        const content = {
+            fileName: '',
+            message: '',
+        };
+        const message = $('#message-text');
+        const file = $('#file_input');
+        message.val('');
+        file.val('');
         loadProduct();
+
+        $('.add-file-btn').on('click', function () {
+            if (!message.val()) {
+                alertFormDanger('.alert-modal-container', 'Lời nhắn còn thiếu vui lòng nhập.');
+                message.focus;
+            } else if (file.get(0).files.length === 0) {
+                alertFormDanger('.alert-modal-container', 'File nộp còn thiếu vui lòng thêm file.');
+            } else {
+                content.fileName = file.val().replace(/C:\\fakepath\\/i, '');
+                content.message = message.val();
+                $('.work-container').append(`<p class="card-text">Lời nhắn : ${content.message}</p>
+                        <div class="d-flex justify-content-between">
+                            <p class="badge badge-secondary card-text mb-0">${content.fileName}</p>
+                </div>`);
+                $('#fileModal').modal('hide');
+                $('.btn_file').attr('disabled', true);
+                $('.btn_submit').attr('disabled', false);
+
+            }
+        });
+
+        $('.btn_submit').on('click', function (){
+            $('.btn_submit').attr('disabled', true);
+            const form =  $('#form_submit')[0];
+            const data = new FormData(form);
+            data.append('id_task', task_id);
+            for(let pair of data.entries()) {
+                console.log(pair[0]+ ', '+ pair[1]);
+            }
+
+            $.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url: "../api/submit_file.php",
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                timeout: 600000,
+                success: function (data) {
+                    console.log("SUCCESS : ", data);
+                },
+                error: function (e) {
+                    console.log("ERROR : ", e);
+                }
+            });
+
+        });
+
+        [message, file].forEach(el => {
+            el.on('input', function () {
+                $('.alert-modal-container').html('');
+            });
+        });
     });
 
-    function loadProduct(){
-        $.post("http://localhost/final/api/get_inprogress_task_detail.php",{id : "<?php echo $_GET['task']?>"}, function(data, status) {
+    function loadProduct() {
+        $.post("http://localhost/final/api/get_inprogress_task_detail.php", {id: task_id}, function (data, status) {
             data.data.forEach((task) => {
                 const tieude = document.getElementById('tieude');
                 tieude.innerHTML = task.TIEU_DE;
@@ -190,25 +269,23 @@
                 const submitfile = document.getElementById('submitfile');
                 submitfile.innerHTML = shortcut(task.SUBMIT_FOLDER_PATH);
             })
-        },"json");
+        }, "json");
     }
 
-    function convert(time){
-        if (time == null){
+    function convert(time) {
+        if (time == null) {
             return null;
-        }
-        else {
+        } else {
             const date = time;
             const readable_date = new Date(date).toLocaleDateString();
             return readable_date;
         }
     }
 
-    function shortcut(file){
-        if (file == null){
+    function shortcut(file) {
+        if (file == null) {
             return "";
-        }
-        else {
+        } else {
             let text = file;
             const myArray = text.split("/");
             return myArray[3];

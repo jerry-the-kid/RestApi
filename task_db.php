@@ -91,3 +91,17 @@ function updateTask($taskid, $tieude, $mota, $deadline, $support_folder_path, $m
     }
     return 0;
 }
+
+function updateTaskToWaiting($taskid, $submit_folder, $message_employee){
+    $coon = getConnection();
+    $sql = "UPDATE task, task_info
+    SET SUBMIT_FOLDER_PATH = ?, message_employee = ?, STATUS = 'Waiting'
+    WHERE task.TASK_ID = ? and  task_info.TASK_ID = ?;";
+    $stm = $coon->prepare($sql);
+    $stm->bind_param('ssii', $submit_folder, $message_employee, $taskid, $taskid);
+    $stm->execute();
+    if ($stm->execute()) {
+        return 1;
+    }
+    return 0;
+}
