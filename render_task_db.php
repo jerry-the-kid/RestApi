@@ -121,5 +121,40 @@ function reject_task($taskId, $deadline, $supportFile, $tleadMessage){
     return 1;
 }
 
+function get_inprogress_task_detail($id){
+    $sql = "SELECT `task`.`TASK_ID`, `task`.`TIEU_DE`, `task`.`MO_TA`, `task`.`SUPPORT_FOLDER_PATH`, `task`.`SUBMIT_FOLDER_PATH`, `task`.`DATE_CREATE`, `task_info`.`MA_NGUOI_GIAO`, `user`.`HO_TEN`, `task_info`.`STATUS`, `task`.`DEADLINE` FROM `task`, `task_info`, `user`, `user_info` WHERE `task_info`.`STATUS` = 'In progress' AND `task`.`TASK_ID` = $id AND `user`.`MA_USER` = `user_info`.`MA_USER` AND `task`.`TASK_ID` = `task_info`.`TASK_ID` AND `task_info`.`MA_NGUOI_GIAO` = `user`.`MA_USER`;";
+    $conn = getConnection();
+    $result = $conn->query($sql);
+    $output = array();
+    while(($row = $result->fetch_assoc())){
+        $output[] = $row;
+    }
+    return $output;
+}
+
+
+function get_reject_task_detail($id){
+    $sql = "SELECT `task`.`TASK_ID`, `task`.`TIEU_DE`, `task`.`MO_TA`, `task`.`SUPPORT_FOLDER_PATH`, `task`.`SUBMIT_FOLDER_PATH`, `task`.`DATE_CREATE`, `task_info`.`MA_NGUOI_GIAO`, `user`.`HO_TEN`, `task_info`.`STATUS`, `task`.`DEADLINE` FROM `task`, `task_info`, `user`, `user_info` WHERE `task_info`.`STATUS` = 'Rejected' AND `task`.`TASK_ID` = $id AND `user`.`MA_USER` = `user_info`.`MA_USER` AND `task`.`TASK_ID` = `task_info`.`TASK_ID` AND `task_info`.`MA_NGUOI_GIAO` = `user`.`MA_USER`;";
+    $conn = getConnection();
+    $result = $conn->query($sql);
+    $output = array();
+    while(($row = $result->fetch_assoc())){
+        $output[] = $row;
+    }
+    return $output;
+}
+
+function get_new_task_detail($id){
+    $sql = "SELECT `task`.`TASK_ID`, `task`.`TIEU_DE`, `task`.`MO_TA`, `task`.`SUPPORT_FOLDER_PATH`, `task`.`SUBMIT_FOLDER_PATH`, `task`.`DATE_CREATE`, `task_info`.`MA_NGUOI_NHAN`, `user`.`HO_TEN`, `task_info`.`STATUS`, `task`.`DEADLINE` FROM `task`, `task_info`, `user`, `user_info` WHERE `task_info`.`STATUS` = 'New' AND `task`.`TASK_ID` = $id AND `user`.`MA_USER` = `user_info`.`MA_USER` AND `task`.`TASK_ID` = `task_info`.`TASK_ID` AND `task_info`.`MA_NGUOI_NHAN` = `user`.`MA_USER`;";
+    $conn = getConnection();
+    $result = $conn->query($sql);
+    $output = array();
+    while(($row = $result->fetch_assoc())){
+        $output[] = $row;
+    }
+    return $output;
+}
+
+
 
 ?>

@@ -125,7 +125,7 @@
                     <td>NV01 - Tuấn Tú</td>
                     <td><span class="badge badge-primary p-2">In progress</span></td>
                     <td>20/11/2021</td>
-                    <td><a href="inprogress_task.html" class="text-primary" style="text-decoration: none">Chi tiết</a>
+                    <td><a href="inprogress_task.php" class="text-primary" style="text-decoration: none">Chi tiết</a>
                     </td>
                 </tr>
                 <tr>
@@ -280,13 +280,13 @@
             return `new_task_info.php?task=${task_id}`;
         }
         else if (status == "In progress"){
-            return `inprogress_task.html?task=${task_id}`;
+            return `inprogress_task.php?task=${task_id}`;
         }
         else if (status == "Waiting"){
             return `waiting_task.html?task=${task_id}`;
         }
         else if (status == "Rejected"){
-            return `reject_task.html?task=${task_id}`;
+            return `reject_task.php?task=${task_id}`;
         }
     }
 
