@@ -1,3 +1,6 @@
+<?php
+require_once ('admin_validate.php');
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -24,7 +27,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item ">
-                    <a class="nav-link" href="nhanvien_list.php">Nhân viên</a>
+                    <a class="nav-link" href="index.php">Nhân viên</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="phong_ban_list.php">Phòng ban</a>
@@ -43,12 +46,12 @@
             <div class="dropdown show ml-auto">
                 <a class="btn text-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Giám đốc
+                    <?php echo $_SESSION['ho_ten'] ?>
                 </a>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <a class="dropdown-item" href="#">Thông tin</a>
-                    <a class="dropdown-item text-danger" href="#">Đăng xuất</a>
+                    <a class="dropdown-item text-danger" href="../logout.php">Đăng xuất</a>
                 </div>
             </div>
 

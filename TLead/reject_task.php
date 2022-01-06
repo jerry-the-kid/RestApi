@@ -1,3 +1,6 @@
+<?php
+require_once ('tlead_validate.php');
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -38,15 +41,15 @@
                     <a class="nav-link" href="#">Đơn nghỉ</a>
                 </li>
             </ul>
-            <div class="dropdown show ml-auto ">
+            <div class="dropdown show ml-auto">
                 <a class="btn text-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Giám đốc
+                    <?php echo $_SESSION['ho_ten'] ?>
                 </a>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <a class="dropdown-item" href="#">Thông tin</a>
-                    <a class="dropdown-item text-danger" href="#">Đăng xuất</a>
+                    <a class="dropdown-item text-danger" href="../logout.php">Đăng xuất</a>
                 </div>
             </div>
 

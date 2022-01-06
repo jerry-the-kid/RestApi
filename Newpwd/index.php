@@ -1,11 +1,13 @@
-<?php
-session_start();
-//session_destroy();
-require_once ('header.php');
-if(isset($_SESSION['user_id'])){
-    locationLoginPage($_SESSION['position'], $_SESSION['active']);
+<?php session_start();
+if (isset($_SESSION['user_id'])) {
+    if ($_SESSION['active'] === 1) {
+        header('Location: http://localhost/final/');
+    }
+} else {
+    header('Location: http://localhost/final/');
 }
 ?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -24,30 +26,32 @@ if(isset($_SESSION['user_id'])){
 <div class="container">
     <div class="row flex-column-reverse flex-md-row">
         <div class="col-md-6 p-4 bg-light rounded" style="padding: 40px 0;">
-            <form id="login_form">
+            <form id="newpwd-form">
                 <div style="margin-bottom: 100px; ">
-                    <h1 class="font-weight-light">Login</h1>
+                    <h1 class="font-weight-light">New password</h1>
                 </div>
 
                 <div class="form-group">
-                    <input type="text" class="form-control" id="username" placeholder="Username" aria-label="Username">
+                    <input type="password" class="form-control" id="pwd_new" placeholder="Created new password"
+                           aria-label="Pwd new">
                 </div>
                 <div class="form-group" style="margin-bottom: 30px">
-                    <input type="password" class="form-control" id="password" placeholder="Password"
-                           aria-label="Password">
+                    <input type="password" class="form-control" id="pwd_confirm" placeholder="Confirm your password"
+                           aria-label="Pwd new confirm">
                 </div>
                 <div class="alert-container mt-4">
                 </div>
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-outline-primary" style="width: 100%;">Login</button>
+                    <button class="btn btn-outline-primary" style="width: 100%;">Change</button>
                 </div>
             </form>
         </div>
         <div class="col-md-6 p-4 bg-light rounded"
-             style="background-image: url(image/us2GQKA.jpg); background-size: cover; min-height: 400px">
+             style="background-image: url(../image/us2GQKA.jpg); background-size: cover; height: 400px">
         </div>
     </div>
 </div>
+
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -67,29 +71,32 @@ if(isset($_SESSION['user_id'])){
         target.focus();
     }
 
+
     $(document).ready(function () {
-        const username = $('#username');
-        const password = $('#password');
-        $('#login_form').on('submit', function (e) {
+        const pwdNew = $('#pwd_new');
+        const pwdConfirm = $('#pwd_confirm');
+
+        $('#newpwd-form').on('submit', function (e) {
             e.preventDefault();
-            if (!username.val().trim()) {
-                alertForm(username, 'Username is required. Please fill in.');
-            } else if (!password.val().trim()) {
-                alertForm(password, 'Password is required. Please fill in.');
+            if (!pwdNew.val().trim()) {
+                alertForm(pwdNew, 'Password new is required. Please fill in.');
+            } else if (!pwdConfirm.val().trim()) {
+                alertForm(pwdConfirm, 'Password repeat is required. Please fill in.');
+            } else if (pwdNew.val().trim() !== pwdConfirm.val().trim()) {
+                alertForm(pwdNew, "Passwords don't match. Please fill in again.");
             } else {
-                $.post('login.php', {username: username.val().trim(), password: password.val().trim()}).done(function (res) {
+                $.post('../renew_pwd.php', {new_pass: pwdNew.val().trim()}).done(function (res) {
                     const data = JSON.parse(res);
-                    if(data.code === 0){
+                    if (data.code === 0) {
                         window.location = data.message;
                     } else {
                         alertForm(null, data.message);
                     }
                 });
-
             }
         });
 
-        [username, password].forEach(el => {
+        [pwdConfirm, pwdNew].forEach(el => {
             el.on('input', function () {
                 $('.alert-container').html('');
             });

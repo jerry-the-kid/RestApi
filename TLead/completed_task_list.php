@@ -1,3 +1,6 @@
+<?php
+require_once ('tlead_validate.php');
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -25,7 +28,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="task_list.php">Task</a>
+                    <a class="nav-link" href="index.php">Task</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="cancel_task_list.php">Canceled Task</a>
@@ -38,15 +41,15 @@
                     <a class="nav-link" href="#">Đơn nghỉ</a>
                 </li>
             </ul>
-            <div class="dropdown show ml-auto ">
+            <div class="dropdown show ml-auto">
                 <a class="btn text-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Giám đốc
+                    <?php echo $_SESSION['ho_ten'] ?>
                 </a>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <a class="dropdown-item" href="#">Thông tin</a>
-                    <a class="dropdown-item text-danger" href="#">Đăng xuất</a>
+                    <a class="dropdown-item text-danger" href="../logout.php">Đăng xuất</a>
                 </div>
             </div>
 
@@ -108,6 +111,7 @@
 </body>
 
 <script>
+    const user_id = <?php echo $_SESSION['user_id'] ?>;
     $(document).ready(function () {
         loadProduct();
     });
@@ -115,7 +119,7 @@
 
     function loadProduct() {
         $('#table-body').html('');
-        $.post("http://localhost/final/api/get_completed_task_Tlead.php", {id: 3}, function (data, status) {
+        $.post("http://localhost/final/api/get_completed_task_Tlead.php", {id: user_id}, function (data, status) {
             data.data.forEach((task) => {
                 let tableRow = $('<tr> <td>' + task.TIEU_DE + '</td> <td>NV' + task.MA_NGUOI_NHAN + ' - ' + task.HO_TEN + '</td> <td><span class="badge badge-primary p-2">' + task.STATUS + '</span></td> <td><span class="' + check(task.COMPLETE_STATUS) + '">' + task.COMPLETE_STATUS + '</span></td> <td>' + convert(task.DEADLINE) + '</td> <td><a href="#chuabiet" class="text-primary" style="text-decoration: none">Chi tiết</a> </td> </tr>');
                 tableRow.attr('task-info', JSON.stringify(task))
