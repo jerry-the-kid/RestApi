@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 04, 2022 at 01:45 AM
+-- Generation Time: Jan 06, 2022 at 03:56 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -38,21 +38,21 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`USER_NAME`, `PASSWORD`, `ACTIVE`) VALUES
-('akaichi21', 'akaichi21', 1),
-('hieutran795', 'hieutran795', 1),
-('huybaHN', 'daicaHn123', 1),
-('longtrong123', '123456789', 1),
-('namvippro123', 'vipprohehe', 1),
-('ngamytho', 'depgaihonquynh', 1),
-('phucmapyoutuber', 'phucmapyoutuber', 0),
-('quangit', 'kocaiwinnhe123', 1),
-('quynhxinhdep123', 'bonghoa1123', 1),
-('tankimcokhi', 'tankimcokhi', 0),
+('akaichi21', '$2y$10$WVIiVTJ9Qwh1Z8CiJpqgluO.r4xyy/a3E2mUHvgj6OZA/vkvs24wa', 1),
+('hieutran795', '$2y$10$GbNYTAqkuOOI2rS2X0wVcOdr7bWtaOFIecMfiID4nF9E4z4JS32oC', 1),
+('huybaHN', '$2y$10$aIeKEUo7nqJPuaqOWAjfPO7cBnmcCScZONMHcfFwhNpLwX6azxLeC', 1),
+('longtrong123', '$2y$10$6vzWSQYx3q4MUwgDZS7peerg045WJrbDBlEmHzChTuTj7b5Pcxxn6', 1),
+('namvippro123', '$2y$10$.VU2cccMu3axRYbXHFJ3UeFhmHUrDPgLGFem77jZf6H0VwCCUOJvW', 1),
+('ngamytho', '$2y$10$jN6sJ14LrsYEVlMw8FsnbufOywpSTBsvJxXBIiqMFbJfzgyJXIpKK', 1),
+('phucmapyoutuber', '$2y$10$Wl/zHoqcsWSrsNjfIFo/8OC13Ue3H8rJvoxWz1mLoCC5tAejolMzG', 0),
+('quangit', '$2y$10$yt5m79aYeG3Bo.ZkKy4DlOwPMXaK0L.JHDDvnEeCDRfZG5KCkJ4J2', 1),
+('quynhxinhdep123', '$2y$10$DHXF6wQNolPnvDoZTTePFuH2F69PaVTeNA5pSk2a68plBelVoZiN6', 1),
+('tankimcokhi', '$2y$10$7AWoqWRyMYUR6Yf78iTcgeboMQDZPZ5nj6FJlVtmOHH.RF2sl9UH6', 0),
 ('test', NULL, 0),
-('thanhnguyen', 'thanhnguyen', 1),
-('thaonguyen811', 'thaonguyen811', 0),
-('thinhnguyen', 'thinhnguyen', 0),
-('vietlatui', 'vietlatui', 0);
+('thanhnguyen', '$2y$10$sXGYDxQ82cTbAvmlXoZIY.Y1AErg5DdFGV9BZOddfk7VYSzalSVM2', 1),
+('thaonguyen811', '$2y$10$P95wzBtuVWJETuSFQ3041eo4TcqpbdyAaRJ7HuMRmBKlHko6V5wra', 0),
+('thinhnguyen', '$2y$10$YyY.sxvZHEiu2qkwuVdOMeifkGeSYTZ940DU/V0gFdGOCdu1nZFS2', 0),
+('vietlatui', '$2y$10$lWGKpWYHYehN6Y/fTuq9HO2HUFtkMRiikvuPszQ61cB.1TCc6Vu76', 0);
 
 -- --------------------------------------------------------
 
@@ -129,17 +129,17 @@ CREATE TABLE `task` (
 --
 
 INSERT INTO `task` (`TASK_ID`, `TIEU_DE`, `MO_TA`, `DEADLINE`, `SUPPORT_FOLDER_PATH`, `SUBMIT_FOLDER_PATH`, `message_employee`, `message_tlead`, `DATE_CREATE`) VALUES
-(1, 'Kế hoạch dự án công nghệ thông tin cho công ty', 'Trong kế hoạch phải cho thấy hiểu rõ mục tiêu, chi phí làm việc cũng như nguồn nhân lực cho phòng công nghệ thông tin cần bổ sung', '2022-01-10 15:00:00', 'file_gui/kg8I5lFSnN/huongdanne.txt', NULL, NULL, NULL, '2022-01-01'),
+(1, 'Kế hoạch dự án công nghệ thông tin cho công ty', 'Trong kế hoạch phải cho thấy hiểu rõ mục tiêu, chi phí làm việc cũng như nguồn nhân lực cho phòng công nghệ thông tin cần bổ sung', '2022-01-10 15:00:00', '../file_gui/kg8I5lFSnN/huongdanne.txt', '', '', NULL, '2022-01-01'),
 (2, 'Thống kê báo cáo doanh thu', 'Trong báo cáo phải có phân tích nghiệp vụ và đồ thị doanh thu trong năm 2021', NULL, NULL, NULL, NULL, NULL, '2021-11-19'),
 (3, 'Bảng kế hoạch công việc năm 2022', 'Trong bảng kế hoạch phải có chi tiết thời gian, địa điểm và xây dựng trước kịch bản công việc', NULL, NULL, NULL, NULL, NULL, '2021-12-16'),
-(4, 'Thống kê nhân sự mới của các trường đại học', 'Nghiên cứu, phân tích kĩ những sinh viên có thành tích tốt và các dự án sinh viên đó tham gia', '2022-01-07 08:00:00', 'file_gui/yanYfyHe3M/data.csv', NULL, NULL, NULL, '2021-01-05'),
+(4, 'Thống kê nhân sự mới của các trường đại học', 'Nghiên cứu, phân tích kĩ những sinh viên có thành tích tốt và các dự án sinh viên đó tham gia', '2022-01-07 08:00:00', '../file_gui/yanYfyHe3M/data.csv', NULL, NULL, NULL, '2021-01-05'),
 (5, 'Kế hoạch tiếp thị sản phẩm', 'Có kế hoạch cụ thể cho dự án tiếp thị sản phẩm mới, lên ý tưởng cụ thể', NULL, NULL, NULL, NULL, NULL, '2022-01-01'),
 (6, 'Bảng phân tích thị trường năm 2022', 'Thu thập thông tin tình hình các doanh nghiệp khác và ngành nào hay sản phẩm nào đang có xu hướng phát triển mạnh mẽ trong năm nay', NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
 (7, 'Ứng dụng điểm danh bằng Trí Tuệ Nhân Tạo', 'Nhận diện khuôn mặt và ghi nhận điểm danh cho nhân viên công ty', NULL, NULL, NULL, NULL, NULL, '2021-12-23'),
-(8, 'Tạo trang web tiếp thị sản phẩm', 'Trang web có phân quyền truy cập cho nhân viên và cho khách hàng riêng', '2022-01-08 15:00:00', 'file_gui/9CWtqp2XsH/demo.zip', NULL, NULL, NULL, '2022-01-04'),
+(8, 'Tạo trang web tiếp thị sản phẩm', 'Trang web có phân quyền truy cập cho nhân viên và cho khách hàng riêng', '2022-01-08 15:00:00', '../file_gui/9CWtqp2XsH/demo.zip', '', '', NULL, '2022-01-04'),
 (9, 'Phiếu thu chi trong ngày của việc marketing', 'Phải có thông tin chi tiết những khoảng chi tiêu cho việc marketing trong ngày', NULL, NULL, NULL, NULL, NULL, '2021-12-02'),
 (10, 'Thống kê lại các văn bản pháp luật của công ty', 'Trong bản thống kê phải có ghi rõ ngày tháng cũng như chi tiết từng loại văn bản', NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
-(11, 'Bảng kế hoạch tuyển dụng', 'Có ngày tháng, địa điểm tuyển dụng rõ ràng và cả chi phí cụ thể cho ngày tuyển dụng', '2022-01-05 11:59:00', 'file_gui/A3kynytwAq/baoCao.docx', NULL, NULL, NULL, '2022-01-04'),
+(11, 'Bảng kế hoạch tuyển dụng', 'Có ngày tháng, địa điểm tuyển dụng rõ ràng và cả chi phí cụ thể cho ngày tuyển dụng', '2022-01-05 11:59:00', '../file_gui/A3kynytwAq/baoCao.docx', NULL, NULL, NULL, '2022-01-04'),
 (12, 'Báo cáo công việc tiếp thị tháng 12', 'Chỉ chú trọng kết quả', NULL, NULL, NULL, NULL, NULL, '2021-12-02'),
 (13, 'Bảng phân tích thị trường năm 2022', 'Thu thập thông tin tình hình các doanh nghiệp khác và ngành nào hay sản phẩm nào đang có xu hướng phát triển mạnh mẽ trong năm nay', NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
 (14, 'Nghiên cứu mô hình đề xuất sản phẩm', 'Đề xuất sản phẩm theo đánh giá của người dùng', NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
@@ -164,15 +164,14 @@ INSERT INTO `task` (`TASK_ID`, `TIEU_DE`, `MO_TA`, `DEADLINE`, `SUPPORT_FOLDER_P
 (33, 'Báo cáo chương trình tiếp thị tháng 12', 'Có thông tin cụ thể của dự án tiếp thị sản phẩm, ý tưởng cụ thể và kết quả đạt được', NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
 (34, 'Báo cáo kế hoạch kinh doanh mặt hàng tiêu dùng', 'Đầy đủ thông tin và đặt biệt kết quả đạt được, lợi nhuận', NULL, NULL, NULL, NULL, NULL, '2021-12-11'),
 (35, 'Nghiên cứu kĩ thuật bảo quản mặt hàng tiêu dùng', 'Tuân thủ theo quy định của Bộ y tế', NULL, NULL, NULL, NULL, NULL, '2022-12-02'),
-(36, 'Kế hoạch dự án công nghệ thông tin tháng 12', 'Trong kế hoạch phải cho thấy hiểu rõ mục tiêu, chi phí làm việc cũng như nguồn nhân lực cho phòng công nghệ thông tin cần bổ sung', '2022-01-20 23:59:00', '../file_gui/Dhwh2w1xjl/baoCao.pdf', '../file_nop/gu2aWSSR6z/Lab02.zip', NULL, NULL, '2022-01-04'),
+(36, 'Kế hoạch dự án công nghệ thông tin tháng 12', 'Trong kế hoạch phải cho thấy hiểu rõ mục tiêu, chi phí làm việc cũng như nguồn nhân lực cho phòng công nghệ thông tin cần bổ sung', '2022-01-20 23:59:00', '../file_gui/Dhwh2w1xjl/baoCao.pdf', '../file_nop/gu2aWSSR6z/Lab02.zip', 'Hoàn thành ngày sớm', 'Ủa em', '2022-01-04'),
 (37, 'Thống kê báo cáo doanh thu tháng 11', 'Trong báo cáo phải có phân tích nghiệp vụ và đồ thị doanh thu tháng 11', NULL, NULL, NULL, NULL, NULL, '2022-12-02'),
 (38, 'Bảng kế hoạch công việc cho tháng 12', 'Trong bảng kế hoạch phải có chi tiết thời gian, địa điểm và xây dựng trước kịch bản công việc', NULL, NULL, NULL, NULL, NULL, '2021-12-15'),
 (39, 'Thống kê nhân sự xuất sắc tháng 11', 'Số dự án mà nhân sự đó tham gia cũng như lợi ích mà nó đem lại', '2022-01-02 08:00:51', '../file_gui/9K9uulMJRu/danhsach.csv', '../file_nop/HGz2MDHWqm/seven11.zip', NULL, NULL, '2022-01-04'),
 (40, 'Kế hoạch tiếp thị sản phẩm tháng 12', 'Có kế hoạch cụ thể cho dự án tiếp thị sản phẩm mới, lên ý tưởng cụ thể', NULL, NULL, NULL, NULL, NULL, '2021-12-01'),
 (41, 'Bảng phân tích thị trường tháng 12', 'Thu thập thông tin tình hình các doanh nghiệp khác và ngành nào hay sản phẩm nào đang có xu hướng phát triển mạnh mẽ trong năm nay', NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
 (42, 'Nghiên cứu cách đo lường hạn sử dụng cho sản phẩm', 'Áp dụng các công nghệ hiện đại để nghiên cứu và có một bài phân tích cho công ty mang lên báo nghiên cứu khoa học', NULL, NULL, NULL, NULL, NULL, '2022-12-03'),
-(56, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
-(57, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-12-01');
+(58, 'Nộp cuối kì', 'task _ 1 ', '2022-01-15 12:00:00', '../file_gui/H19Rdlrs/Final.pdf', NULL, NULL, NULL, '2022-01-04');
 
 -- --------------------------------------------------------
 
@@ -234,7 +233,8 @@ INSERT INTO `task_info` (`TASK_ID`, `MA_NGUOI_GIAO`, `MA_NGUOI_NHAN`, `STATUS`, 
 (39, 3, 14, 'Completed', 'Ok'),
 (40, 6, 13, 'Completed', 'Bad'),
 (41, 11, 8, 'Completed', 'Bad'),
-(42, 9, 7, 'Completed', 'Good');
+(42, 9, 7, 'Completed', 'Good'),
+(58, 3, 14, 'New', NULL);
 
 -- --------------------------------------------------------
 
@@ -425,7 +425,7 @@ ALTER TABLE `phong_ban`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `TASK_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `TASK_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `user`
