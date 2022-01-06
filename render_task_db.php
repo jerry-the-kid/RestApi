@@ -170,4 +170,31 @@ function complete_task($taskId, $completeStatus){
     return 1;
 }
 
+function update_reject_task($taskId, $employeeMessage, $submitFolder){
+    $conn = getConnection();
+
+    $newSubmitFilePath = "+" . $submitFolder;
+
+    $sql = "UPDATE task
+            SET task.SUBMIT_FOLDER_PATH = concat(task.SUBMIT_FOLDER_PATH, '$newSubmitFilePath'),
+            task.message_employee = '$employeeMessage'
+            WHERE TASK_ID = $taskId";
+
+    $stm = $conn->prepare($sql);
+    if (!$stm->execute()) {
+        return 0;
+    }
+
+    $sql = "UPDATE task_info
+            SET task_info.STATUS = 'Waiting'
+            WHERE TASK_ID = $taskId";
+
+    $stm = $conn->prepare($sql);
+    if (!$stm->execute()) {
+        return 0;
+    }
+
+    return 1;
+}
+
 ?>
