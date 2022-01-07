@@ -113,8 +113,5 @@ require_once ('tlead_validate.php');
         crossorigin="anonymous"></script>
 </body>
 
-<script>
-
-</script>
 
 </html>

@@ -39,7 +39,7 @@ require_once ('admin_validate.php');
                     <a class="nav-link" href="taikhoan.php">Tài khoản</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Đơn nghỉ</a>
+                    <a class="nav-link" href="don_nghi_list.php">Đơn nghỉ</a>
                 </li>
             </ul>
             <div class="dropdown show ml-auto">
