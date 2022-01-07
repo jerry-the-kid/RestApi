@@ -1,5 +1,5 @@
 <?php
-require_once('employee_validate.php');
+require_once('tlead_validate.php');
 ?>
 
 <!doctype html>
@@ -35,7 +35,7 @@ require_once('employee_validate.php');
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="completed_task_list.php">Completed Task<span
-                                class="sr-only">(current)</span></a>
+                            class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Đơn nghỉ</a>

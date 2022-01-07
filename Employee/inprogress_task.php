@@ -206,12 +206,13 @@ require_once ('employee_validate.php');
             } else {
                 content.fileName = file.val().replace(/C:\\fakepath\\/i, '');
                 content.message = message.val();
+                $('.work-container').html('');
                 $('.work-container').append(`<p class="card-text">Lời nhắn : ${content.message}</p>
                         <div class="d-flex justify-content-between">
                         <p class="badge badge-secondary card-text mb-0">${content.fileName}</p>
                 </div>`);
                 $('#fileModal').modal('hide');
-                $('.btn_file').attr('disabled', true);
+                $('.btn_file').text('Cập nhật file nộp');
                 $('.btn_submit').attr('disabled', false);
 
             }
