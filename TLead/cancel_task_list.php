@@ -73,7 +73,7 @@ require_once ('tlead_validate.php');
             </form>
         </div>
         <div class="col-12 col-md-4 d-flex align-items-center justify-content-end">
-            <button class="btn btn-danger" href="them_nhanvien.php">Xóa tất cả task hủy</button>
+            <button class="btn btn-danger" data-toggle="modal" data-target="#deletedModal">Xóa tất cả task hủy</button>
         </div>
     </div>
 
@@ -91,8 +91,6 @@ require_once ('tlead_validate.php');
                 </tr>
                 </thead>
                 <tbody id="table-body">
-                </tr>
-
 
                 </tbody>
             </table>
@@ -101,6 +99,26 @@ require_once ('tlead_validate.php');
     </div>
 </div>
 
+<!-- delete model -->
+<div class="modal fade px-0" id="deletedModal" tabindex="-1" role="dialog" aria-labelledby="deletedModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deletedModalLabel">Xóa nhân viên</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <p>Bạn có chắc muốn xóa tất cả nhiệm vụ đã hủy ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-danger" id="deleteConfirm">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -117,6 +135,7 @@ require_once ('tlead_validate.php');
     const user_id = <?php echo $_SESSION['user_id'] ?>;
     $(document).ready(function () {
         loadProduct();
+        deleteAll();
     });
 
     
@@ -124,11 +143,17 @@ require_once ('tlead_validate.php');
         $.post("http://localhost/final/api/get_cancel_task_tLead.php",{id : user_id}, function(data, status) {
             $('#table-body').html('');
             data.data.forEach((task) => {
-                let tableRow = $('<tr> <td>'+ task.TIEU_DE +'</td> <td>NV'+ task.MA_NGUOI_NHAN +' - '+ task.HO_TEN +'</td> <td><span class="badge badge-secondary p-2">'+ task.STATUS +'</span></td> <td>'+ convert(task.DEADLINE) +'</td> <td><a href="cancel_task.php" class="text-primary" style="text-decoration: none">Chi tiết</a> </td> </tr>');
+                let tableRow = $('<tr> <td>'+ task.TIEU_DE +'</td> <td>NV'+ task.MA_NGUOI_NHAN +' - '+ task.HO_TEN +'</td> <td><span class="badge badge-secondary p-2">'+ task.STATUS +'</span></td> <td>'+ convert(task.DEADLINE) +'</td> <td><a href="cancel_task.php?task=' + task.TASK_ID + '" class="text-primary" style="text-decoration: none">Chi tiết</a> </td> </tr>');
                 tableRow.attr('task-info', JSON.stringify(task))
                 $('.table').append(tableRow);
             })
         },"json");
+    }
+
+    function deleteAll(){
+        $(document).on("click", "#deleteConfirm", function(){
+            
+        });
     }
     
     function convert(time){
