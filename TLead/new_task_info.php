@@ -85,9 +85,7 @@ require_once('tlead_validate.php');
         </div>
         <div class="mt-4 col-md-8 col-lg-6">
             <ul class="list-group list-group-flush" id="download-container">
-                <li class="list-group-item text-center">
-                    <a href="">Download All <i class="ml-2 fas fa-download"></i></a>
-                </li>
+                
             </ul>
         </div>
         <div class="mt-4 col-md-4 col-lg-6 d-flex justify-content-end align-items-end">

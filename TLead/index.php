@@ -119,28 +119,29 @@ require_once ('tlead_validate.php');
 </div>
 
 
-<!-- Modal-->
-<div class="modal fade px-0" id="deletedModal" tabindex="-1" role="dialog" aria-labelledby="deletedModalLabel"
+<!-- Cancel Modal-->
+<div class="modal fade px-0" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deletedModalLabel">Xóa nhân viên</h5>
+                <h5 class="modal-title" id="cancelModalLabel">Xóa nhân viên</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Bạn có chắc muốn xóa nhân viên tên <span class="font-weight-bold">Văn A</span> ?</p>
+                <p>Bạn chắc muốn hủy task này chứ ?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Thoát</button>
-                <button type="button" class="btn btn-danger">Xóa</button>
+                <button type="button" class="btn btn-danger" id="cancelTask">Hủy</button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Create Task Modal-->
 <div class="modal fade" id="createTaskModal" tabindex="-1" role="dialog" aria-labelledby="createTaskModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -218,16 +219,16 @@ require_once ('tlead_validate.php');
         $.post("http://localhost/final/api/get_task_teamLead.php",{id : user_id}, function(data, status) {
             console.log(data);
             data.data.forEach((task) => {
-                let tableRow = $('<tr> <td>'+ task.TIEU_DE +'</td> <td>NV'+ task.MA_NGUOI_NHAN +' - '+ task.HO_TEN +'</td> <td><span class="'+ check(task.STATUS) +'">'+ task.STATUS +'</span></td> <td>'+ convert(task.DEADLINE) +'</td> <td><a href="'+ link(task.STATUS, task.TASK_ID) +'" class="text-primary" style="text-decoration: none">Chi tiết</a> '+ buttonDlt(task.STATUS) +'</td> </tr>');
+                let tableRow = $('<tr> <td>'+ task.TIEU_DE +'</td> <td>NV'+ task.MA_NGUOI_NHAN +' - '+ task.HO_TEN +'</td> <td><span class="'+ check(task.STATUS) +'">'+ task.STATUS +'</span></td> <td>'+ convert(task.DEADLINE) +'</td> <td><a href="'+ link(task.STATUS, task.TASK_ID) +'" class="text-primary" style="text-decoration: none">Chi tiết</a> '+ buttonDlt(task.STATUS, task.TASK_ID) +'</td> </tr>');
                 tableRow.attr('task-info', JSON.stringify(task))
                 $('.table').append(tableRow);
             })
         },"json");
     }
 
-    function buttonDlt(status){
+    function buttonDlt(status, task_id){
         if (status == "New"){
-            return '| <button class="text-primary" type="button" data-toggle="modal" data-target="#deletedModal" style="border: none; background-color: inherit; cursor: pointer">Hủy </button>';
+            return '| <button taskId="' + task_id + '" id="cancelBtn" class="text-primary" type="button" data-toggle="modal" data-target="#cancelModal" style="border: none; background-color: inherit; cursor: pointer">Hủy </button>';
         }
         else {
             return '';
@@ -374,6 +375,17 @@ require_once ('tlead_validate.php');
                 });
 
             }
+        });
+
+        $(document).on("click", "#cancelBtn", function(){
+            let taskId = $(this).attr("taskId");
+
+            $('#cancelTask').on('click', function (e) {
+                $.post('../api/cancel_task.php', {id: taskId}).done(function (response) {
+                    $('#cancelModal').modal('hide');
+                    loadProduct();
+                });
+            });
         });
 
         [taskName, deadLine, nhanVien, describeText].forEach(el => {
