@@ -65,7 +65,7 @@ require_once ('admin_validate.php');
             <h2 class="font-weight-bold text-left">Thông tin phòng ban</h2>
         </div>
         <div class="col-md-6 col-12 mb-4 d-flex justify-content-end">
-            <button class="btn btn-light">Trở về danh sách</button>
+            <a class="btn btn-light" href="phong_ban_list.php">Trở về danh sách</a>
         </div>
     </div>
     <div class="row bg-light rounded p-4">

@@ -36,7 +36,7 @@ require_once ('employee_validate.php');
                     <a class="nav-link" href="completed_task_list.php">Completed Task</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Đơn nghỉ</a>
+                    <a class="nav-link" href="don_nghi_list.php">Đơn nghỉ</a>
                 </li>
             </ul>
             <div class="dropdown show ml-auto">
@@ -62,7 +62,7 @@ require_once ('employee_validate.php');
             <h2 class="font-weight-bold text-left"><span id="tieude"></span></h2>
         </div>
         <div class="col-md-6 col-12 mb-4 d-flex justify-content-end align-items-center">
-            <button class="btn btn-light">Trở về danh sách</button>
+            <a class="btn btn-light" href="index.php">Trở về danh sách</a>
         </div>
     </div>
     <div class="row p-4 bg-light rounded">
@@ -83,9 +83,6 @@ require_once ('employee_validate.php');
                 <li class="list-group-item d-flex justify-content-between align-items-center"><span
                             id="supportfile"></span>
                     <a href="#" class="btn btn-primary btn-sm link-download">Download</a>
-                </li>
-                <li class="list-group-item text-center">
-                    <a href="">Download All <i class="ml-2 fas fa-download"></i></a>
                 </li>
             </ul>
         </div>

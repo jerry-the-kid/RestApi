@@ -61,7 +61,7 @@ require_once ('employee_validate.php');
                 <h2 class="font-weight-bold text-left">Testing sản phẩm</h2>
             </div>
             <div class="col-md-6 col-12 mb-4 d-flex justify-content-end">
-                <button class="btn btn-light">Trở về danh sách</button>
+                <a class="btn btn-light" href="don_nghi_list.php">Trở về danh sách</a>
             </div>
         </div>
         <div class="row p-4 bg-light rounded">

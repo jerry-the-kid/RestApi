@@ -38,7 +38,7 @@ require_once ('tlead_validate.php');
                             class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Đơn nghỉ</a>
+                    <a class="nav-link" href="don_nghi_list.php">Đơn nghỉ</a>
                 </li>
             </ul>
             <div class="dropdown show ml-auto">

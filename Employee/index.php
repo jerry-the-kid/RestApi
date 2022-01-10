@@ -35,7 +35,7 @@ require_once ('employee_validate.php');
                     <a class="nav-link" href="completed_task_list.php">Completed Task</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Đơn nghỉ</a>
+                    <a class="nav-link" href="don_nghi_list.php">Đơn nghỉ</a>
                 </li>
             </ul>
             <div class="dropdown show ml-auto">

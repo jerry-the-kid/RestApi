@@ -38,7 +38,7 @@ require_once ('tlead_validate.php');
                         <a class="nav-link" href="completed_task_list.php">Completed Task</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Đơn nghỉ<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="don_nghi_list.php">Đơn nghỉ<span class="sr-only">(current)</span></a>
                     </li>
                 </ul>
                 <div class="dropdown show ml-auto">
@@ -64,7 +64,7 @@ require_once ('tlead_validate.php');
                 <h2 class="font-weight-bold text-left">Testing sản phẩm</h2>
             </div>
             <div class="col-md-6 col-12 mb-4 d-flex justify-content-end">
-                <button class="btn btn-light">Trở về danh sách</button>
+                <a class="btn btn-light" href="don_nghi_list.php">Trở về danh sách</a>
             </div>
         </div>
         <div class="row p-4 bg-light rounded">
