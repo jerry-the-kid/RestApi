@@ -83,7 +83,7 @@ require_once ('tlead_validate.php');
         <div class="mt-4 col-md-8 col-lg-6">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex justify-content-between align-items-center"><span id="supportfile"></span>
-                    <button class="btn btn-primary btn-sm">Download</button>
+                    <a class="btn btn-primary btn-sm" href="#" id="downloadBtn">Download</a>
                 </li>
             </ul>
         </div>
@@ -124,6 +124,8 @@ require_once ('tlead_validate.php');
                 mota.innerHTML = task.MO_TA;
                 const supportfile = document.getElementById('supportfile');
                 supportfile.innerHTML = shortcut(task.SUPPORT_FOLDER_PATH);
+                
+                $("#downloadBtn").attr("href", "../api/download.php?file=" + task.SUPPORT_FOLDER_PATH);
             })
         },"json");
     }
