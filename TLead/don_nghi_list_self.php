@@ -1,5 +1,5 @@
 <?php
-require_once('employee_validate.php');
+require_once('tlead_validate.php');
 ?>
 
 <!doctype html>
@@ -28,8 +28,11 @@ require_once('employee_validate.php');
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="index.php">Task</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="cancel_task_list.php">Canceled Task</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="completed_task_list.php">Completed Task</a>
@@ -56,21 +59,24 @@ require_once('employee_validate.php');
 
 <!--Container-->
 <div class="container">
-    <div class="row">
-        <div class="col-12 mb-4 align-items-center justify-content-end">
-            <h3 class="font-weight-bold">Danh Sách Đơn Nghỉ</h3>
-        </div>
-    </div>
 
     <div class="row">
+        <div class="col-12 mb-4 align-items-center justify-content-end">
+            <h3 class="font-weight-bold">Danh Sách Đơn nghỉ</h3>
+        </div>
+    </div>
+    <div class="row">
         <div class="jumbotron jumbotron-fluid col-12 rounded" style="padding: 2rem">
-            <div class="container d-flex justify-content-between">
-                <p class="lead mb-0"><b>Tổng ngày nghỉ :</b> 12 ngày </p>
-                <p class="lead mb-0"><b>Số ngày đã sử dụng :</b> 14 ngày </p>
-                <p class="lead mb-0"><b>Còn lại :</b> 14 ngày </p>
+            <div class="container">
+                <div class="d-flex justify-content-between">
+                    <p class="lead mb-0"><b>Tổng ngày nghỉ :</b> 12 ngày </p>
+                    <p class="lead mb-0"><b>Số ngày đã sử dụng :</b> 14 ngày </p>
+                    <p class="lead mb-0"><b>Còn lại :</b> 14 ngày </p>
+                </div>
             </div>
         </div>
     </div>
+
 
     <div class="row">
         <div class="col-12 col-md-8 mb-md-0 mb-2">

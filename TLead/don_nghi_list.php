@@ -59,12 +59,12 @@ require_once('tlead_validate.php');
 
 <!--Container-->
 <div class="container">
+
     <div class="row">
         <div class="col-12 mb-4 align-items-center justify-content-end">
-            <h3 class="font-weight-bold">Danh Sách Nhiệm Vụ</h3>
+            <h3 class="font-weight-bold">Danh Sách Đơn nghỉ</h3>
         </div>
     </div>
-
 
     <div class="row">
         <div class="col-12 col-md-8 mb-md-0 mb-2">
@@ -74,7 +74,8 @@ require_once('tlead_validate.php');
             </form>
         </div>
         <div class="col-12 col-md-4 d-flex align-items-center justify-content-end">
-            <button class="btn btn-success btn-add" data-toggle="modal" data-target="#createTaskModal">Tạo đơn nghỉ</button>
+            <a href="don_nghi_list_self.php" class="btn btn-primary" >Đơn nghỉ của bản thân
+            </a>
         </div>
     </div>
 
