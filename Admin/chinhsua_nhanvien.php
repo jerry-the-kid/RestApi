@@ -214,7 +214,7 @@ require_once ('admin_validate.php');
 
     const updateEmployee = function () {
         $("#saveBtn").click(function(event) {
-            let isFileNull = $('#exampleFormControlFile1').get(0).files.length
+            let isFileExisted = $('#exampleFormControlFile1').get(0).files.length
             let hoTen = $("#name").val();
             let phone = $("#phone").val();
             let address = $("#inputAddress").val();
@@ -227,7 +227,7 @@ require_once ('admin_validate.php');
             {
                 alertDanger("Dữ liệu không được để trống");
             }
-            else if(isFileNull === 0){
+            else if(isFileExisted === 0){
                 let url = window.location.href;
                 let id = url.split('id=').pop();
 

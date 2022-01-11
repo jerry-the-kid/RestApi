@@ -171,7 +171,7 @@ require_once ('admin_validate.php');
 
     const addEmployee = function () {
         $("#saveBtn").click(function(event) {
-            let isFileNull = $('#exampleFormControlFile1').get(0).files.length
+            let isFileExisted = $('#exampleFormControlFile1').get(0).files.length
             let hoTen = $("#name").val();
             let phone = $("#phone").val();
             let address = $("#inputAddress").val();
@@ -179,7 +179,7 @@ require_once ('admin_validate.php');
             let email = $("#email").val();
             let username = $("#username").val();
 
-            if(isFileNull === 0 || hoTen === '' || phone === '' || address === '' || ngaySinh === '' ||
+            if(isFileExisted === 0 || hoTen === '' || phone === '' || address === '' || ngaySinh === '' ||
                 email === '' || username === '')
             {
                 alertDanger("Dữ liệu không được để trống");
