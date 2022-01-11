@@ -152,7 +152,10 @@ require_once ('tlead_validate.php');
 
     function deleteAll(){
         $(document).on("click", "#deleteConfirm", function(){
-            
+            $.post("http://localhost/final/api/delete-all-cancel-task.php",{id : user_id}, function(data, status) {
+                loadProduct();
+                $('#deletedModal').modal('hide');
+            },"json");
         });
     }
     

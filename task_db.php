@@ -105,3 +105,16 @@ function updateTaskToWaiting($taskid, $submit_folder, $message_employee){
     }
     return 0;
 }
+
+function deleteTask($taskId){
+    $conn = getConnection();
+    $sql = "DELETE FROM task_info WHERE task_info.TASK_ID = $taskId";
+    $stm = $conn->prepare($sql);
+    $stm->execute();
+    
+    $sql = "DELETE FROM task WHERE task.TASK_ID = $taskId";
+    $stm = $conn->prepare($sql);
+    $stm->execute();
+
+    return 1;
+}

@@ -42,7 +42,7 @@ function get_task_teamLead($id){
 
 function get_cancel_task_teamLead($id){
     $conn = getConnection();
-    $sql = "SELECT t.TASK_ID, TIEU_DE, MA_NGUOI_NHAN, HO_TEN, DEADLINE, STATUS
+    $sql = "SELECT t.TASK_ID, TIEU_DE, MA_NGUOI_NHAN, HO_TEN, DEADLINE, STATUS, SUPPORT_FOLDER_PATH
     FROM task t join task_info ti on t.TASK_ID = ti.TASK_ID
     join user on MA_NGUOI_NHAN = MA_USER
     where MA_NGUOI_GIAO = $id and STATUS = 'canceled'";
