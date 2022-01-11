@@ -30,7 +30,7 @@ require_once ('admin_validate.php');
                     <a class="nav-link" href="index.php">Nhân viên</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="phong_ban_info.php">Phòng ban<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="phong_ban_list.php">Phòng ban<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="truong_phong.php">Trưởng phòng</a>
@@ -69,15 +69,16 @@ require_once ('admin_validate.php');
         </div>
     </div>
     <div class="row bg-light rounded p-4">
-        <div class="col-12 mb-4"><h3>Phòng thiết kế</h3></div>
-        <div class="col-6"><p><span class="font-weight-bold">Số phòng :</span> L4.003 </p></div>
-        <div class="col-6"><p><span class="font-weight-bold">Mã phòng ban : </span>PB1</p></div>
-        <div class="col-6"><p><span class="font-weight-bold">Mã tổ trưởng : </span>MV1</p></div>
-        <div class="col-6"><p><span class="font-weight-bold">Tên tổ trưởng : </span>Văn A</p></div>
-        <div class="col-md-9"><p><span class="font-weight-bold">Mô tả : </span>Quisque elementum faucibus mi a venenatis.
-            Donec non pharetra sem, at venenatis lectus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi
-            blanditiis perspiciatis placeat praesentium ullam vitae voluptatem! Commodi consequatur dolorum maiores
-        </p></div>
+        <div class="col-12 mb-4"><h3><span id="dpName"></span></h3></div>
+        <div class="col-6"><p><span class="font-weight-bold">Số phòng :</span> <span id="dpNumber"></span> </p></div>
+        <div class="col-6"><p><span class="font-weight-bold">Mã phòng ban : </span><span id="dpId"></span></p></div>
+        <div class="col-6"><p><span class="font-weight-bold">Mã tổ trưởng : </span><span id="tleadId"></span></p></div>
+        <div class="col-6"><p><span class="font-weight-bold">Tên tổ trưởng : </span><span id="tleadName"></span></p></div>
+        <div class="col-md-9">
+            <p>
+                <span class="font-weight-bold">Mô tả : </span><span id="desc"></span>
+            </p>
+        </div>
     </div>
 </div>
 
@@ -86,9 +87,7 @@ require_once ('admin_validate.php');
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
@@ -96,4 +95,42 @@ require_once ('admin_validate.php');
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 </body>
+
+<script>
+    function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+        return false;
+    };
+
+    const fillData = function(){
+        let id = getUrlParameter("id");
+
+        $.post('http://localhost/final/API/get_dp_info.php', {pb: id}).done(function (respone) {
+            dpInfo = respone['data'][0];
+
+            $("#dpName").text(dpInfo.TEN_PB);
+            $("#dpNumber").text(dpInfo.SO_PHONG);
+            $("#dpId").text(dpInfo.MA_PHONG_BAN);
+            $("#tleadID").text("NV" + dpInfo.MA_NV);
+            $("#tleadName").text(dpInfo.HO_TEN);
+            $("#desc").text(dpInfo.MO_TA);
+        })
+    }
+
+    $(document).ready(function () {
+        fillData();
+    })
+</script>
+
 </html>

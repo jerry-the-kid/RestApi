@@ -239,14 +239,14 @@ require_once ('admin_validate.php');
         $('#table-body').html('');
         data.forEach((info) => {
             $('#table-body').append(`
-                     <tr>
+                <tr>
                     <td>PB${info.MA_PHONG_BAN}</td>
                     <td>${info.TEN_PB}</td>
                     <td>${info.SO_PHONG}</td>
                     <td>
-                        <a href="phong_ban_info.php" class="text-primary" style="text-decoration: none">Chi tiết</a>
+                        <a href="phong_ban_info.php?id=${info.MA_PHONG_BAN}" class="text-primary" style="text-decoration: none">Chi tiết</a>
                         |
-                        <button href="#" class="text-primary"
+                        <button href="#" class="text-primary" data-id="${info.MA_PHONG_BAN}"
                                 type="button" data-toggle="modal" data-target="#updatedModal"
                                 style="border: none; background-color: inherit; cursor: pointer">Cập nhật
                         </button>
