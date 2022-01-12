@@ -138,8 +138,6 @@ require_once('tlead_validate.php');
 </div>
 
 
-
-
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -151,10 +149,40 @@ require_once('tlead_validate.php');
         crossorigin="anonymous"></script>
 </body>
 
+
+
 <script type="application/javascript">
+    const id = <?php echo $_SESSION['user_id']  ?>;
     $('input[type="file"]').change(function (e) {
         var fileName = e.target.files[0].name;
         $('.custom-file-label').html(fileName);
+    });
+
+    const statusBadge = function (status){
+        if(status === 'waiting'){
+            return '<td><span class="badge badge-warning p-2">Waiting</span></td>';
+        } else if(status === 'approved') {
+            return '<td><span class="badge badge-success p-2">Approved</span></td>';
+        } else if(status === 'refused'){
+            return '<td><span class="badge badge-secondary p-2">Refused</span></td>';
+        }
+    }
+
+
+    $(document).ready(function (){
+        $.getJSON('../api/get_don_nghi_employee.php', {id : id}).done(function (res){
+            const data = res.data;
+            $('#table-body').html('');
+            data.forEach(function (el){
+                $('#table-body').append(`<tr>
+                    <td>${el.TIEU_DE}</td>
+                    <td>NV${el.MA_NV} - ${el.HO_TEN}</td>
+                    <td>${el.SO_NGAY}</td>
+                    ${statusBadge(el.TRANG_THAI)}
+                    <td><a href="don_nghi.php?DN=${el.MA_NGHI}" style="text-decoration: none">Xem chi tiết</a></td>
+                </tr>`);
+            });
+        });
     });
 </script>
 </html>

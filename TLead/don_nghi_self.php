@@ -69,8 +69,9 @@ require_once('tlead_validate.php');
             </div>
         </div>
         <div class="row p-4 bg-light rounded">
-            <div class="col-12 d-flex align-items-center justify-content-between badge__container">
+            <div class="col-12 d-flex align-items-center justify-content-between">
                 <p class="mb-0"><span id="info_sender">NV1 - Người gửi • 18/12</span></p>
+                <span class="badge badge-secondary px-3 py-2">Cancel</span>
             </div>
             <div style="margin : 30px 16px; border-bottom: 1px solid black; width: 100%"></div>
             <div class="col-12">
@@ -88,12 +89,12 @@ require_once('tlead_validate.php');
             <div class="mt-4 col-md-8 col-lg-6 ml-auto">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span id="ten_file" class="badge badge-secondary p-2">minhchung.ppt</span>
-                        <a id="download_link" href="#" class="btn btn-primary btn-sm">Download</a>
+                        <span class="badge badge-secondary p-2">minhchung.ppt</span>
+                        <button class="btn btn-primary btn-sm">Download</button>
                     </li>
                 </ul>
             </div>
-            <div class="mt-4 col-12 ml-auto d-flex justify-content-end btn_container">
+            <div class="mt-4 col-12 ml-auto d-flex justify-content-end">
                 <button class="btn-success btn" data-toggle="modal" data-target="#approvedModal">Approved</button>
                 <button class="btn-danger btn ml-2" data-toggle="modal" data-target="#refusedModal">Refused</button>
             </div>
@@ -116,7 +117,7 @@ require_once('tlead_validate.php');
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary btn-ok">Duyệt đơn</button>
+                    <button type="button" class="btn btn-primary">Duyệt đơn</button>
                 </div>
             </div>
         </div>
@@ -139,7 +140,7 @@ require_once('tlead_validate.php');
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-danger btn-not-ok">Từ chối</button>
+                    <button type="button" class="btn btn-danger">Từ chối</button>
                 </div>
             </div>
         </div>
@@ -158,66 +159,21 @@ require_once('tlead_validate.php');
     <script>
         const dn = <?php  echo $_GET['DN']  ?>;
 
-        const createDateFormat = function (date, options) {
-            const locale = navigator.language;
-            return new Intl.DateTimeFormat(
-                locale,
-                options
-            ).format(new Date(date));
-        }
-
-        const statusBadge = function (status){
-            if(status === 'waiting'){
-                return '<span class="badge badge-warning p-2">Waiting</span>';
-            } else if(status === 'approved') {
-                return '<span class="badge badge-success p-2">Approved</span>';
-            } else if(status === 'refused'){
-                return '<span class="badge badge-secondary p-2">Refused</span>';
-            }
-        }
-
-
         $(document).ready(function () {
             const tieu_de = $('#tieu_de');
             const sender = $('#info_sender');
             const date = $('#day');
-            const description = $('#des');
+            // const
 
-            $('.btn-ok').on('click', function (){
-                $.post('../api/update_don_nghi_status.php', {status : 'approved', dn : dn}).done(function (res){
-                    location.reload();
-                });
+                $.getJSON('../api/get_details_don_nghi.php', {dn : dn}).done(function (res){
+                const data = res.data;
+                console.log(data);
             });
-
-            $('.btn-not-ok').on('click', function (){
-                $.post('../api/update_don_nghi_status.php', {status : 'refused', dn : dn}).done(function (res){
-                    location.reload();
-                });
-            });
-
-           $.getJSON('../api/get_details_don_nghi.php', {dn : dn}).done(function (res){
-               const data = res.data[0];
-               console.log(data);
-               tieu_de.text(data.TIEU_DE);
-               sender.text(`NV${data.MA_NV} - ${data.HO_TEN} • ${createDateFormat(data.NGAY_LAM_DON, {
-                   day: 'numeric',
-                   month: 'numeric',
-               })}`);
-               date.text(data.SO_NGAY);
-               description.text(data.NOI_DUNG);
-               $('.badge__container').append(statusBadge(data.TRANG_THAI));
-               $('#ten_file').text(data.MINH_CHUNG?.split('/').pop());
-               $('#download_link').attr('href', `../api/download.php?file=${data.MINH_CHUNG}`);
-               if(data.TRANG_THAI !== 'waiting') {
-                   console.log('Hello');
-                   $('.btn_container').removeClass('d-flex');
-                   $('.btn_container').addClass('d-none');
-               }
-           });
         });
 
     </script>
     </body>
+
 
     </html>
 <?php
