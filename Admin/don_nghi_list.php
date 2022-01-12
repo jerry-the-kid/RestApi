@@ -214,7 +214,7 @@ require_once('admin_validate.php');
 
 
     const loadData = function () {
-        $.get('http://localhost:81/final/API/get_donnghi_teamLeaders.php').done(function (respone) {
+        $.get('http://localhost/final/API/get_donnghi_teamLeaders.php').done(function (respone) {
             const {data} = respone;
             renderTable(data);
             searchData = data;
