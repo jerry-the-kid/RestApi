@@ -58,32 +58,28 @@ require_once ('employee_validate.php');
     <div class="container">
         <div class="row mb-2 flex-column-reverse flex-md-row">
             <div class="col-md-6 col-12 mb-4 align-items-center justify-content-end">
-                <h2 class="font-weight-bold text-left">Testing sản phẩm</h2>
+                <h2 class="font-weight-bold text-left" id="tieu_de">Tiêu đề</h2>
             </div>
             <div class="col-md-6 col-12 mb-4 d-flex justify-content-end">
                 <a class="btn btn-light" href="don_nghi_list.php">Trở về danh sách</a>
             </div>
         </div>
         <div class="row p-4 bg-light rounded">
-            <div class="col-12 d-flex align-items-center justify-content-between">
-                <p class="mb-0">NV1 - Người gửi • 18/12</p>
-                <span class="badge badge-secondary px-3 py-2">Cancel</span>
+            <div class="col-12 d-flex align-items-center justify-content-between badge__container">
+                <p class="mb-0"><span id="info_sender"></span></p>
             </div>
             <div style="margin : 30px 16px; border-bottom: 1px solid black; width: 100%"></div>
             <div class="col-12">
-                Số ngày nghỉ đề cập : 3 ngày</p>
+                Số ngày nghỉ đề cập : <span id="day"></span> ngày</p>
             </div>
             <div class="col-12">
-                Nội dung: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam
-                quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam
-                voluptates! Distinctio nisi omnis recusandae. Aperiam atque ea, eius est minus molestiae, nobis officiis
-                praesentium provident quas qui quisquam, ratione suscipit vitae.
+                Nội dung: <span id="des"></span>
             </div>
             <div class="mt-4 col-md-8 col-lg-6 ml-auto">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span class="badge badge-secondary p-2">minhchung.ppt</span>
-                        <button class="btn btn-primary btn-sm">Download</button>
+                        <span id="ten_file" class="badge badge-secondary p-2">minhchung.ppt</span>
+                        <a id="download_link" href="#" class="btn btn-primary btn-sm">Download</a>
                     </li>
                 </ul>
             </div>
@@ -104,6 +100,67 @@ require_once ('employee_validate.php');
             crossorigin="anonymous"></script>
     </body>
 
+    <script>
+        const dn = <?php  echo $_GET['DN']  ?>;
 
+        const createDateFormat = function (date, options) {
+            const locale = navigator.language;
+            return new Intl.DateTimeFormat(
+                locale,
+                options
+            ).format(new Date(date));
+        }
+
+        const statusBadge = function (status){
+            if(status === 'waiting'){
+                return '<span class="badge badge-warning p-2">Waiting</span>';
+            } else if(status === 'approved') {
+                return '<span class="badge badge-success p-2">Approved</span>';
+            } else if(status === 'refused'){
+                return '<span class="badge badge-secondary p-2">Refused</span>';
+            }
+        }
+
+
+        $(document).ready(function () {
+            const tieu_de = $('#tieu_de');
+            const sender = $('#info_sender');
+            const date = $('#day');
+            const description = $('#des');
+
+            $('.btn-ok').on('click', function (){
+                $.post('../api/update_don_nghi_status.php', {status : 'approved', dn : dn}).done(function (res){
+                    location.reload();
+                });
+            });
+
+            $('.btn-not-ok').on('click', function (){
+                $.post('../api/update_don_nghi_status.php', {status : 'refused', dn : dn}).done(function (res){
+                    location.reload();
+                });
+            });
+
+           $.getJSON('../api/get_details_don_nghi.php', {dn : dn}).done(function (res){
+               const data = res.data[0];
+               console.log(data);
+               tieu_de.text(data.TIEU_DE);
+               sender.text(`NV${data.MA_NV} - ${data.HO_TEN} • ${createDateFormat(data.NGAY_LAM_DON, {
+                   day: 'numeric',
+                   month: 'numeric',
+               })}`);
+               date.text(data.SO_NGAY);
+               description.text(data.NOI_DUNG);
+               $('.badge__container').append(statusBadge(data.TRANG_THAI));
+               $('#ten_file').text(data.MINH_CHUNG?.split('/').pop());
+               $('#download_link').attr('href', `../api/download.php?file=${data.MINH_CHUNG}`);
+               if(data.TRANG_THAI !== 'waiting') {
+                   console.log('Hello');
+                   $('.btn_container').removeClass('d-flex');
+                   $('.btn_container').addClass('d-none');
+               }
+           });
+        });
+    </script>
+    
     </html>
 <?php

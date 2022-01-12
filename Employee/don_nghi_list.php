@@ -66,8 +66,8 @@ require_once('employee_validate.php');
         <div class="jumbotron jumbotron-fluid col-12 rounded" style="padding: 2rem">
             <div class="container d-flex justify-content-between">
                 <p class="lead mb-0"><b>Tổng ngày nghỉ :</b> 12 ngày </p>
-                <p class="lead mb-0"><b>Số ngày đã sử dụng :</b> 14 ngày </p>
-                <p class="lead mb-0"><b>Còn lại :</b> 14 ngày </p>
+                <p class="lead mb-0"><b>Số ngày đã sử dụng :</b> <span id="soNgayDaDung">0</span> ngày </p>
+                <p class="lead mb-0"><b>Còn lại :</b> <span id="soNgayConLai"></span> ngày </p>
             </div>
         </div>
     </div>
@@ -95,7 +95,7 @@ require_once('employee_validate.php');
                     <option>All</option>
                     <option value="3">Approved</option>
                     <option value="2">Refused</option>
-                    <option value="3">Waiting</option>
+                    <option value="1">Waiting</option>
                 </select>
             </div>
         </div>
@@ -109,33 +109,14 @@ require_once('employee_validate.php');
                 <tr>
                     <th scope="col">Tiêu đề</th>
                     <th scope="col">Trưởng phòng</th>
+                    <th scope="col">Ngày tạo</th>
                     <th scope="col">Số ngày</th>
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Tác vụ</th>
                 </tr>
                 </thead>
                 <tbody id="table-body">
-                <tr>
-                    <td>Vợ em đẻ sếp ạ</td>
-                    <td>NV01 - Mark</td>
-                    <td>3</td>
-                    <td><span class="badge badge-warning p-2">Waiting</span></td>
-                    <td><a href="don_nghi.php" style="text-decoration: none">Xem chi tiết</a></td>
-                </tr>
-                <tr>
-                    <td>Vợ bạn em đẻ sếp ạ</td>
-                    <td>NV02 - Mike</td>
-                    <td>12</td>
-                    <td><span class="badge badge-secondary p-2">Refused</span></td>
-                    <td><a href="don_nghi.php" style="text-decoration: none">Xem chi tiết</a></td>
-                </tr>
-                <tr>
-                    <td>Đi party</td>
-                    <td>NV02 - Johnny</td>
-                    <td>2</td>
-                    <td><span class="badge badge-success p-2">Approved</span></td>
-                    <td><a href="don_nghi.php" style="text-decoration: none">Xem chi tiết</a></td>
-                </tr>
+                    <!-- data goes here -->
                 </tbody>
             </table>
 
@@ -206,5 +187,74 @@ require_once('employee_validate.php');
         var fileName = e.target.files[0].name;
         $('.custom-file-label').html(fileName);
     });
+
+    const user_id = <?php echo $_SESSION['user_id'] ?>;
+    $(document).ready(function () {
+        ngayNghiDaDung();
+        loadDonNghiList();
+    });
+
+    function getStatusBadge(status){
+        if(status == 'waiting'){
+            return "badge badge-warning p-2";
+        }
+        else if(status == 'refused'){
+            return "badge badge-secondary p-2";
+        }
+        else if(status == 'approved'){
+            return "badge badge-success p-2"
+        }
+        else return "hey something went wrong";
+    }
+
+    function dateFormat(date){
+        let dateObj = new Date(date);
+        let month = dateObj.getMonth() + 1;
+        let day = dateObj.getDate();
+        let year = dateObj.getFullYear();
+        newdate = day + "/" + month + "/" + year;
+        return newdate;
+    }
+
+    const loadDonNghiList = function(){
+        $.get('http://localhost/final/API/get-employee-self-don-nghi.php', {id: user_id}).done(function (respone) {
+            let donNghiList = respone['data'];
+
+            $('#table-body').html('');
+            donNghiList.forEach((info) => {
+                let status = info.TRANG_THAI.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                    return letter.toUpperCase();
+                });
+
+                $('#table-body').append(
+                    `<tr>
+                        <td>${info.TIEU_DE}</td>
+                        <td>NV${info.tleadID} - ${info.tleadName}</td>
+                        <td>${dateFormat(info.NGAY_LAM_DON)}</td>
+                        <td>${info.SO_NGAY}</td>
+                        <td><span class="${getStatusBadge(info.TRANG_THAI)}">${status}</span></td>
+                        <td><a href="don_nghi.php?DN=${info.MA_NGHI}" style="text-decoration: none">Xem chi tiết</a></td>
+                    </tr>`
+                );
+            });
+        });
+    }
+
+    function soNgayConLai(soNgayDaDung){
+        return (12 - soNgayDaDung >= 0) ? 12 - soNgayDaDung : 0;
+    }
+
+    const ngayNghiDaDung = function(){
+        $.get('http://localhost/final/API/get-employee-used-day-off.php', {id: user_id}).done(function (respone) {
+            let soNgayDaDung = respone['data'][0]['SO_NGAY'];
+            let remain = soNgayConLai(soNgayDaDung);
+
+            $("#soNgayDaDung").text(soNgayDaDung);
+            $("#soNgayConLai").text(remain);
+
+            
+        });
+    }
+
 </script>
 </html>
