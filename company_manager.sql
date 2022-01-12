@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 06, 2022 at 03:56 AM
+-- Generation Time: Jan 12, 2022 at 05:03 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -65,6 +65,26 @@ CREATE TABLE `chi_tiet_don_nghi` (
   `MA_NV` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `chi_tiet_don_nghi`
+--
+
+INSERT INTO `chi_tiet_don_nghi` (`MA_NGHI`, `MA_NV`) VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 14),
+(5, 14),
+(6, 14),
+(7, 14),
+(8, 3),
+(9, 3),
+(10, 3),
+(11, 3),
+(12, 2),
+(13, 2),
+(14, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -76,8 +96,29 @@ CREATE TABLE `don_nghi` (
   `NOI_DUNG` text DEFAULT NULL,
   `MINH_CHUNG` text DEFAULT NULL,
   `SO_NGAY` int(11) DEFAULT NULL,
-  `TRANG_THAI` enum('approved','refused','waiting') DEFAULT 'waiting'
+  `TRANG_THAI` enum('approved','refused','waiting') DEFAULT 'waiting',
+  `NGAY_LAM_DON` date DEFAULT curdate()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `don_nghi`
+--
+
+INSERT INTO `don_nghi` (`MA_NGHI`, `NOI_DUNG`, `MINH_CHUNG`, `SO_NGAY`, `TRANG_THAI`, `NGAY_LAM_DON`) VALUES
+(1, 'Đi khám nghĩa vụ quân sự', '../minh_chung/vA064njj/minh_chung.pdf', 3, 'waiting', '2022-01-11'),
+(2, 'Về quê thăm gia đình', '../minh_chung/ZsIoH9w7/MV01.pdf', 4, 'approved', '2021-01-08'),
+(3, 'Bệnh tiểu đường ', '../minh_chung/1LMs1IPK/minh_chung.png', 2, 'refused', '2021-01-24'),
+(4, 'Đi thi Toeic', '../minh_chung/fLNYu5hT/minh_chung.pdf', 3, 'waiting', '2022-01-07'),
+(5, 'Không lý do', '../minh_chung/pocPIiAO/minh_chung.pdf', 4, 'refused', '2022-01-01'),
+(6, 'Bị nghi ngờ là F0 covid', '../minh_chung/JqXHFKKi/minh_chung.pdf', 7, 'approved', '2022-01-06'),
+(7, 'Họp đồng hương', '../minh_chung/bpauaiqT/minh_chung.docx', 2, 'refused', '2022-01-01'),
+(8, 'Đi khám nghĩa vụ quân sự', '../minh_chung/LO1mErFj/minh_chung.png', 5, 'waiting', '2022-01-12'),
+(9, 'Về quê thăm gia đình', '../minh_chung/o91EURSW/minh_chung.pdf', 4, 'refused', '2022-01-08'),
+(10, 'Bệnh tiểu đường ', '../minh_chung/bgeE9VMa/minh_chung.png', 6, 'approved', '2022-01-01'),
+(11, 'Đi thi Toeic', '../minh_chung/hcCFOSzQ/minh_chung.pdf', 1, 'waiting', '2022-01-13'),
+(12, 'Không lý do', '../minh_chung/FDAbVUqW/minh_chung.pdf', 2, 'refused', '2022-01-01'),
+(13, 'Bị nghi ngờ là F0 covid', '../minh_chung/y6aUF33P/minh_chung.txt', 5, 'approved', '2022-01-02'),
+(14, 'Họp đồng hương', '../minh_chung/bwMv5X7U/minh_chung.ppt', 4, 'refused', '2022-01-01');
 
 -- --------------------------------------------------------
 
@@ -139,7 +180,7 @@ INSERT INTO `task` (`TASK_ID`, `TIEU_DE`, `MO_TA`, `DEADLINE`, `SUPPORT_FOLDER_P
 (8, 'Tạo trang web tiếp thị sản phẩm', 'Trang web có phân quyền truy cập cho nhân viên và cho khách hàng riêng', '2022-01-08 15:00:00', '../file_gui/9CWtqp2XsH/demo.zip', '', '', NULL, '2022-01-04'),
 (9, 'Phiếu thu chi trong ngày của việc marketing', 'Phải có thông tin chi tiết những khoảng chi tiêu cho việc marketing trong ngày', NULL, NULL, NULL, NULL, NULL, '2021-12-02'),
 (10, 'Thống kê lại các văn bản pháp luật của công ty', 'Trong bản thống kê phải có ghi rõ ngày tháng cũng như chi tiết từng loại văn bản', NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
-(11, 'Bảng kế hoạch tuyển dụng', 'Có ngày tháng, địa điểm tuyển dụng rõ ràng và cả chi phí cụ thể cho ngày tuyển dụng', '2022-01-05 11:59:00', '../file_gui/A3kynytwAq/baoCao.docx', NULL, NULL, NULL, '2022-01-04'),
+(11, 'Bảng kế hoạch tuyển dụng', 'Có ngày tháng, địa điểm tuyển dụng rõ ràng và cả chi phí cụ thể cho ngày tuyển dụng', '2022-01-05 11:59:00', '../file_gui/A3kynytwAq/baoCao.docx', '', '', NULL, '2022-01-04'),
 (12, 'Báo cáo công việc tiếp thị tháng 12', 'Chỉ chú trọng kết quả', NULL, NULL, NULL, NULL, NULL, '2021-12-02'),
 (13, 'Bảng phân tích thị trường năm 2022', 'Thu thập thông tin tình hình các doanh nghiệp khác và ngành nào hay sản phẩm nào đang có xu hướng phát triển mạnh mẽ trong năm nay', NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
 (14, 'Nghiên cứu mô hình đề xuất sản phẩm', 'Đề xuất sản phẩm theo đánh giá của người dùng', NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
@@ -283,7 +324,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`MA_USER`, `HO_TEN`, `AVATAR_PATH`, `ADDRESS`, `PHONE`, `ngay_sinh`, `gioi_tinh`, `email`) VALUES
-(1, 'Tân Kim', NULL, '404, Thôn 1, Phường 56, Huyện Thịnh Thụy\nHà Tĩnh', '0186018571', '1990-06-01', '1', 'inguy@diep.info.vn'),
+(1, 'Tân Kim', '../image/1vSole7m/tankim.jpg', '404, Thôn 1, Phường 56, Huyện Thịnh Thụy\nHà Tĩnh', '0186018571', '1990-06-01', '1', 'inguy@diep.info.vn'),
 (2, 'Quỳnh Vũ', NULL, '479 Phố Đoàn Tâm Yến, Ấp Hiếu Bích, Quận Nhân\nĐà Nẵng', '8465085261', '1995-12-09', '0', 'hanh89@gmail.com'),
 (3, 'Quang Võ', NULL, '74 Phố Quang, Phường Hiền, Quận Trung Khu\nBắc Giang', '0283935612', '1980-09-16', '1', 'klu@phung.info.vn\n'),
 (4, 'Thịnh Nguyễn', NULL, '79, Thôn Lạc Sang, Ấp Chiêu Hảo, Quận 2\nĐắk Lắk', '0166196042', '1980-08-01', '1', 'vung@dang.gov.vn'),
@@ -318,7 +359,7 @@ CREATE TABLE `user_info` (
 --
 
 INSERT INTO `user_info` (`MA_NV`, `USER_NAME`, `MA_PHONG_BAN`, `CHUC_VU`, `MA_USER`) VALUES
-(1, 'tankimcokhi', 2, 'employee', 1),
+(1, 'tankimcokhi', 1, 'employee', 1),
 (2, 'quynhxinhdep123', 4, 'employee', 2),
 (3, 'quangit', 1, 'employee', 3),
 (4, 'thinhnguyen', 3, 'employee', 4),
@@ -404,16 +445,10 @@ ALTER TABLE `user_info`
 --
 
 --
--- AUTO_INCREMENT for table `chi_tiet_don_nghi`
---
-ALTER TABLE `chi_tiet_don_nghi`
-  MODIFY `MA_NGHI` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `don_nghi`
 --
 ALTER TABLE `don_nghi`
-  MODIFY `MA_NGHI` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `MA_NGHI` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `phong_ban`
