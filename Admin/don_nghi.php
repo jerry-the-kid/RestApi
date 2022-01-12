@@ -94,12 +94,54 @@ require_once ('admin_validate.php');
                 </ul>
             </div>
             <div class="mt-4 col-12 ml-auto d-flex justify-content-end">
-                <button class="btn-success btn">Approved</button>
-                <button class="btn-danger btn ml-2">Refused</button>
+                <button class="btn-success btn" data-toggle="modal" data-target="#approvedModal">Approved</button>
+                <button class="btn-danger btn ml-2" data-toggle="modal" data-target="#refusedModal">Refused</button>
             </div>
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="approvedModal" tabindex="-1" role="dialog" aria-labelledby="approvedModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="approvedModalLabel">Duyệt đơn nghỉ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                   <p>Bạn đồng ý duyệt đơn nghỉ này ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary">Duyệt đơn</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="refusedModal" tabindex="-1" role="dialog" aria-labelledby="refusedModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="refusedModalLabel">Từ chối đơn nghỉ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn đồng ý từ chối đơn nghỉ này ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-danger">Từ chối</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

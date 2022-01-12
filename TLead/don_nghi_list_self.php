@@ -62,7 +62,7 @@ require_once('tlead_validate.php');
 
     <div class="row">
         <div class="col-12 mb-4 align-items-center justify-content-end">
-            <h3 class="font-weight-bold">Danh Sách Đơn nghỉ</h3>
+            <h3 class="font-weight-bold">Danh Sách Đơn Nghỉ</h3>
         </div>
     </div>
     <div class="row">
@@ -145,6 +145,53 @@ require_once('tlead_validate.php');
                 </tbody>
             </table>
 
+        </div>
+    </div>
+</div>
+
+<!-- Create Task Modal-->
+<div class="modal fade" id="createTaskModal" tabindex="-1" role="dialog" aria-labelledby="createTaskModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createTaskModalLabel">Tạo task</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="createTaskForm">
+                    <div class="form-group">
+                        <label for="task-name" class="col-form-label">Tiêu đề</label>
+                        <input name="task" type="text" class="form-control" id="task-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="createTaskNVien">Số ngày :</label>
+                        <select name="nhanvien" class="form-control" id="createTaskNVien">
+                            <option value="1">1</option>
+                            <option value="1">2</option>
+                            <option value="1">3</option>
+                            <option value="1">4</option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">File đính kèm</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" name="file" class="custom-file-input" id="inputGroupFile01">
+                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        </div>
+                    </div>
+                    <div class="alert-modal-container">
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary btn-create-task">Create</button>
+            </div>
         </div>
     </div>
 </div>
