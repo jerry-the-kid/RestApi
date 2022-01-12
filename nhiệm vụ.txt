@@ -50,3 +50,32 @@ Nhân viên :
 
 
 _note : Hủy ở task list, Create task thêm badge, chuyển trưởng phòng khi đã giao task
+
+
+Đơn nghỉ admin :
+Lấy hết của trưởng phòng. 
+Aprove / Refused
+Lấy chi tiết
+
+Đơn nghỉ tlead :
+Lấy đơn nghỉ nhân viên phòng ban mình
+Xem chi tiết
+Approve / Refused
+Xem đơn nghỉ bản thân
+Hiện số ngày, Tổng ngày... Quá hạn Disable button khi quá hạn
+
+Đơn nghỉ employee :
+Xem chi tiết
+Xem đơn nghỉ bản thân
+Hiện số ngày, Tổng ngày... Quá hạn Disable button khi quá hạn
+
+
+//
+Reset MK
+Cập nhật phòng ban
+Search, Chuyển trang khi sai task
+Trang thông tin, Đổi mật khẩu
+
+
+
+
