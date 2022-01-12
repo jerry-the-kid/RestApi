@@ -65,13 +65,15 @@ require_once('tlead_validate.php');
             <h3 class="font-weight-bold">Danh Sách Đơn Nghỉ</h3>
         </div>
     </div>
+    <div class="container" id="alert-container">
+    </div>
     <div class="row">
         <div class="jumbotron jumbotron-fluid col-12 rounded" style="padding: 2rem">
             <div class="container">
                 <div class="d-flex justify-content-between">
-                    <p class="lead mb-0"><b>Tổng ngày nghỉ :</b> 12 ngày </p>
-                    <p class="lead mb-0"><b>Số ngày đã sử dụng :</b> 14 ngày </p>
-                    <p class="lead mb-0"><b>Còn lại :</b> 14 ngày </p>
+                    <p class="lead mb-0"><b>Tổng ngày nghỉ :</b> 15 ngày </p>
+                    <p class="lead mb-0"><b>Số ngày đã sử dụng :</b> <span id="date-used"></span> ngày</p>
+                    <p class="lead mb-0"><b>Còn lại :</b> <span id="date-left"></span> ngày</p>
                 </div>
             </div>
         </div>
@@ -150,7 +152,8 @@ require_once('tlead_validate.php');
 </div>
 
 <!-- Create Task Modal-->
-<div class="modal fade" id="createTaskModal" tabindex="-1" role="dialog" aria-labelledby="createTaskModalLabel" aria-hidden="true">
+<div class="modal fade" id="createTaskModal" tabindex="-1" role="dialog" aria-labelledby="createTaskModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -162,25 +165,30 @@ require_once('tlead_validate.php');
             <div class="modal-body">
                 <form id="createTaskForm">
                     <div class="form-group">
-                        <label for="task-name" class="col-form-label">Tiêu đề</label>
-                        <input name="task" type="text" class="form-control" id="task-name">
+                        <label for="title" class="col-form-label">Tiêu đề</label>
+                        <input name="title" type="text" class="form-control" id="title">
                     </div>
                     <div class="form-group">
-                        <label for="createTaskNVien">Số ngày :</label>
-                        <select name="nhanvien" class="form-control" id="createTaskNVien">
+                        <label for="date_left_form">Số ngày :</label>
+                        <select name="date" class="form-control" id="date_left_form">
                             <option value="1">1</option>
                             <option value="1">2</option>
                             <option value="1">3</option>
                             <option value="1">4</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="description" class="col-form-label">Mô tả</label>
+                        <textarea class="form-control" name="description" id="description" cols="10"
+                                  rows="3"></textarea>
+                    </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">File đính kèm</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" name="file" class="custom-file-input" id="inputGroupFile01">
-                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            <input type="file" name="file" class="custom-file-input" id="file">
+                            <label class="custom-file-label" for="file">Choose file</label>
                         </div>
                     </div>
                     <div class="alert-modal-container">
@@ -190,7 +198,7 @@ require_once('tlead_validate.php');
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary btn-create-task">Create</button>
+                <button type="button" class="btn btn-primary btn-create">Create</button>
             </div>
         </div>
     </div>
@@ -208,9 +216,103 @@ require_once('tlead_validate.php');
 </body>
 
 <script type="application/javascript">
+    let dateUsed, dateLeft;
+    const id = <?php echo $_SESSION['user_id']  ?>;
     $('input[type="file"]').change(function (e) {
         var fileName = e.target.files[0].name;
         $('.custom-file-label').html(fileName);
     });
+
+    const alertSuccess = function (message) {
+        const alert = `<div class="alert alert-success" role="alert">
+         ${message}
+         </div>`;
+        $('#alert-container').append(alert);
+        $('.alert-success').fadeOut(3500);
+    }
+
+    const alertDanger = function (message) {
+        const alert = `<div class="alert alert-danger" role="alert">
+         ${message}
+         </div>`;
+        $('#alert-container').append(alert);
+        $('.alert-danger').fadeOut(4500);
+    }
+
+
+    const alertFormDanger = function (container, message) {
+        $(container).html('');
+        $(container).append(`<div class="alert alert-danger alert-dismissible fade show" role="alert" id="modal-alert">
+        ${message}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>`);
+    }
+
+
+    const loadDate = function () {
+        $.get('../api/get_ngay_nghi_trong_nam_tlead.php', {id: id}).done(function (res) {
+            const data = res.data;
+            dateUsed = data.reduce((el, el_1) => el.SO_NGAY + el_1.SO_NGAY);
+            $('#date-used').text(dateUsed);
+            dateLeft = 15 - dateUsed;
+            $('#date-left').text(dateLeft);
+            $('#date_left_form').html('');
+            for (let i = 1; i <= dateLeft; i++) {
+                $('#date_left_form').append(`<option value="${i}">${i}</option>`);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        const title = $('#title');
+        const dateLeftForm = $('#date_left_form');
+        const description = $('#description');
+        const file = $('#file');
+        loadDate();
+        $('.btn-create').on('click', function () {
+            console.log(file.get(0).files.length);
+            if (!title.val()) {
+                alertFormDanger('.alert-modal-container', 'Tiêu đề còn thiếu. Vui lòng nhập');
+                title.focus();
+            } else if (!description.val()) {
+                alertFormDanger('.alert-modal-container', 'Nội dung còn thiếu. Vui lòng nhập');
+                description.focus();
+            } else if (file.get(0).files.length === 0) {
+                alertFormDanger('.alert-modal-container', 'File minh chứng còn thiếu. Vui lòng thêm');
+            } else {
+                const form = $('#createTaskForm')[0];
+                const formData = new FormData(form);
+                formData.append("sender", id);
+
+                $.ajax({
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    url: "../api/create_don_nghi_tlead.php",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 600000,
+                    success: function (data) {
+                        alertSuccess(data.message);
+                        $('#createTaskModal').modal('hide');
+                    },
+                    error: function (e) {
+                        $('#createTaskModal').modal('hide');
+                        alertDanger(e.responseText);
+                    }
+                });
+            }
+        });
+
+        [title, description, file].forEach(el => {
+            el.on('input', function () {
+                $('.alert-modal-container').html('');
+            });
+        });
+    });
+
 </script>
 </html>

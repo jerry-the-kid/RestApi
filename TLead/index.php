@@ -362,15 +362,13 @@ require_once ('tlead_validate.php');
                     cache: false,
                     timeout: 600000,
                     success: function (data) {
-                        console.log("SUCCESS : ", data);
                         $('#createTaskModal').modal('hide');
                         alertSuccess(data.message);
                         loadProduct();
                     },
                     error: function (e) {
-                        console.log("ERROR : ", e);
                         $('#createTaskModal').modal('hide');
-                        alertDanger(e);
+                        alertDanger(e.responseText);
                     }
                 });
 
