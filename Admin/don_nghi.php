@@ -64,7 +64,7 @@ require_once ('admin_validate.php');
     <div class="container">
         <div class="row mb-2 flex-column-reverse flex-md-row">
             <div class="col-md-6 col-12 mb-4 align-items-center justify-content-end">
-                <h2 class="font-weight-bold text-left">Testing sản phẩm</h2>
+                <h2 class="font-weight-bold text-left" id="tieu_de"></h2>
             </div>
             <div class="col-md-6 col-12 mb-4 d-flex justify-content-end">
                 <button class="btn btn-light">Trở về danh sách</button>
@@ -72,24 +72,16 @@ require_once ('admin_validate.php');
         </div>
         <div class="row p-4 bg-light rounded">
             <div class="col-12 d-flex align-items-center justify-content-between">
-                <p class="mb-0">NV1 - Người gửi • 18/12</p>
-                <span class="badge badge-secondary px-3 py-2">Cancel</span>
+                <p class="mb-0">NV<span id="ma_nv"></span> - <span id="ho_ten"></span> • <span id="date_create"></span></p>
+                <span id="trang_thai"></span>
             </div>
             <div style="margin : 30px 16px; border-bottom: 1px solid black; width: 100%"></div>
             <div class="col-12">
-                Số ngày nghỉ đề cập : 3 ngày</p>
-            </div>
-            <div class="col-12">
-                Nội dung: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam
-                quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam
-                voluptates! Distinctio nisi omnis recusandae. Aperiam atque ea, eius est minus molestiae, nobis officiis
-                praesentium provident quas qui quisquam, ratione suscipit vitae.
+                Số ngày nghỉ đề cập : <span id="so_ngay_nghi"></span></p>
             </div>
             <div class="mt-4 col-md-8 col-lg-6 ml-auto">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span class="badge badge-secondary p-2">minhchung.ppt</span>
-                        <button class="btn btn-primary btn-sm">Download</button>
+                    <li class="list-group-item d-flex justify-content-between align-items-center" id="minh_chung">
                     </li>
                 </ul>
             </div>
@@ -154,8 +146,46 @@ require_once ('admin_validate.php');
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
+
+    <script>
+        const idnghi = <?php echo $_GET['madonnghi'] ?>;
+
+        const createDateFormat = function (date, options) {
+            const locale = navigator.language;
+            return new Intl.DateTimeFormat(
+                locale,
+                options
+            ).format(new Date(date));
+        }
+
+        const renderStatus = function (status) {
+            if (status === 'waiting') return "<span class = 'badge badge-warning p-2'>waiting</span>";
+            if (status === 'refused') return "<span class = 'badge badge-secondary p-2'>refused</span>";
+            if (status === 'approved') return "<span class = 'badge badge-success p-2'>approved</span>";
+        }
+
+        $(document).ready(function () {
+            $.get('http://localhost/final/api/get_chi_tiet_don_nghi_tlead.php', {id: idnghi}).done(function (response) {
+                console.log(response);
+                const task = response.data[0];
+                $('#tieu_de').text(task.NOI_DUNG);
+                $('#ma_nv').text(task.MA_NV);
+                $('#ho_ten').text(task.HO_TEN);
+                $('#date_create').text(createDateFormat(task.NGAY_LAM_DON, {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                }));
+                $('#trang_thai').append(renderStatus(task.TRANG_THAI));
+                $('#so_ngay_nghi').text(task.SO_NGAY);
+                $('#minh_chung').append(`<p class="p-2 badge badge-secondary card-text mb-0">${task.MINH_CHUNG?.split('/').slice(-1)}</p>
+            <a href="../api/download.php?file=${task.MINH_CHUNG}" class="btn btn-primary btn-sm">Download</a>`);
+            });
+        });
+
+    </script>
+
     </body>
 
 
     </html>
-<?php
