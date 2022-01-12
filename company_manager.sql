@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 12, 2022 at 05:03 AM
+-- Generation Time: Jan 12, 2022 at 09:39 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -93,32 +93,33 @@ INSERT INTO `chi_tiet_don_nghi` (`MA_NGHI`, `MA_NV`) VALUES
 
 CREATE TABLE `don_nghi` (
   `MA_NGHI` int(11) NOT NULL,
-  `NOI_DUNG` text DEFAULT NULL,
+  `TIEU_DE` text DEFAULT NULL,
   `MINH_CHUNG` text DEFAULT NULL,
   `SO_NGAY` int(11) DEFAULT NULL,
   `TRANG_THAI` enum('approved','refused','waiting') DEFAULT 'waiting',
-  `NGAY_LAM_DON` date DEFAULT curdate()
+  `NGAY_LAM_DON` date DEFAULT curdate(),
+  `NOI_DUNG` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `don_nghi`
 --
 
-INSERT INTO `don_nghi` (`MA_NGHI`, `NOI_DUNG`, `MINH_CHUNG`, `SO_NGAY`, `TRANG_THAI`, `NGAY_LAM_DON`) VALUES
-(1, 'Đi khám nghĩa vụ quân sự', '../minh_chung/vA064njj/minh_chung.pdf', 3, 'waiting', '2022-01-11'),
-(2, 'Về quê thăm gia đình', '../minh_chung/ZsIoH9w7/MV01.pdf', 4, 'approved', '2021-01-08'),
-(3, 'Bệnh tiểu đường ', '../minh_chung/1LMs1IPK/minh_chung.png', 2, 'refused', '2021-01-24'),
-(4, 'Đi thi Toeic', '../minh_chung/fLNYu5hT/minh_chung.pdf', 3, 'waiting', '2022-01-07'),
-(5, 'Không lý do', '../minh_chung/pocPIiAO/minh_chung.pdf', 4, 'refused', '2022-01-01'),
-(6, 'Bị nghi ngờ là F0 covid', '../minh_chung/JqXHFKKi/minh_chung.pdf', 7, 'approved', '2022-01-06'),
-(7, 'Họp đồng hương', '../minh_chung/bpauaiqT/minh_chung.docx', 2, 'refused', '2022-01-01'),
-(8, 'Đi khám nghĩa vụ quân sự', '../minh_chung/LO1mErFj/minh_chung.png', 5, 'waiting', '2022-01-12'),
-(9, 'Về quê thăm gia đình', '../minh_chung/o91EURSW/minh_chung.pdf', 4, 'refused', '2022-01-08'),
-(10, 'Bệnh tiểu đường ', '../minh_chung/bgeE9VMa/minh_chung.png', 6, 'approved', '2022-01-01'),
-(11, 'Đi thi Toeic', '../minh_chung/hcCFOSzQ/minh_chung.pdf', 1, 'waiting', '2022-01-13'),
-(12, 'Không lý do', '../minh_chung/FDAbVUqW/minh_chung.pdf', 2, 'refused', '2022-01-01'),
-(13, 'Bị nghi ngờ là F0 covid', '../minh_chung/y6aUF33P/minh_chung.txt', 5, 'approved', '2022-01-02'),
-(14, 'Họp đồng hương', '../minh_chung/bwMv5X7U/minh_chung.ppt', 4, 'refused', '2022-01-01');
+INSERT INTO `don_nghi` (`MA_NGHI`, `TIEU_DE`, `MINH_CHUNG`, `SO_NGAY`, `TRANG_THAI`, `NGAY_LAM_DON`, `NOI_DUNG`) VALUES
+(1, 'Đi khám nghĩa vụ quân sự', '../minh_chung/vA064njj/minh_chung.pdf', 3, 'waiting', '2022-01-11', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
+(2, 'Về quê thăm gia đình', '../minh_chung/ZsIoH9w7/MV01.pdf', 4, 'approved', '2021-01-08', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
+(3, 'Bệnh tiểu đường ', '../minh_chung/1LMs1IPK/minh_chung.png', 2, 'refused', '2021-01-24', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
+(4, 'Đi thi Toeic', '../minh_chung/fLNYu5hT/minh_chung.pdf', 3, 'waiting', '2022-01-07', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
+(5, 'Không lý do', '../minh_chung/pocPIiAO/minh_chung.pdf', 4, 'refused', '2022-01-01', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
+(6, 'Bị nghi ngờ là F0 covid', '../minh_chung/JqXHFKKi/minh_chung.pdf', 7, 'approved', '2022-01-06', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
+(7, 'Họp đồng hương', '../minh_chung/bpauaiqT/minh_chung.docx', 2, 'refused', '2022-01-01', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
+(8, 'Đi khám nghĩa vụ quân sự', '../minh_chung/LO1mErFj/minh_chung.png', 5, 'waiting', '2022-01-12', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
+(9, 'Về quê thăm gia đình', '../minh_chung/o91EURSW/minh_chung.pdf', 4, 'refused', '2022-01-08', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
+(10, 'Bệnh tiểu đường ', '../minh_chung/bgeE9VMa/minh_chung.png', 6, 'approved', '2022-01-01', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
+(11, 'Đi thi Toeic', '../minh_chung/hcCFOSzQ/minh_chung.pdf', 1, 'waiting', '2022-01-13', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
+(12, 'Không lý do', '../minh_chung/FDAbVUqW/minh_chung.pdf', 2, 'refused', '2022-01-01', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
+(13, 'Bị nghi ngờ là F0 covid', '../minh_chung/y6aUF33P/minh_chung.txt', 5, 'approved', '2022-01-02', 'Lorem ipsum dolor sit amet'),
+(14, 'Họp đồng hương', '../minh_chung/bwMv5X7U/minh_chung.ppt', 4, 'refused', '2022-01-01', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. ');
 
 -- --------------------------------------------------------
 
