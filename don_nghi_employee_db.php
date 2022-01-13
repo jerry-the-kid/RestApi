@@ -29,7 +29,7 @@
         $sql = "SELECT SUM(don_nghi.SO_NGAY) AS SO_NGAY
                 FROM don_nghi, chi_tiet_don_nghi
                 WHERE YEAR(don_nghi.NGAY_LAM_DON) = YEAR(CURDATE()) AND chi_tiet_don_nghi.MA_NGHI = don_nghi.MA_NGHI
-                AND chi_tiet_don_nghi.MA_NV = $id";
+                AND don_nghi.TRANG_THAI = 'approved' AND chi_tiet_don_nghi.MA_NV = $id";
 
         $stm = $conn->prepare($sql);
         if (!$stm->execute()) {

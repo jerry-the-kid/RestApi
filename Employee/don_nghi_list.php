@@ -62,12 +62,14 @@ require_once('employee_validate.php');
         </div>
     </div>
 
+    <div class="container" id="alert-container"></div>
+
     <div class="row">
         <div class="jumbotron jumbotron-fluid col-12 rounded" style="padding: 2rem">
             <div class="container d-flex justify-content-between">
                 <p class="lead mb-0"><b>Tổng ngày nghỉ :</b> 12 ngày </p>
                 <p class="lead mb-0"><b>Số ngày đã sử dụng :</b> <span id="soNgayDaDung">0</span> ngày </p>
-                <p class="lead mb-0"><b>Còn lại :</b> <span id="soNgayConLai"></span> ngày </p>
+                <p class="lead mb-0"><b>Còn lại :</b> <span id="soNgayConLai">12</span> ngày </p>
             </div>
         </div>
     </div>
@@ -80,7 +82,7 @@ require_once('employee_validate.php');
             </form>
         </div>
         <div class="col-12 col-md-4 d-flex align-items-center justify-content-end">
-            <button class="btn btn-success btn-add" data-toggle="modal" data-target="#createTaskModal">Tạo đơn nghỉ
+            <button id="createDonNghi" class="btn btn-success btn-add" data-toggle="modal" data-target="#createDonNghiModal">Tạo đơn nghỉ
             </button>
         </div>
     </div>
@@ -124,8 +126,8 @@ require_once('employee_validate.php');
     </div>
 </div>
 
-<!-- Create Task Modal-->
-<div class="modal fade" id="createTaskModal" tabindex="-1" role="dialog" aria-labelledby="createTaskModalLabel" aria-hidden="true">
+<!-- Create Đơn nghỉ Modal-->
+<div class="modal fade" id="createDonNghiModal" tabindex="-1" role="dialog" aria-labelledby="createTaskModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -137,25 +139,27 @@ require_once('employee_validate.php');
             <div class="modal-body">
                 <form id="createTaskForm">
                     <div class="form-group">
-                        <label for="task-name" class="col-form-label">Tiêu đề</label>
-                        <input name="task" type="text" class="form-control" id="task-name">
+                        <label for="title" class="col-form-label">Tiêu đề</label>
+                        <input name="title" type="text" class="form-control" id="title">
                     </div>
                     <div class="form-group">
-                        <label for="createTaskNVien">Số ngày :</label>
-                        <select name="nhanvien" class="form-control" id="createTaskNVien">
-                            <option value="1">1</option>
-                            <option value="1">2</option>
-                            <option value="1">3</option>
-                            <option value="1">4</option>
+                        <label for="date_left_form">Số ngày :</label>
+                        <select name="date" class="form-control" id="date_left_form">
+                            <!-- load option here -->
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="col-form-label">Nội dung</label>
+                        <textarea class="form-control" name="description" id="description" cols="10"
+                                  rows="3"></textarea>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">File đính kèm</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" name="file" class="custom-file-input" id="inputGroupFile01">
-                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            <input type="file" name="file" class="custom-file-input" id="file">
+                            <label class="custom-file-label" for="file">Choose file</label>
                         </div>
                     </div>
                     <div class="alert-modal-container">
@@ -165,7 +169,7 @@ require_once('employee_validate.php');
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success btn-create-task">Tạo</button>
+                <button type="button" class="btn btn-primary btn-create">Create</button>
             </div>
         </div>
     </div>
@@ -190,8 +194,8 @@ require_once('employee_validate.php');
 
     const user_id = <?php echo $_SESSION['user_id'] ?>;
     $(document).ready(function () {
-        ngayNghiDaDung();
         loadDonNghiList();
+        addDonNghi();
     });
 
     function getStatusBadge(status){
@@ -217,26 +221,41 @@ require_once('employee_validate.php');
     }
 
     const loadDonNghiList = function(){
+        ngayNghiDaDung();
+
         $.get('http://localhost/final/API/get-employee-self-don-nghi.php', {id: user_id}).done(function (respone) {
             let donNghiList = respone['data'];
 
-            $('#table-body').html('');
-            donNghiList.forEach((info) => {
-                let status = info.TRANG_THAI.toLowerCase().replace(/\b[a-z]/g, function(letter) {
-                    return letter.toUpperCase();
+            if(donNghiList){
+                $('#table-body').html('');
+                donNghiList.forEach((info) => {
+                    let status = info.TRANG_THAI.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                        return letter.toUpperCase();
+                    });
+
+                    $('#table-body').append(
+                        `<tr>
+                            <td>${info.TIEU_DE}</td>
+                            <td>NV${info.tleadID} - ${info.tleadName}</td>
+                            <td>${dateFormat(info.NGAY_LAM_DON)}</td>
+                            <td>${info.SO_NGAY}</td>
+                            <td><span class="${getStatusBadge(info.TRANG_THAI)}">${status}</span></td>
+                            <td><a href="don_nghi.php?DN=${info.MA_NGHI}" style="text-decoration: none">Xem chi tiết</a></td>
+                        </tr>`
+                    );
                 });
 
-                $('#table-body').append(
-                    `<tr>
-                        <td>${info.TIEU_DE}</td>
-                        <td>NV${info.tleadID} - ${info.tleadName}</td>
-                        <td>${dateFormat(info.NGAY_LAM_DON)}</td>
-                        <td>${info.SO_NGAY}</td>
-                        <td><span class="${getStatusBadge(info.TRANG_THAI)}">${status}</span></td>
-                        <td><a href="don_nghi.php?DN=${info.MA_NGHI}" style="text-decoration: none">Xem chi tiết</a></td>
-                    </tr>`
-                );
-            });
+                let currentDate = new Date();
+                let lastDonNghiDate = new Date(donNghiList[0].NGAY_LAM_DON)
+
+                var timeDiff = Math.abs(currentDate - lastDonNghiDate);
+                var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+
+                if(diffDays <= 7){
+                    $("#createDonNghi").prop('disabled', true);
+                    $("#createDonNghi").text("Bạn vừa mới làm đơn nghỉ");
+                }
+            }
         });
     }
 
@@ -249,10 +268,101 @@ require_once('employee_validate.php');
             let soNgayDaDung = respone['data'][0]['SO_NGAY'];
             let remain = soNgayConLai(soNgayDaDung);
 
-            $("#soNgayDaDung").text(soNgayDaDung);
-            $("#soNgayConLai").text(remain);
+            if(soNgayDaDung){
+                $("#soNgayDaDung").text(soNgayDaDung);
+                $("#soNgayConLai").text(remain);
 
-            
+                if(remain <= 0){
+                    $("#createDonNghi").prop('disabled', true);
+                    $("#createDonNghi").text("Đã dùng hết ngày nghỉ");
+                }
+                else{
+                    loadOption(remain);
+                }
+            }
+            else{
+                $("#soNgayDaDung").text("0");
+                $("#soNgayConLai").text("12");
+
+                loadOption(12);
+            }
+        });
+    }
+
+    const alertSuccess = function (message) {
+        const alert = `<div class="alert alert-success" role="alert">
+         ${message}
+         </div>`;
+        $('#alert-container').append(alert);
+        $('.alert-success').fadeOut(3500);
+    }
+
+    const alertDanger = function (message) {
+        const alert = `<div class="alert alert-danger" role="alert">
+         ${message}
+         </div>`;
+        $('#alert-container').append(alert);
+        $('.alert-danger').fadeOut(4500);
+    }
+
+
+    const alertFormDanger = function (container, message) {
+        $(container).html('');
+        $(container).append(
+            `<div class="alert alert-danger alert-dismissible fade show" role="alert" id="modal-alert">
+                ${message}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>`);
+    }
+
+    const loadOption = function(dateLeft){
+        $('#date_left_form').html('');
+        for (let i = 1; i <= dateLeft; i++) {
+            $('#date_left_form').append(`<option value="${i}">${i}</option>`);
+        }
+    }
+
+    const addDonNghi = function(){
+        const title = $('#title');
+        const dateLeftForm = $('#date_left_form');
+        const description = $('#description');
+        const file = $('#file');
+        $('.btn-create').on('click', function () {
+            if (!title.val()) {
+                alertFormDanger('.alert-modal-container', 'Tiêu đề còn thiếu. Vui lòng nhập');
+                title.focus();
+            }else if (!description.val()) {
+                alertFormDanger('.alert-modal-container', 'Nội dung còn thiếu. Vui lòng nhập');
+                description.focus();
+            }else if (file.get(0).files.length === 0) {
+                alertFormDanger('.alert-modal-container', 'File minh chứng còn thiếu. Vui lòng thêm');
+            } else {
+                const form = $('#createTaskForm')[0];
+                const formData = new FormData(form);
+                formData.append("sender", user_id);
+
+                $.ajax({
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    url: "../api/create_don_nghi_tlead.php",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 600000,
+                    success: function (data) {
+                        loadDonNghiList();
+                        alertSuccess(data.message);
+                        $('#createTaskModal').modal('hide');
+                    },
+                    error: function (e) {
+                        $('#createTaskModal').modal('hide');
+                        alertDanger(e.responseText);
+                    }
+                });
+            }
         });
     }
 
