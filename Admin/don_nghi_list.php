@@ -202,7 +202,7 @@ require_once('admin_validate.php');
         data.forEach((info) => {
             $('#table-body').append(`
                     <tr>
-                        <td>${info.NOI_DUNG}</td>
+                        <td>${info.TIEU_DE}</td>
                         <td>NV${info.MA_NV} - ${info.HO_TEN}</td>
                         <td>${info.SO_NGAY}</td>
                         <td><span class="${check(info.TRANG_THAI)}">${info.TRANG_THAI}</span></td>

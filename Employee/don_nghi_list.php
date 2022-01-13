@@ -216,7 +216,7 @@ require_once('employee_validate.php');
         let month = dateObj.getMonth() + 1;
         let day = dateObj.getDate();
         let year = dateObj.getFullYear();
-        newdate = day + "/" + month + "/" + year;
+        newdate = month + "/" + day + "/" + year;
         return newdate;
     }
 

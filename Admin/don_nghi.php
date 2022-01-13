@@ -79,6 +79,9 @@ require_once ('admin_validate.php');
             <div class="col-12">
                 Số ngày nghỉ đề cập : <span id="so_ngay_nghi"></span></p>
             </div>
+            <div class="col-12">
+                Nội dung: <span id="noi_dung"></span>
+            </div>
             <div class="mt-4 col-md-8 col-lg-6 ml-auto">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center" id="minh_chung">
@@ -168,7 +171,7 @@ require_once ('admin_validate.php');
             $.get('http://localhost/final/api/get_chi_tiet_don_nghi_tlead.php', {id: idnghi}).done(function (response) {
                 console.log(response);
                 const task = response.data[0];
-                $('#tieu_de').text(task.NOI_DUNG);
+                $('#tieu_de').text(task.TIEU_DE);
                 $('#ma_nv').text(task.MA_NV);
                 $('#ho_ten').text(task.HO_TEN);
                 $('#date_create').text(createDateFormat(task.NGAY_LAM_DON, {
@@ -176,6 +179,7 @@ require_once ('admin_validate.php');
                     month: 'long',
                     year: 'numeric'
                 }));
+                $('#noi_dung').text(task.NOI_DUNG)
                 $('#trang_thai').append(renderStatus(task.TRANG_THAI));
                 $('#so_ngay_nghi').text(task.SO_NGAY);
                 $('#minh_chung').append(`<p class="p-2 badge badge-secondary card-text mb-0">${task.MINH_CHUNG?.split('/').slice(-1)}</p>

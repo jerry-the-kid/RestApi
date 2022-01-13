@@ -184,10 +184,10 @@ require_once ('employee_validate.php');
         let dateObj = new Date(date);
         let month = dateObj.getMonth() + 1;
         let day = dateObj.getDate();
-        let hours = dateObj.getHours();
-        let minute = dateObj.getMinutes();
+        let hours = ("0" + dateObj.getHours()).slice(-2);
+        let minute = ("0" + dateObj.getMinutes()).slice(-2);
 
-        newdate = day + "/" + month + " - " + hours + ":" + minute;
+        newdate = month + "/" + day + " - " + hours + ":" + minute;
         return newdate;
     }
 
@@ -196,7 +196,7 @@ require_once ('employee_validate.php');
         let month = dateObj.getMonth() + 1;
         let day = dateObj.getDate();
 
-        newdate = day + "/" + month;
+        newdate = month + "/" + day;
         return newdate;
     }
 
@@ -239,33 +239,6 @@ require_once ('employee_validate.php');
                     </li>`);
             });
 
-        });
-    }
-
-    const downloadSupportFile = function(supportFileList){
-        $(document).on ("click", "#downloadAll," + "button[id^=" + "file" + "]", function (event) {
-            if(this.id == 'downloadAll'){
-                event.preventDefault();
-
-                $.each(supportFileList, function( index, value ) {
-                    window.open(addDotToPathIfNeeded(value));
-                });
-            }
-            else{
-                event.preventDefault();
-
-                let fileIndex = this.id.substr(4);
-                window.open(addDotToPathIfNeeded(supportFileList[fileIndex]));
-            }
-        });
-    }
-    
-    const downloadSubmitFile = function(submitFileList){
-        $(document).on ("click", "#downloadSubmitFile", function (event) {
-            event.preventDefault();
-
-            let fileLastIndex = submitFileList.length - 1;
-            window.open(addDotToPathIfNeeded(submitFileList[fileLastIndex]));
         });
     }
 

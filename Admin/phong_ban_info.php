@@ -122,7 +122,7 @@ require_once ('admin_validate.php');
             $("#dpName").text(dpInfo.TEN_PB);
             $("#dpNumber").text(dpInfo.SO_PHONG);
             $("#dpId").text(dpInfo.MA_PHONG_BAN);
-            $("#tleadID").text("NV" + dpInfo.MA_NV);
+            $("#tleadId").text("NV" + dpInfo.MA_NV);
             $("#tleadName").text(dpInfo.HO_TEN);
             $("#desc").text(dpInfo.MO_TA);
         })

@@ -136,10 +136,10 @@ require_once ('tlead_validate.php');
         let dateObj = new Date(date);
         let month = dateObj.getMonth() + 1;
         let day = dateObj.getDate();
-        let hours = dateObj.getHours();
-        let minute = dateObj.getMinutes();
+        let hours = ("0" + dateObj.getHours()).slice(-2);
+        let minute = ("0" + dateObj.getMinutes()).slice(-2);
 
-        newdate = day + "/" + month + " - " + hours + ":" + minute;
+        newdate = month + "/" + day + " - " + hours + ":" + minute;
         return newdate;
     }
 
@@ -148,7 +148,7 @@ require_once ('tlead_validate.php');
         let month = dateObj.getMonth() + 1;
         let day = dateObj.getDate();
 
-        newdate = day + "/" + month;
+        newdate = month + "/" + day;
         return newdate;
     }
 

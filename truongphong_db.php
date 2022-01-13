@@ -103,7 +103,7 @@ function getEmployeeByTeamLead($id){
 
 function getDonNghiTlead(){
     $coon = getConnection();
-    $sql = 'SELECT `don_nghi`.`NOI_DUNG`, `don_nghi`.`MA_NGHI`, `chi_tiet_don_nghi`.`MA_NV`, `user`.`HO_TEN`, `don_nghi`.`SO_NGAY`, `don_nghi`.`TRANG_THAI`
+    $sql = 'SELECT `don_nghi`.`TIEU_DE`, `don_nghi`.`NOI_DUNG`, `don_nghi`.`MA_NGHI`, `chi_tiet_don_nghi`.`MA_NV`, `user`.`HO_TEN`, `don_nghi`.`SO_NGAY`, `don_nghi`.`TRANG_THAI`
             FROM `don_nghi`, `chi_tiet_don_nghi`, `user`, `user_info`, `truong_phong`
             WHERE `chi_tiet_don_nghi`.`MA_NV` = `truong_phong`.`MA_NV` AND `chi_tiet_don_nghi`.`MA_NGHI` = `don_nghi`.`MA_NGHI` AND
                 `user`.`MA_USER` = `user_info`.`MA_USER` AND `user_info`.`MA_NV` = `truong_phong`.`MA_NV`';
@@ -117,7 +117,7 @@ function getDonNghiTlead(){
 
 function getchitietDonNghiTlead($id){
     $coon = getConnection();
-    $sql = "SELECT `don_nghi`.`NOI_DUNG`, `chi_tiet_don_nghi`.`MA_NV`, `user`.`HO_TEN`, `don_nghi`.`MINH_CHUNG`, `don_nghi`.`SO_NGAY`, `don_nghi`.`TRANG_THAI`, `don_nghi`.`NGAY_LAM_DON`
+    $sql = "SELECT `don_nghi`.`TIEU_DE`, `don_nghi`.`NOI_DUNG`, `chi_tiet_don_nghi`.`MA_NV`, `user`.`HO_TEN`, `don_nghi`.`MINH_CHUNG`, `don_nghi`.`SO_NGAY`, `don_nghi`.`TRANG_THAI`, `don_nghi`.`NGAY_LAM_DON`
             FROM `don_nghi`, `chi_tiet_don_nghi`, `user`, `user_info`, `truong_phong`
             WHERE `chi_tiet_don_nghi`.`MA_NV` = `truong_phong`.`MA_NV` AND `chi_tiet_don_nghi`.`MA_NGHI` = `don_nghi`.`MA_NGHI` AND 
             `don_nghi`.`MA_NGHI` = $id AND `user`.`MA_USER` = `user_info`.`MA_USER` AND `user_info`.`MA_NV` = `truong_phong`.`MA_NV`";
