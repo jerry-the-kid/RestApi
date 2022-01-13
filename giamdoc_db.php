@@ -267,4 +267,17 @@
         }
         else return FALSE;
     }
+
+    function update_employee_avatar($id, $avatar){
+        $conn = getConnection();
+        $sql = "UPDATE user
+                SET AVATAR_PATH = '$avatar'
+                WHERE MA_USER = $id";
+        $stm = $conn->prepare($sql);
+        $stm->execute();
+        if ($stm->affected_rows == 1) {
+            return 1;
+        }
+        return 0;
+    }
 ?>

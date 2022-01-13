@@ -75,7 +75,7 @@ require_once ('admin_validate.php');
             <form method="post" enctype="multipart/form-data" onsubmit="return false"> 
                 <!-- form is here -->
                 <div class="form-group">
-                    <label for="exampleFormControlFile1">Ảnh đại diện</label>
+                    <p>Ảnh đại diện</p>
                     <div>
                         <img src="" width="240px" height="240px" class="img-responsive mb-2" alt="" id="avatar">
                     </div>
@@ -265,7 +265,7 @@ require_once ('admin_validate.php');
                 let id = url.split('id=').pop();
 
                 let data = new FormData();
-                data.append("id", id)
+                data.append("id", id);
                 data.append("image", $('#exampleFormControlFile1').get(0).files[0]);
                 data.append("hoTen", hoTen);
                 data.append("phone", phone);
@@ -284,8 +284,6 @@ require_once ('admin_validate.php');
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == XMLHttpRequest.DONE) {
                         const respone = JSON.parse(xhr.response);
-
-                        console.log(respone);
 
                         if(respone.code == 0){
                             alertSuccess("Cập nhật nhân viên thành công");
