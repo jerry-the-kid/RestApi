@@ -78,7 +78,7 @@ require_once('employee_validate.php');
     <div class="row">
         <div class="col-12 col-md-8 mb-md-0 mb-2">
             <form class="form-group mb-0 d-flex flex-sm-row flex-column">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm theo tiêu đề" aria-label="Search" id="search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
@@ -92,13 +92,13 @@ require_once('employee_validate.php');
         <div class="col-12 mb-4 align-items-center justify-content-end">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="inputGroupSelect01">Trạng thái</label>
+                    <label class="input-group-text" for="statusSelect">Trạng thái</label>
                 </div>
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option>All</option>
-                    <option value="3">Approved</option>
-                    <option value="2">Refused</option>
-                    <option value="1">Waiting</option>
+                <select class="custom-select" id="statusSelect">
+                    <option value="1" selected>All</option>
+                    <option value="2">Approved</option>
+                    <option value="3">Refused</option>
+                    <option value="4">Waiting</option>
                 </select>
             </div>
         </div>
@@ -194,10 +194,94 @@ require_once('employee_validate.php');
     });
 
     const user_id = <?php echo $_SESSION['user_id'] ?>;
+    let globalDonNghiList  = [];
+    let tempSearch = [];
     $(document).ready(function () {
         loadDonNghiList();
         addDonNghi();
+        statusSelect();
+        searchDonNghi();
     });
+
+    function removeVietnameseTones(str) {
+        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a");
+        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
+        str = str.replace(/ì|í|ị|ỉ|ĩ/g,"i");
+        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o");
+        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u");
+        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y");
+        str = str.replace(/đ/g,"d");
+        str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+        str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+        str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+        str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+        str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+        str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+        str = str.replace(/Đ/g, "D");
+        // Some system encode vietnamese combining accent as individual utf-8 characters
+        // Một vài bộ encode coi các dấu mũ, dấu chữ như một kí tự riêng biệt nên thêm hai dòng này
+        str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // ̀ ́ ̃ ̉ ̣  huyền, sắc, ngã, hỏi, nặng
+        str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // ˆ ̆ ̛  Â, Ê, Ă, Ơ, Ư
+        // Remove extra spaces
+        // Bỏ các khoảng trắng liền nhau
+        str = str.replace(/ + /g," ");
+        str = str.trim();
+        // Remove punctuations
+        // Bỏ dấu câu, kí tự đặc biệt
+        str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g," ");
+        return str;
+    }
+
+    const statusSelect = function(){
+        $("#statusSelect").on("change", function(event){
+            let value = $(this).val();
+
+            if(value == 1){
+                tempSearch = globalDonNghiList;
+                renderTable(tempSearch);
+            } else if(value == 2){
+                tempSearch = globalDonNghiList.filter(el => el.TRANG_THAI === "approved");
+                renderTable(tempSearch);
+            } else if(value == 3){
+                tempSearch = globalDonNghiList.filter(el => el.TRANG_THAI === "refused");
+                renderTable(tempSearch);
+            } else if(value == 4){
+                tempSearch = globalDonNghiList.filter(el => el.TRANG_THAI === "waiting");
+                renderTable(tempSearch);
+            }
+        });
+    }
+    
+    function renderTable(data){
+        $('#table-body').html('');
+        data.forEach((info) => {
+            let status = info.TRANG_THAI.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                return letter.toUpperCase();
+            });
+
+            $('#table-body').append(
+                `<tr>
+                    <td>${info.TIEU_DE}</td>
+                    <td>NV${info.tleadID} - ${info.tleadName}</td>
+                    <td>${dateFormat(info.NGAY_LAM_DON)}</td>
+                    <td>${info.SO_NGAY}</td>
+                    <td><span class="${getStatusBadge(info.TRANG_THAI)}">${status}</span></td>
+                    <td><a href="don_nghi.php?DN=${info.MA_NGHI}" style="text-decoration: none">Xem chi tiết</a></td>
+                </tr>`
+            );
+        });
+    }
+
+    const searchDonNghi = function(){
+        $("#search").on('input', function (e){
+            let value = removeVietnameseTones(e.target.value);
+            let foundData = tempSearch.filter(function (el){
+                return removeVietnameseTones(el.TIEU_DE.toLowerCase()).includes(value.toLowerCase());
+            });
+
+            renderTable(foundData);
+        });
+    }
 
     function getStatusBadge(status){
         if(status == 'waiting'){
@@ -226,6 +310,7 @@ require_once('employee_validate.php');
 
         $.get('../API/get-employee-self-don-nghi.php', {id: user_id}).done(function (respone) {
             let donNghiList = respone['data'];
+            globalDonNghiList = donNghiList;
 
             if(donNghiList){
                 $('#table-body').html('');
