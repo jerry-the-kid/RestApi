@@ -13,7 +13,7 @@ require_once ('employee_validate.php');
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>Danh Sách Nhiệm Vụ</title>
+    <title>Thông tin cá nhân</title>
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
@@ -46,6 +46,7 @@ require_once ('employee_validate.php');
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <a class="dropdown-item" href="user_info.php">Thông tin</a>
+                    <a class="dropdown-item" href="change_pwd.php">Đổi mật khẩu</a>
                     <a class="dropdown-item text-danger" href="../logout.php">Đăng xuất</a>
                 </div>
             </div>
@@ -66,7 +67,7 @@ require_once ('employee_validate.php');
     </div>
     <div class="row rounded p-4">
         <div class="col-4 bg-light py-4 rounded d-flex align-items-center justify-content-center flex-column">
-            <h5 class="font-weight-bold mb-4" id="name">Ba mày nè</h5>
+            <h5 class="font-weight-bold mb-4" id="name">Tên</h5>
             <img class="img-responsive mb-2" id="avatar" src="" alt="Không nhận được avatar xin hãy cập nhật avatar" height="150px" width="150px" style="display: block; border-radius: 50%;">
             <a href="#" class="link-primary" data-toggle="modal" data-target="#updateAvatarModal">Cập nhật ảnh đại diện</a>
         </div>

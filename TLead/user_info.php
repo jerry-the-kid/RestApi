@@ -32,6 +32,9 @@ require_once ('tlead_validate.php');
                     <a class="nav-link" href="index.php">Task</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="cancel_task_list.php">Canceled Task</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="completed_task_list.php">Completed Task</a>
                 </li>
                 <li class="nav-item">
@@ -46,6 +49,7 @@ require_once ('tlead_validate.php');
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <a class="dropdown-item" href="user_info.php">Thông tin</a>
+                    <a class="dropdown-item" href="change_pwd.php">Đổi mật khẩu</a>
                     <a class="dropdown-item text-danger" href="../logout.php">Đăng xuất</a>
                 </div>
             </div>
@@ -66,7 +70,7 @@ require_once ('tlead_validate.php');
     </div>
     <div class="row rounded p-4">
         <div class="col-4 bg-light py-4 rounded d-flex align-items-center justify-content-center flex-column">
-            <h5 class="font-weight-bold mb-4" id="name">Ba mày nè</h5>
+            <h5 class="font-weight-bold mb-4" id="name">Tên</h5>
             <img class="img-responsive mb-2" id="avatar" src="" alt="Không nhận được avatar xin hãy cập nhật avatar" height="150px" width="150px" style="display: block; border-radius: 50%;">
             <a href="#" class="link-primary" data-toggle="modal" data-target="#updateAvatarModal">Cập nhật ảnh đại diện</a>
         </div>

@@ -47,6 +47,7 @@ require_once ('employee_validate.php');
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <a class="dropdown-item" href="user_info.php">Thông tin</a>
+                    <a class="dropdown-item" href="change_pwd.php">Đổi mật khẩu</a>
                     <a class="dropdown-item text-danger" href="../logout.php">Đăng xuất</a>
                 </div>
             </div>

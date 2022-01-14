@@ -280,4 +280,34 @@
         }
         return 0;
     }
+
+    function change_pwd($username ,$pwd){
+        $conn = getConnection();
+
+        $password = password_hash($pwd, PASSWORD_DEFAULT);
+        $sql = "UPDATE account
+                SET PASSWORD = '$password'
+                WHERE USER_NAME = '$username'";
+        $stm = $conn->prepare($sql);
+        $stm->execute();
+        if ($stm->affected_rows == 1) {
+            return 1;
+        }
+        return 0;
+    }
+
+    function getUserAccountById($id){
+        $conn = getConnection();
+
+        $sql = "SELECT account.USER_NAME, account.PASSWORD
+                FROM account, user_info
+                WHERE account.USER_NAME = user_info.USER_NAME AND user_info.MA_NV = $id";
+
+        $stm = $conn->prepare($sql);
+        if (!$stm->execute()) {
+            return 0;
+        }
+        $result = $stm->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 ?>
