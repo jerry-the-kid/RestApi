@@ -26,6 +26,17 @@ if(isset($_FILES['file'])){
     $file_tmp = $_FILES['file']['tmp_name'];
     $file_type = $_FILES['file']['type'];
 
+    $file_ext=explode('.',$file_name);
+    $file_ext = strtolower(end($file_ext));
+    $extensions= array("exe","sh");
+    if(in_array($file_ext,$extensions)=== true){
+        error_response(4, 'Kiểu file không hợp lệ');
+    }
+
+    if($file_size > 104857600){
+        error_response(5, 'File size quá lớn. Cần nhỏ hơn 100MB');
+    }
+
     if($file_name){
         if (!is_dir('../file_gui')) {
             mkdir('../file_gui');

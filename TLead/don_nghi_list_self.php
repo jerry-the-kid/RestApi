@@ -352,10 +352,9 @@ require_once('tlead_validate.php');
 
         loadData();
 
-        const date_1 = new Date('1/14/2022');
-        const date_2 = new Date('1/21/2022');
 
         $('.btn-create').on('click', function () {
+            const extenstion = file[0].files[0].name.split('.').pop();
             if (!title.val()) {
                 alertFormDanger('.alert-modal-container', 'Tiêu đề còn thiếu. Vui lòng nhập');
                 title.focus();
@@ -364,6 +363,11 @@ require_once('tlead_validate.php');
                 description.focus();
             } else if (file.get(0).files.length === 0) {
                 alertFormDanger('.alert-modal-container', 'File minh chứng còn thiếu. Vui lòng thêm');
+            } else if(file[0].files[0].size > 104857600) {
+                alertFormDanger('.alert-modal-container', 'File nộp cần nhỏ hơn 100MB');
+            }
+            else if(extenstion.includes('exe') || extenstion.includes('sh')) {
+                alertFormDanger('.alert-modal-container', 'Kiểu file sai. Xin nhập kiểu khác');
             } else {
                 const form = $('#createTaskForm')[0];
                 const formData = new FormData(form);

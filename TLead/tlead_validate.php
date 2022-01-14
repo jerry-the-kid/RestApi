@@ -4,5 +4,5 @@ require_once('../header.php');
 if (isset($_SESSION['user_id'])) {
     locationTleadPage($_SESSION['position'], $_SESSION['active']);
 } else{
-    header('Location: http://localhost/login/');
+    header('Location: ../index.php');
 }

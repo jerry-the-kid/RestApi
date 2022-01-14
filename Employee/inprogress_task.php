@@ -196,12 +196,20 @@ require_once ('employee_validate.php');
         loadProduct();
 
         $('.add-file-btn').on('click', function () {
+            const extenstion = file[0].files[0].name.split('.').pop();
             if (!message.val()) {
                 alertFormDanger('.alert-modal-container', 'Lời nhắn còn thiếu vui lòng nhập.');
                 message.focus;
             } else if (file.get(0).files.length === 0) {
                 alertFormDanger('.alert-modal-container', 'File nộp còn thiếu vui lòng thêm file.');
-            } else {
+            } else if(file[0].files[0].size > 104857600) {
+                alertFormDanger('.alert-modal-container', 'File nộp cần nhỏ hơn 100MB');
+            }
+            else if(extenstion.includes('exe') || extenstion.includes('sh')) {
+                alertFormDanger('.alert-modal-container', 'Kiểu file sai. Xin nhập kiểu khác');
+            }
+            else {
+
                 content.fileName = file.val().replace(/C:\\fakepath\\/i, '');
                 content.message = message.val();
                 $('.work-container').html('');
@@ -212,7 +220,6 @@ require_once ('employee_validate.php');
                 $('#fileModal').modal('hide');
                 $('.btn_file').text('Cập nhật file nộp');
                 $('.btn_submit').attr('disabled', false);
-
             }
         });
 

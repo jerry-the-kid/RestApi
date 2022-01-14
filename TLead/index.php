@@ -92,7 +92,7 @@ require_once ('tlead_validate.php');
                     <option value="2">New Tasks</option>
                     <option value="3">In progress Tasks</option>
                     <option selected value="4">Waiting tasks</option>
-                    <option selected value="4">Rejected tasks</option>
+                    <option selected value="5">Rejected tasks</option>
                 </select>
             </div>
         </div>
@@ -469,7 +469,7 @@ require_once ('tlead_validate.php');
             renderTable(foundData);
         });
 
-        [taskName, deadLine, nhanVien, describeText].forEach(el => {
+        [taskName, deadLine, nhanVien, describeText, file].forEach(el => {
             el.on('input', function (){
                 $('.alert-modal-container').html('');
             });
