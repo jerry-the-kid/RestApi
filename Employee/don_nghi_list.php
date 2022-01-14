@@ -223,7 +223,7 @@ require_once('employee_validate.php');
     const loadDonNghiList = function(){
         ngayNghiDaDung();
 
-        $.get('http://localhost/final/API/get-employee-self-don-nghi.php', {id: user_id}).done(function (respone) {
+        $.get('../API/get-employee-self-don-nghi.php', {id: user_id}).done(function (respone) {
             let donNghiList = respone['data'];
 
             if(donNghiList){
@@ -264,7 +264,7 @@ require_once('employee_validate.php');
     }
 
     const ngayNghiDaDung = function(){
-        $.get('http://localhost/final/API/get-employee-used-day-off.php', {id: user_id}).done(function (respone) {
+        $.get('../API/get-employee-used-day-off.php', {id: user_id}).done(function (respone) {
             let soNgayDaDung = respone['data'][0]['SO_NGAY'];
             let remain = soNgayConLai(soNgayDaDung);
 

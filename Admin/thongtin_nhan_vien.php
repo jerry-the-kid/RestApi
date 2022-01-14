@@ -127,7 +127,7 @@ require_once ('admin_validate.php');
         let id = getUrlParameter('id');
         let role = getUrlParameter('role');
 
-        $.get('http://localhost/final/API/get-employee-detail.php', {id: id}).done(function (respone) {
+        $.get('../API/get-employee-detail.php', {id: id}).done(function (respone) {
             const employee = respone['data'][0];
 
             $('#avatar').attr('src', employee.AVATAR_PATH);

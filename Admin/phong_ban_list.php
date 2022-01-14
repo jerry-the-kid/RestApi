@@ -265,7 +265,7 @@ require_once ('admin_validate.php');
 
 
     const loadData = function () {
-        $.get('http://localhost/final/API/get_all_departments.php').done(function (respone) {
+        $.get('../API/get_all_departments.php').done(function (respone) {
             const {data} = respone;
             renderTable(data);
         });
@@ -311,7 +311,7 @@ require_once ('admin_validate.php');
                     mota: motaAdding.val()
                 };
 
-                $.post('http://localhost/final/API/add_dp.php', data).done(function (response) {
+                $.post('../API/add_dp.php', data).done(function (response) {
                     if (response.code === 0) {
                         alertSuccess(response.message);
                         $('#addModal').modal('hide');

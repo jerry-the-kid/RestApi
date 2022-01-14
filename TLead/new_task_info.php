@@ -268,14 +268,14 @@ require_once('tlead_validate.php');
             $.post('../api/cancel_task.php', {id: taskId}).done(function (response) {
                 console.log(response);
                 $('#cancelModal').modal('hide');
-                document.location.href = 'http://localhost/final/Tlead/task_list.html';
+                document.location.href = 'task_list.html';
             });
         });
 
         $('.btn_update').on('click', function (e) {
             renderModalInput(dataStored);
             const selector = $('#createTaskNVien');
-            $.post('http://localhost/final/API/get_employee_by_Tlead.php', {id: user_id}).done(function (data) {
+            $.post('../API/get_employee_by_Tlead.php', {id: user_id}).done(function (data) {
                 const nhanVien = data.data;
                 if (!nhanVien) {
                     selector.append('')

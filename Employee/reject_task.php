@@ -223,7 +223,7 @@ require_once ('employee_validate.php');
     const fillData = function(){
         let taskId = getUrlParameter('task');
 
-        $.get('http://localhost/final/API/get-task.php', {id: taskId}).done(function (respone) {
+        $.get('../API/get-task.php', {id: taskId}).done(function (respone) {
             let taskInfo = respone.data[0];
 
             $("#title").text(taskInfo.TIEU_DE);
@@ -307,7 +307,7 @@ require_once ('employee_validate.php');
 
             let xhr = new XMLHttpRequest();
 
-            xhr.open("POST", "http://localhost/final/API/update-reject-task.php", true);
+            xhr.open("POST", "../API/update-reject-task.php", true);
             xhr.send(data);
 
             xhr.onreadystatechange = function() {

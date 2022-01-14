@@ -163,7 +163,7 @@ require_once ('admin_validate.php');
 
 <script>
     const loadData = function () {
-        $.get('http://localhost/final/API/get-all-accounts.php').done(function (respone) {
+        $.get('../API/get-all-accounts.php').done(function (respone) {
             const {data} = respone;
             $('#table-body').html('');
             data.forEach((info) => {

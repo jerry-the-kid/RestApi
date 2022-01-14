@@ -161,7 +161,7 @@ require_once ('admin_validate.php');
     }
 
     const loadOption = function () {
-        $.get('http://localhost/final/API/get-all-department-name.php').done(function (respone) {
+        $.get('../API/get-all-department-name.php').done(function (respone) {
             const {data} = respone;
             data.forEach((info) => {
                     $('#Department').append(`<option>${info.TEN_PB}</option>`)
@@ -199,7 +199,7 @@ require_once ('admin_validate.php');
 
                 let xhr = new XMLHttpRequest();
 
-                xhr.open("POST", "http://localhost/final/API/add-employee.php", true);
+                xhr.open("POST", "../API/add-employee.php", true);
                 xhr.send(data);
 
                 xhr.onreadystatechange = function() {

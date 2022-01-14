@@ -170,7 +170,7 @@ require_once ('admin_validate.php');
     }
 
     const loadOption = function () {
-        $.get('http://localhost/final/API/get-all-department-name.php').done(function (respone) {
+        $.get('../API/get-all-department-name.php').done(function (respone) {
             const {data} = respone;
             phongBanList = data;
             data.forEach((info) => {
@@ -183,7 +183,7 @@ require_once ('admin_validate.php');
         let url = window.location.href;
         let id = url.split('id=').pop();
 
-        $.get('http://localhost/final/API/get-employee-detail.php', {id: id}).done(function (respone) {
+        $.get('../API/get-employee-detail.php', {id: id}).done(function (respone) {
             const employee = respone['data'][0];
 
             $('#exampleFormControlFile1').val("")
@@ -244,7 +244,7 @@ require_once ('admin_validate.php');
 
                 let xhr = new XMLHttpRequest();
 
-                xhr.open("POST", "http://localhost/final/API/update-employee.php", true);
+                xhr.open("POST", "../API/update-employee.php", true);
                 xhr.send(data);
 
                 xhr.onreadystatechange = function() {
@@ -278,7 +278,7 @@ require_once ('admin_validate.php');
 
                 let xhr = new XMLHttpRequest();
 
-                xhr.open("POST", "http://localhost/final/API/update-employee.php", true);
+                xhr.open("POST", "../API/update-employee.php", true);
                 xhr.send(data);
 
                 xhr.onreadystatechange = function() {

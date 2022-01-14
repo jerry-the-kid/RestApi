@@ -231,7 +231,7 @@ require_once ('employee_validate.php');
                 cache: false,
                 timeout: 600000,
                 success: function (data) {
-                    window.location = `http://localhost/final/Employee/waiting_task.php?task=${task_id}`;
+                    window.location = `./waiting_task.php?task=${task_id}`;
                 },
             });
 
@@ -245,7 +245,7 @@ require_once ('employee_validate.php');
     });
 
     function loadProduct() {
-        $.post("http://localhost/final/api/get_inprogress_task_detail.php", {id: task_id}, function (data, status) {
+        $.post("../api/get_inprogress_task_detail.php", {id: task_id}, function (data, status) {
             data.data.forEach((task) => {
                 const tieude = document.getElementById('tieude');
                 tieude.innerHTML = task.TIEU_DE;

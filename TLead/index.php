@@ -321,7 +321,7 @@ require_once ('tlead_validate.php');
         $('.btn-add').on('click', function (e){
             clearElementInput(taskName, deadLine, nhanVien, describeText, file);
             const selector = $('#createTaskNVien');
-            $.post('http://localhost/final/API/get_employee_by_Tlead.php', {id : user_id}).done(function (data){
+            $.post('../API/get_employee_by_Tlead.php', {id : user_id}).done(function (data){
                 const nhanVien = data.data;
                 if(!nhanVien) {
                     selector.append('')

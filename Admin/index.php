@@ -184,7 +184,7 @@ require_once ('admin_validate.php');
     }
 
     const loadData = function () {
-        $.get('http://localhost/final/API/get-all-employees.php').done(function (respone) {
+        $.get('../API/get-all-employees.php').done(function (respone) {
             const {data} = respone;
             employeeList = data;
             $('#table-body').html('');
@@ -222,7 +222,7 @@ require_once ('admin_validate.php');
             $("#employeeName").text(name);
 
             $(document).on ("click", "#deleteConfirm", function () {
-                $.post('http://localhost/final/API/delete-employee.php', {id: id}).done(function (response) {
+                $.post('../API/delete-employee.php', {id: id}).done(function (response) {
                     if (response.code == 0) {
                         alertSuccess(response.message);
                         $('.modal').modal('hide');

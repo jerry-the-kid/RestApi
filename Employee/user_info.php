@@ -178,7 +178,7 @@ require_once ('employee_validate.php');
     const fillData = function(){
         let id = user_id;
 
-        $.get('http://localhost/final/API/get-employee-detail.php', {id: id}).done(function (respone) {
+        $.get('../API/get-employee-detail.php', {id: id}).done(function (respone) {
             const employee = respone['data'][0];
 
             $('#avatar').attr('src', employee.AVATAR_PATH);
@@ -246,7 +246,7 @@ require_once ('employee_validate.php');
 
                 let xhr = new XMLHttpRequest();
 
-                xhr.open("POST", "http://localhost/final/API/update-employee-avatar.php", true);
+                xhr.open("POST", "../API/update-employee-avatar.php", true);
                 xhr.send(data);
 
                 xhr.onreadystatechange = function() {

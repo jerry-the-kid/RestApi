@@ -110,7 +110,7 @@ require_once ('tlead_validate.php');
     });
 
     function loadProduct(){
-        $.post("http://localhost/final/api/get_inprogress_task_detail.php",{id : "<?php echo $_GET['task']?>"}, function(data) {
+        $.post("../api/get_inprogress_task_detail.php",{id : "<?php echo $_GET['task']?>"}, function(data) {
             data.data.forEach((task) => {
                 const tieude = document.getElementById('tieude');
                 tieude.innerHTML = task.TIEU_DE;

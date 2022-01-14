@@ -181,7 +181,7 @@ require_once ('employee_validate.php');
         $('.start_task_btn').on('click', function (){
             $.post('../api/change_to_in_progress.php', {id : taskId}).done(function (response){
                 $('#startTaskModal').modal('hide');
-                window.location = `http://localhost/final/Employee/inprogress_task.php?task=${taskId}`;
+                window.location = `./inprogress_task.php?task=${taskId}`;
             });
         });
     });

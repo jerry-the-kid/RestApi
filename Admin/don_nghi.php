@@ -168,7 +168,7 @@ require_once ('admin_validate.php');
         }
 
         $(document).ready(function () {
-            $.get('http://localhost/final/api/get_chi_tiet_don_nghi_tlead.php', {id: idnghi}).done(function (response) {
+            $.get('../api/get_chi_tiet_don_nghi_tlead.php', {id: idnghi}).done(function (response) {
                 console.log(response);
                 const task = response.data[0];
                 $('#tieu_de').text(task.TIEU_DE);

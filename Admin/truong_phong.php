@@ -259,7 +259,7 @@ require_once ('admin_validate.php');
 
 
     const loadData = function () {
-        $.get('http://localhost/final/API/get_all_teamLeaders.php').done(function (respone) {
+        $.get('../API/get_all_teamLeaders.php').done(function (respone) {
             const {data} = respone;
             renderTable(data);
             searchData = data;
@@ -283,7 +283,7 @@ require_once ('admin_validate.php');
     }
 
     const loadingAvailableEmployee = function (target, id) {
-        $.post('http://localhost/final/API/get_tLeader_byDp.php', {id: id}).done(function (response) {
+        $.post('../API/get_tLeader_byDp.php', {id: id}).done(function (response) {
             target.html('');
             if (response.code === 2) {
                 target.attr('disabled', true);
@@ -307,7 +307,7 @@ require_once ('admin_validate.php');
             const phongBanAdd = $('#phongBan__add');
             phongBanAdd.html('');
             const truongPhongAdd = $('#truongPhong__add');
-            $.getJSON('http://localhost/final/API/get_dp_no_leader.php').done(function (response) {
+            $.getJSON('../API/get_dp_no_leader.php').done(function (response) {
                 if (response.code === 2) {
                     phongBanAdd.attr('disabled', true);
                     phongBanAdd.append('<option>Không còn phòng ban cần thêm</option>')
@@ -347,7 +347,7 @@ require_once ('admin_validate.php');
                 return;
             }
 
-            $.post('http://localhost/final/API/addTeamLeader.php', data).done(function (res) {
+            $.post('../API/addTeamLeader.php', data).done(function (res) {
                 $('#addTruongPhong').modal('hide');
                 loadData();
                 alertSuccess(res.message);
@@ -359,7 +359,7 @@ require_once ('admin_validate.php');
         $('.btn-updated-leader').on('click', function () {
             const currentLeader = $('#truongPhong_change').val();
             const data = {id: currentLeader, pb: currentUpdateDepartment}
-            $.post('http://localhost/final/API/update_teamLeaders.php', data).done(function (response) {
+            $.post('../API/update_teamLeaders.php', data).done(function (response) {
                 if (response.code === 0) {
                     alertSuccess(response.message);
                     loadData();
@@ -373,7 +373,7 @@ require_once ('admin_validate.php');
         });
 
         $('.btn-modal-deleted').on('click', function () {
-            $.post('http://localhost/final/API/delete_truong_phong.php', {pb: currentDelete}).done(function (response) {
+            $.post('../API/delete_truong_phong.php', {pb: currentDelete}).done(function (response) {
                 if (response.code === 0) {
                     alertSuccess(response.message);
                     loadData();
@@ -395,7 +395,7 @@ require_once ('admin_validate.php');
             if ($(btn).hasClass('btn-change')) {
                 $('.modal-change__name').html(`PB${pb}`);
                 $('#truongPhong_change').html('');
-                $.post('http://localhost/final/API/get_tLeader_byDp.php', {id: pb}).done(function (response) {
+                $.post('../API/get_tLeader_byDp.php', {id: pb}).done(function (response) {
                     const {data} = response;
                     data.forEach((info) => {
                         $('#truongPhong_change').append(`<option ${nv == info.MA_NV ? 'selected' : ''} value="${info.MA_NV}">NV${info.MA_NV} - ${info.HO_TEN}</option>`)

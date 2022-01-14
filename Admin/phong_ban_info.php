@@ -116,7 +116,7 @@ require_once ('admin_validate.php');
     const fillData = function(){
         let id = getUrlParameter("id");
 
-        $.post('http://localhost/final/API/get_dp_info.php', {pb: id}).done(function (respone) {
+        $.post('../API/get_dp_info.php', {pb: id}).done(function (respone) {
             dpInfo = respone['data'][0];
 
             $("#dpName").text(dpInfo.TEN_PB);

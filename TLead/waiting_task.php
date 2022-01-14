@@ -254,7 +254,7 @@ require_once ('tlead_validate.php');
     const fillData = function(){
         let taskId = getUrlParameter('task');
 
-        $.get('http://localhost/final/API/get-task.php', {id: taskId}).done(function (respone) {
+        $.get('../API/get-task.php', {id: taskId}).done(function (respone) {
             let taskInfo = respone.data[0];
 
             $("#title").text(taskInfo.TIEU_DE);
@@ -313,7 +313,7 @@ require_once ('tlead_validate.php');
 
                 let xhr = new XMLHttpRequest();
 
-                xhr.open("POST", "http://localhost/final/API/reject-task.php", true);
+                xhr.open("POST", "../API/reject-task.php", true);
                 xhr.send(data);
 
                 xhr.onreadystatechange = function() {
@@ -337,7 +337,7 @@ require_once ('tlead_validate.php');
 
                 let xhr = new XMLHttpRequest();
 
-                xhr.open("POST", "http://localhost/final/API/reject-task.php", true);
+                xhr.open("POST", "../API/reject-task.php", true);
                 xhr.send(data);
 
                 xhr.onreadystatechange = function() {
@@ -359,7 +359,7 @@ require_once ('tlead_validate.php');
             let taskId = getUrlParameter('task');
             let completeStatus = $("#exampleFormControlSelect1").val();
 
-            $.post('http://localhost/final/API/complete-task.php', {id: taskId, completeStatus: completeStatus})
+            $.post('../API/complete-task.php', {id: taskId, completeStatus: completeStatus})
             .done(function (respone) {
                 if(respone.code == 0){
                     window.location.href = "completed_task_list.php";

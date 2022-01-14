@@ -115,7 +115,7 @@ require_once ('employee_validate.php');
 
     
     function loadProduct(){
-        $.post("http://localhost/final/api/get_completed_task_employee.php",{id : user_id}, function(data, status) {
+        $.post("../api/get_completed_task_employee.php",{id : user_id}, function(data, status) {
             $('.table-body').html('');
             data.data.forEach((task) => {
                 let tableRow = $('<tr> <td>'+ task.TIEU_DE +'</td> <td>NV'+ task.MA_NGUOI_NHAN +' - '+ task.HO_TEN +'</td> <td><span class="badge badge-primary p-2">'+ task.STATUS +'</span></td> <td><span class="'+ check(task.COMPLETE_STATUS) +'">'+ task.COMPLETE_STATUS +'</span></td> <td>'+ convert(task.DEADLINE) +'</td> <td><a href= '+`completed_task.php?task=${task.TASK_ID}`+' class="text-primary" style="text-decoration: none">Chi tiết</a> </td> </tr>');
