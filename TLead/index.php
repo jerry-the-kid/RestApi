@@ -84,13 +84,14 @@ require_once ('tlead_validate.php');
         <div class="col-12 mb-4 align-items-center justify-content-end">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="inputGroupSelect01">Trạng thái</label>
+                    <label class="input-group-text" for="status_select">Trạng thái</label>
                 </div>
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option>All</option>
-                    <option value="1">New Tasks</option>
-                    <option value="2">Cancel Tasks</option>
-                    <option selected value="3">Waiting tasks</option>
+                <select class="custom-select" id="status_select">
+                    <option value="1">All</option>
+                    <option value="2">New Tasks</option>
+                    <option value="3">In progress Tasks</option>
+                    <option selected value="4">Waiting tasks</option>
+                    <option selected value="4">Rejected tasks</option>
                 </select>
             </div>
         </div>
@@ -214,17 +215,85 @@ require_once ('tlead_validate.php');
 
 <script>
     const user_id = <?php echo $_SESSION['user_id'] ?>;
+    let storedData = [];
+    let searchData = [];
+
+    function removeVietnameseTones(str) {
+        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a");
+        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
+        str = str.replace(/ì|í|ị|ỉ|ĩ/g,"i");
+        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o");
+        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u");
+        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y");
+        str = str.replace(/đ/g,"d");
+        str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+        str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+        str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+        str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+        str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+        str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+        str = str.replace(/Đ/g, "D");
+        // Some system encode vietnamese combining accent as individual utf-8 characters
+        // Một vài bộ encode coi các dấu mũ, dấu chữ như một kí tự riêng biệt nên thêm hai dòng này
+        str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // ̀ ́ ̃ ̉ ̣  huyền, sắc, ngã, hỏi, nặng
+        str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // ˆ ̆ ̛  Â, Ê, Ă, Ơ, Ư
+        // Remove extra spaces
+        // Bỏ các khoảng trắng liền nhau
+        str = str.replace(/ + /g," ");
+        str = str.trim();
+        // Remove punctuations
+        // Bỏ dấu câu, kí tự đặc biệt
+        str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g," ");
+        return str;
+    }
+
+
+    const changeFilter = function (filter){
+        let data = [];
+        data = storedData.filter(el => el.STATUS === filter);
+        renderTable(data);
+        searchData = data;
+    }
+
+
+    const renderByValue = function (){
+        const value = +$('#status_select').val();
+        if(value === 1){
+            renderTable(storedData);
+            searchData = storedData;
+        } else if(value === 2){
+            changeFilter('New');
+        } else if(value === 3){
+            changeFilter('In progress');
+        } else if(value === 4){
+            changeFilter('Waiting');
+        } else if(value === 5){
+            changeFilter('Rejected');
+        }
+    }
+
+    const renderTable = function (data){
+        $('#table-body').html('');
+        data.forEach((task) => {
+            let tableRow = $('<tr> <td>'+ task.TIEU_DE +'</td> <td>NV'+ task.MA_NGUOI_NHAN +' - '+ task.HO_TEN +'</td> <td><span class="'+ check(task.STATUS) +'">'+ task.STATUS +'</span></td> <td>'+ convert(task.DEADLINE) +'</td> <td><a href="'+ link(task.STATUS, task.TASK_ID) +'" class="text-primary" style="text-decoration: none">Chi tiết</a> '+ buttonDlt(task.STATUS, task.TASK_ID) +'</td> </tr>');
+            tableRow.attr('task-info', JSON.stringify(task))
+            $('#table-body').append(tableRow);
+        })
+    }
+
+
     function loadProduct(){
         $('#table-body').html('');
-        $.post("http://localhost/final/api/get_task_teamLead.php",{id : user_id}, function(data, status) {
-            console.log(data);
-            data.data.forEach((task) => {
-                let tableRow = $('<tr> <td>'+ task.TIEU_DE +'</td> <td>NV'+ task.MA_NGUOI_NHAN +' - '+ task.HO_TEN +'</td> <td><span class="'+ check(task.STATUS) +'">'+ task.STATUS +'</span></td> <td>'+ convert(task.DEADLINE) +'</td> <td><a href="'+ link(task.STATUS, task.TASK_ID) +'" class="text-primary" style="text-decoration: none">Chi tiết</a> '+ buttonDlt(task.STATUS, task.TASK_ID) +'</td> </tr>');
-                tableRow.attr('task-info', JSON.stringify(task))
-                $('.table').append(tableRow);
-            })
+        $.post("../api/get_task_teamLead.php",{id : user_id}, function(res, status) {
+            const data = res.data;
+            storedData = data;
+            renderByValue();
         },"json");
     }
+
+
+
+
 
     function buttonDlt(status, task_id){
         if (status == "New"){
@@ -270,8 +339,8 @@ require_once ('tlead_validate.php');
             return null;
         }
         else {
-            var date = time;
-            var readable_date = new Date(date).toLocaleDateString();
+            const date = time;
+            const readable_date = new Date(date).toLocaleDateString();
             return readable_date;
         }
     }
@@ -384,18 +453,27 @@ require_once ('tlead_validate.php');
                     loadProduct();
                 });
             });
+
+        });
+
+        $('#status_select').on('change', function (){
+            renderByValue();
+        });
+
+        $("input[type='search']").on('input', function (e){
+            const value = removeVietnameseTones(e.target.value);
+            const foundData = searchData.filter(function (el){
+                return removeVietnameseTones(el.TIEU_DE.toLowerCase()).includes(value.toLowerCase());
+            });
+            renderTable(foundData);
         });
 
         [taskName, deadLine, nhanVien, describeText].forEach(el => {
-           el.on('input', function (){
-               $('.alert-modal-container').html('');
-           });
+            el.on('input', function (){
+                $('.alert-modal-container').html('');
+            });
         });
-
     });
-
-
-
 </script>
 
 </html>

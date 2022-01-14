@@ -72,7 +72,7 @@ require_once('admin_validate.php');
     <div class="row">
         <div class="col-12 col-md-8 mb-md-0 mb-2">
             <form class="form-group mb-0 d-flex flex-sm-row flex-column">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm theo tiêu đề" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
@@ -82,13 +82,13 @@ require_once('admin_validate.php');
         <div class="col-12 mb-4 align-items-center justify-content-end">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="inputGroupSelect01">Trạng thái</label>
+                    <label class="input-group-text" for="status">Trạng thái</label>
                 </div>
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option>All</option>
-                    <option value="3">Approved</option>
-                    <option value="2">Refused</option>
-                    <option value="3">Waiting</option>
+                <select class="custom-select" id="status">
+                    <option value="1">All</option>
+                    <option value="2">Approved</option>
+                    <option value="3">Refused</option>
+                    <option value="4">Waiting</option>
                 </select>
             </div>
         </div>
@@ -108,27 +108,6 @@ require_once('admin_validate.php');
                 </tr>
                 </thead>
                 <tbody id="table-body">
-                <tr>
-                    <td>Vợ em đẻ sếp ạ</td>
-                    <td>NV01 - Mark</td>
-                    <td>3</td>
-                    <td><span class="badge badge-warning p-2">Waiting</span></td>
-                    <td><a href="don_nghi.php" style="text-decoration: none">Xem chi tiết</a></td>
-                </tr>
-                <tr>
-                    <td>Vợ bạn em đẻ sếp ạ</td>
-                    <td>NV02 - Mike</td>
-                    <td>12</td>
-                    <td><span class="badge badge-secondary p-2">Refused</span></td>
-                    <td><a href="don_nghi.php" style="text-decoration: none">Xem chi tiết</a></td>
-                </tr>
-                <tr>
-                    <td>Đi party</td>
-                    <td>NV02 - Johnny</td>
-                    <td>2</td>
-                    <td><span class="badge badge-success p-2">Approved</span></td>
-                    <td><a href="don_nghi.php" style="text-decoration: none">Xem chi tiết</a></td>
-                </tr>
                 </tbody>
             </table>
 
@@ -155,6 +134,9 @@ require_once('admin_validate.php');
 </script>
 
 <script>
+    let storedData = [];
+    let searchData = [];
+
     function removeVietnameseTones(str) {
         str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a");
         str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
@@ -184,6 +166,28 @@ require_once('admin_validate.php');
         return str;
     }
 
+    const changeFilter = function (filter){
+        let data = [];
+        data = storedData.filter(el => el.TRANG_THAI === filter);
+        renderTable(data);
+        searchData = data;
+    }
+
+
+    const renderByValue = function (){
+        const value = +$('#status').val();
+        if(value === 1){
+            renderTable(storedData);
+            searchData = storedData;
+        } else if(value === 2){
+            changeFilter('approved');
+        } else if(value === 3){
+            changeFilter('refused');
+        } else if(value === 4){
+           changeFilter('waiting');
+        }
+    }
+
     function check(status){
         if (status == "approved"){
             return "badge badge-success p-2";
@@ -196,7 +200,7 @@ require_once('admin_validate.php');
         }
     }
 
-    let searchData = [];
+
     const renderTable = function (data){
         $('#table-body').html('');
         data.forEach((info) => {
@@ -216,13 +220,25 @@ require_once('admin_validate.php');
     const loadData = function () {
         $.get('../API/get_donnghi_teamLeaders.php').done(function (respone) {
             const {data} = respone;
-            renderTable(data);
-            searchData = data;
+            storedData = data;
+            renderByValue();
         });
     }
 
     $(document).ready(function () {
         loadData();
+
+        $('#status').on('change', function (){
+            renderByValue();
+        });
+
+        $("input[type='search']").on('input', function (e){
+            const value = removeVietnameseTones(e.target.value);
+            const foundData = searchData.filter(function (el){
+                return removeVietnameseTones(el.TIEU_DE.toLowerCase()).includes(value.toLowerCase());
+            });
+            renderTable(foundData);
+        });
     });
 </script>
 </html>

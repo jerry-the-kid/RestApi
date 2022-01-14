@@ -30,7 +30,8 @@ function get_task_teamLead($id){
     $sql = "SELECT t.TASK_ID, TIEU_DE, MA_NGUOI_NHAN, HO_TEN, DEADLINE, STATUS
     FROM task t join task_info ti on t.TASK_ID = ti.TASK_ID
     join user on MA_NGUOI_NHAN = MA_USER
-    where MA_NGUOI_GIAO = $id and STATUS not in ('canceled', 'completed')";
+    where MA_NGUOI_GIAO = $id and STATUS not in ('canceled', 'completed')
+    order by STATUS";
     $result = $conn->query($sql);
     $output = array();
     while(($row = $result->fetch_assoc())){
