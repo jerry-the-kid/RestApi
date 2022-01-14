@@ -21,6 +21,23 @@ function getDonNghiEmployee($id)
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 
+function getDonNghi($id){
+    $conn = getConnection();
+    $sql = "select dn.MA_NGHI, TIEU_DE, SO_NGAY,TRANG_THAI, NGAY_LAM_DON ,ui.MA_NV, HO_TEN
+    from don_nghi dn join chi_tiet_don_nghi ctdn on dn.MA_NGHI = ctdn.MA_NGHI
+    join user_info ui on ui.MA_NV = ctdn.MA_NV join user u on u.MA_USER = ui.MA_USER
+    where ui.MA_NV = ?
+    order by TRANG_THAI desc";
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('i', $id);
+    if (!$stm->execute()) {
+        return 0;
+    }
+    $result = $stm->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
 function getDetailDonNghi($dn){
     $conn = getConnection();
     $sql = "SELECT dn.*, u.HO_TEN, ui.MA_NV

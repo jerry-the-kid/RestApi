@@ -157,7 +157,7 @@ require_once('tlead_validate.php');
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createTaskModalLabel">Tạo task</h5>
+                <h5 class="modal-title" id="createTaskModalLabel">Tạo đơn nghỉ</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -250,6 +250,16 @@ require_once('tlead_validate.php');
     </div>`);
     }
 
+    const statusBadge = function (status){
+        if(status === 'waiting'){
+            return '<td><span class="badge badge-warning p-2">Waiting</span></td>';
+        } else if(status === 'approved') {
+            return '<td><span class="badge badge-success p-2">Approved</span></td>';
+        } else if(status === 'refused'){
+            return '<td><span class="badge badge-secondary p-2">Refused</span></td>';
+        }
+    }
+
 
     const loadDate = function () {
         $.get('../api/get_ngay_nghi_trong_nam_tlead.php', {id: id}).done(function (res) {
@@ -265,12 +275,47 @@ require_once('tlead_validate.php');
         });
     }
 
+    const loadData = function (){
+        loadDate();
+        $.getJSON('../api/get_don_nghi_self_list.php', {id : id}).done(function (res){
+            const now = new Date();
+            const data = res.data;
+            let sevenDayBlock = data.some(function (el){
+                return now.getTime() - Date.parse(el.NGAY_LAM_DON) < 604800000;
+            });
+
+            if(sevenDayBlock){
+                $('.btn-add').attr('disabled', true);
+            } else {
+                $('.btn-add').attr('disabled', false);
+            }
+
+            $('#table-body').html('');
+            data.forEach(function (el){
+                $('#table-body').append(`<tr>
+                    <td>${el.TIEU_DE}</td>
+                    <td>NV${el.MA_NV} - ${el.HO_TEN}</td>
+                    <td>${el.SO_NGAY}</td>
+                    ${statusBadge(el.TRANG_THAI)}
+                    <td><a href="don_nghi_self.php?DN=${el.MA_NGHI}" style="text-decoration: none">Xem chi tiết</a></td>
+                </tr>`);
+            });
+        });
+    }
+
     $(document).ready(function () {
         const title = $('#title');
         const dateLeftForm = $('#date_left_form');
         const description = $('#description');
         const file = $('#file');
-        loadDate();
+
+        loadData();
+
+        console.log(new Date('04/03/2001'));
+        const date_1 = new Date('1/14/2022');
+        const date_2 = new Date('1/21/2022');
+        console.log(date_2.getTime() - date_1.getTime());
+
         $('.btn-create').on('click', function () {
             console.log(file.get(0).files.length);
             if (!title.val()) {
@@ -298,6 +343,7 @@ require_once('tlead_validate.php');
                     success: function (data) {
                         alertSuccess(data.message);
                         $('#createTaskModal').modal('hide');
+                        loadData();
                     },
                     error: function (e) {
                         $('#createTaskModal').modal('hide');

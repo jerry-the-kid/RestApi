@@ -65,7 +65,7 @@ require_once('tlead_validate.php');
                 <h2 class="font-weight-bold text-left" id="tieu_de">Testing sản phẩm</h2>
             </div>
             <div class="col-md-6 col-12 mb-4 d-flex justify-content-end">
-                <a class="btn btn-light" href="don_nghi_list.php">Trở về danh sách</a>
+                <a class="btn btn-light ali" href="don_nghi_list_self.php">Trở về danh sách</a>
             </div>
         </div>
         <div class="row p-4 bg-light rounded">
@@ -94,34 +94,9 @@ require_once('tlead_validate.php');
                     </li>
                 </ul>
             </div>
-            <div class="mt-4 col-12 ml-auto d-flex justify-content-end">
-                <button class="btn-success btn" data-toggle="modal" data-target="#approvedModal">Approved</button>
-                <button class="btn-danger btn ml-2" data-toggle="modal" data-target="#refusedModal">Refused</button>
-            </div>
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="approvedModal" tabindex="-1" role="dialog" aria-labelledby="approvedModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="approvedModalLabel">Duyệt đơn nghỉ</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Bạn đồng ý duyệt đơn nghỉ này ?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary">Duyệt đơn</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
     <!-- Modal -->
@@ -137,10 +112,6 @@ require_once('tlead_validate.php');
                 </div>
                 <div class="modal-body">
                     <p>Bạn đồng ý từ chối đơn nghỉ này ?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-danger">Từ chối</button>
                 </div>
             </div>
         </div>
@@ -159,15 +130,46 @@ require_once('tlead_validate.php');
     <script>
         const dn = <?php  echo $_GET['DN']  ?>;
 
+        const createDateFormat = function (date, options) {
+            const locale = navigator.language;
+            return new Intl.DateTimeFormat(
+                locale,
+                options
+            ).format(new Date(date));
+        }
+
+        const statusBadge = function (status){
+            if(status === 'waiting'){
+                return '<span class="badge badge-warning p-2">Waiting</span>';
+            } else if(status === 'approved') {
+                return '<span class="badge badge-success p-2">Approved</span>';
+            } else if(status === 'refused'){
+                return '<span class="badge badge-secondary p-2">Refused</span>';
+            }
+        }
+
         $(document).ready(function () {
             const tieu_de = $('#tieu_de');
             const sender = $('#info_sender');
             const date = $('#day');
-            // const
+            const description = $('#des');
 
-                $.getJSON('../api/get_details_don_nghi.php', {dn : dn}).done(function (res){
-                const data = res.data;
-                console.log(data);
+            $.getJSON('../api/get_details_don_nghi.php', {dn : dn}).done(function (res){
+                const data = res.data[0];
+                tieu_de.text(data.TIEU_DE);
+                sender.text(`NV${data.MA_NV} - ${data.HO_TEN} • ${createDateFormat(data.NGAY_LAM_DON, {
+                    day: 'numeric',
+                    month: 'numeric',
+                })}`);
+                date.text(data.SO_NGAY);
+                description.text(data.NOI_DUNG);
+                $('.badge__container').append(statusBadge(data.TRANG_THAI));
+                $('#ten_file').text(data.MINH_CHUNG?.split('/').pop());
+                $('#download_link').attr('href', `../api/download.php?file=${data.MINH_CHUNG}`);
+                if(data.TRANG_THAI !== 'waiting') {
+                    $('.btn_container').removeClass('d-flex');
+                    $('.btn_container').addClass('d-none');
+                }
             });
         });
 
