@@ -18,6 +18,23 @@
         }
 
         $file = isset($_FILES['file']) ? $_FILES['file'] : error_response(1, 'Không nhận được file');
+
+        $file_name = $_FILES['file']['name'];
+        $file_size = $_FILES['file']['size'];
+        $file_tmp = $_FILES['file']['tmp_name'];
+        $file_type = $_FILES['file']['type'];
+        $file_ext=explode('.',$file_name);
+        $file_ext = strtolower(end($file_ext));
+        
+        $extensions= array("exe","sh");
+        if(in_array($file_ext,$extensions)=== true){
+            error_response(4, 'Kiểu file không hợp lệ');
+        }
+
+        if($file_size > 104857600){
+            error_response(5, 'File size quá lớn. Cần nhỏ hơn 100MB');
+        }
+
         $filePath = '../file_nop/' . randomString(8) . '/' . $file['name'];
         mkdir(dirname($filePath));
 
@@ -30,7 +47,7 @@
         }
     }
     else{
-        error_response(1, 'API support POST method only');
+        error_response(1, 'Invalid input');
     }
 
     function randomString($n)

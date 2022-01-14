@@ -275,15 +275,23 @@ require_once ('employee_validate.php');
 
     const updateSubmitFile = function(){
         $(document).on("click", "#updateSubmitFile", function(event){
-            let isFileExisted = $('#inputGroupFile01').get(0).files.length;
+            let file = $('#inputGroupFile01');
 
             if(!$("#message-text").val()){
                 alertDanger("Nội dung không được để trống");
                 $("#submit").prop("disabled", true);
             }
-            else if(!isFileExisted){
+            else if (file.get(0).files.length === 0) {
                 alertDanger("Vui lòng upload file mới");
-                $("#submit").prop("disabled", true);
+                $("#submit").prop("disabled", true);        
+            }
+            else if(file[0].files[0].size > 104857600) {
+                alertDanger("File nộp cần nhỏ hơn 100MB");
+                $("#submit").prop("disabled", true); 
+            }
+            else if(!isExtensionValidate(file.val().replace(/C:\\fakepath\\/i, ''))){
+                alertDanger("Định dạng file không hợp lệ");
+                $("#submit").prop("disabled", true); 
             }
             else{
                 let filename = $('input[type=file]').val().split('\\').pop();
@@ -295,6 +303,14 @@ require_once ('employee_validate.php');
                 $('.modal').modal('hide');
             }
         });
+    }
+
+    const isExtensionValidate = function(extension){
+        var fileExtension = ['exe', 'sh'];
+        if (!($.inArray(extension.split('.').pop().toLowerCase(), fileExtension) == -1)) {
+            return false;
+        }
+        else return true;
     }
 
     const submitNewFile = function(){
@@ -313,7 +329,6 @@ require_once ('employee_validate.php');
 
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == XMLHttpRequest.DONE) {
-                    console.log(xhr.response);
                     const respone = JSON.parse(xhr.response);
 
                     if(respone.code == 0){

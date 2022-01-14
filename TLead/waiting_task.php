@@ -304,27 +304,37 @@ require_once ('tlead_validate.php');
                 alertDanger("Hãy chọn ngày gia hạn");
             }
             else if(isFileExisted){
-                let taskId = getUrlParameter('task');
+                let file = $('#inputGroupFile01');
 
-                let data = new FormData();
-                data.append("file", $('#inputGroupFile01').get(0).files[0]);
-                data.append("id", taskId);
-                data.append("tleadMessage", $("#message-text").val());
-                data.append("deadline",dateFormatForInput($("#date").val()));
+                if(file[0].files[0].size > 104857600) {
+                    alertDanger("File nộp cần nhỏ hơn 100MB");
+                }
+                else if(!isExtensionValidate(file.val().replace(/C:\\fakepath\\/i, ''))){
+                    alertDanger("Định dạng file không hợp lệ");
+                }
+                else{
+                    let taskId = getUrlParameter('task');
 
-                let xhr = new XMLHttpRequest();
+                    let data = new FormData();
+                    data.append("file", $('#inputGroupFile01').get(0).files[0]);
+                    data.append("id", taskId);
+                    data.append("tleadMessage", $("#message-text").val());
+                    data.append("deadline",dateFormatForInput($("#date").val()));
 
-                xhr.open("POST", "../API/reject-task.php", true);
-                xhr.send(data);
+                    let xhr = new XMLHttpRequest();
 
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState == XMLHttpRequest.DONE) {
-                        const respone = JSON.parse(xhr.response);
+                    xhr.open("POST", "../API/reject-task.php", true);
+                    xhr.send(data);
 
-                        if(respone.code == 0){
-                            window.location.href = "reject_task.php?task=" + taskId;
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == XMLHttpRequest.DONE) {
+                            const respone = JSON.parse(xhr.response);
+
+                            if(respone.code == 0){
+                                window.location.href = "reject_task.php?task=" + taskId;
+                            }
+                            else alertDanger(respone.message);
                         }
-                        else alertDanger(respone.message);
                     }
                 }
             }
@@ -353,6 +363,14 @@ require_once ('tlead_validate.php');
                 }
             }
         });
+    }
+
+    const isExtensionValidate = function(extension){
+        var fileExtension = ['exe', 'sh'];
+        if (!($.inArray(extension.split('.').pop().toLowerCase(), fileExtension) == -1)) {
+            return false;
+        }
+        else return true;
     }
 
     const complete = function(){

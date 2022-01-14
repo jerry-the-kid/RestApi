@@ -45,29 +45,37 @@
 
         if(isset($_FILES['image'])){
             $image = $_FILES['image'];
-            $imagePath = '../image/' . randomString(8) . '/' . $image['name'];
 
-            delete_user_info($id);
-            rrmdir(dirname($old_user_info["AVATAR_PATH"]));
+            $extList = array('jpeg', 'jpg', 'png', 'gif');
+            $ext = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
 
-            mkdir(dirname($imagePath));
+            if(in_array($ext, $extList)){
+                $imagePath = '../image/' . randomString(8) . '/' . $image['name'];
 
-            if (move_uploaded_file($_FILES["image"]["tmp_name"], $imagePath)) {
-                if(is_activated($id)){
-                    update_account_if_activated($old_user_info["USER_NAME"], $username);
+                delete_user_info($id);
+                rrmdir(dirname($old_user_info["AVATAR_PATH"]));
+
+                mkdir(dirname($imagePath));
+
+                if (move_uploaded_file($_FILES["image"]["tmp_name"], $imagePath)) {
+                    if(is_activated($id)){
+                        update_account_if_activated($old_user_info["USER_NAME"], $username);
+                    }
+                    else update_account_if_not_activated($old_user_info["USER_NAME"], $username);
+
+                    update_user($id, $hoTen, $imagePath, $address, $phone, $ngaySinh, $gioiTinh, $email);
+
+                    $data = getMaPhongBanByName($phongBan);
+                    add_user_info($id, $username, $data[0]['MA_PHONG_BAN']);
+
+                    success_response(1, "success");
+                } else {
+                    http_response_code(400);
+                    error_response(1, 'Something went wrong with file');
                 }
-                else update_account_if_not_activated($old_user_info["USER_NAME"], $username);
-
-                update_user($id, $hoTen, $imagePath, $address, $phone, $ngaySinh, $gioiTinh, $email);
-
-                $data = getMaPhongBanByName($phongBan);
-                add_user_info($id, $username, $data[0]['MA_PHONG_BAN']);
-
-                success_response(1, "success");
-            } else {
-                http_response_code(400);
-                error_response(1, 'Something went wrong with file');
             }
+            else error_response(1, 'Wrong extension');
+            
         }
         else{
             delete_user_info($id);

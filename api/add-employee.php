@@ -34,27 +34,37 @@
             mkdir('../image');
         }
 
-        $image = isset($_FILES['image']) ? $_FILES['image'] : null;
-        $imagePath = '../image/' . randomString(8) . '/' . $image['name'];
-        mkdir(dirname($imagePath));
+        if(isset($_FILES['image'])){
+            $image =  $_FILES['image'];
 
-        if (move_uploaded_file($_FILES["image"]["tmp_name"], $imagePath)) {
-            add_account($username);
+            $extList = array('jpeg', 'jpg', 'png', 'gif');
+            $ext = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
 
-            if ($gioiTinh == 'Male') {
-                $gioiTinh = 1;
-            } else $gioiTinh = 0;
-
-            $id = add_user($hoTen, $imagePath, $address, $phone, $ngaySinh, $gioiTinh, $email);
-
-            $data = getMaPhongBanByName($phongBan);
-            add_user_info($id, $username, $data[0]['MA_PHONG_BAN']);
-
-            success_response(1, "success");
-        } else {
-            http_response_code(400);
-            error_response(1, 'Something went wrong with file row 53');
+            if(in_array($ext, $extList)){
+                $imagePath = '../image/' . randomString(8) . '/' . $image['name'];
+                mkdir(dirname($imagePath));
+        
+                if (move_uploaded_file($_FILES["image"]["tmp_name"], $imagePath)) {
+                    add_account($username);
+        
+                    if ($gioiTinh == 'Male') {
+                        $gioiTinh = 1;
+                    } else $gioiTinh = 0;
+        
+                    $id = add_user($hoTen, $imagePath, $address, $phone, $ngaySinh, $gioiTinh, $email);
+        
+                    $data = getMaPhongBanByName($phongBan);
+                    add_user_info($id, $username, $data[0]['MA_PHONG_BAN']);
+        
+                    success_response(1, "success");
+                } else {
+                    http_response_code(400);
+                    error_response(1, 'Something went wrong with file');
+                }
+            }
+            else error_response(1, 'Wrong extension');
         }
+        else error_response(1, 'Invalid file input');
     }
     else{
         http_response_code(400);

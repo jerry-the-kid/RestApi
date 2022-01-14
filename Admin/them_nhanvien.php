@@ -77,7 +77,7 @@ require_once ('admin_validate.php');
                 <!-- form is here -->
                 <div class="form-group">
                     <label for="exampleFormControlFile1">Ảnh đại diện</label>
-                    <input name="image" type="file" class="form-control-file" id="exampleFormControlFile1">
+                    <input name="image" type="file" class="form-control-file" id="exampleFormControlFile1" accept=".gif,.jpg,.jpeg,.png">
                 </div>
 
                 <div class="form-row">
@@ -186,42 +186,58 @@ require_once ('admin_validate.php');
                 alertDanger("Dữ liệu không được để trống");
             }
             else{
-                let isSuccess = 0;
-                let data = new FormData();
-                data.append("image", $('#exampleFormControlFile1').get(0).files[0]);
-                data.append("hoTen", hoTen);
-                data.append("phone", phone);
-                data.append("address", address);
-                data.append("ngaySinh", ngaySinh);
-                data.append("email", email);
-                data.append("username", username)
-                data.append("phongBan", $("#Department").val())
-                data.append("gioiTinh", $("#gender").val())
+                let filename = $('#exampleFormControlFile1').val().replace(/C:\\fakepath\\/i, '')
+                
+                if(!isPictureExtension(filename)){
+                    alertDanger("Định dạng file không hợp lệ");
+                    $('#exampleFormControlFile1').focus();
+                }
+                else{
+                    let isSuccess = 0;
+                    let data = new FormData();
+                    data.append("image", $('#exampleFormControlFile1').get(0).files[0]);
+                    data.append("hoTen", hoTen);
+                    data.append("phone", phone);
+                    data.append("address", address);
+                    data.append("ngaySinh", ngaySinh);
+                    data.append("email", email);
+                    data.append("username", username)
+                    data.append("phongBan", $("#Department").val())
+                    data.append("gioiTinh", $("#gender").val())
 
-                let xhr = new XMLHttpRequest();
+                    let xhr = new XMLHttpRequest();
 
-                xhr.open("POST", "../API/add-employee.php", true);
-                xhr.send(data);
+                    xhr.open("POST", "../API/add-employee.php", true);
+                    xhr.send(data);
 
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState == XMLHttpRequest.DONE) {
-                        const respone = JSON.parse(xhr.response);
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == XMLHttpRequest.DONE) {
+                            const respone = JSON.parse(xhr.response);
 
-                        if(respone.code == 0){
-                            alertSuccess("Thêm nhân viên thành công");
-                            $('#exampleFormControlFile1').val("")
-                            $("#name").val("");
-                            $("#phone").val("");
-                            $("#inputAddress").val("");
-                            $("#birthdate").val("");
-                            $("#email").val("");
-                            $("#username").val("");
+                            if(respone.code == 0){
+                                alertSuccess("Thêm nhân viên thành công");
+                                $('#exampleFormControlFile1').val("")
+                                $("#name").val("");
+                                $("#phone").val("");
+                                $("#inputAddress").val("");
+                                $("#birthdate").val("");
+                                $("#email").val("");
+                                $("#username").val("");
+                            }
+                            else alertDanger(respone.message);
                         }
-                        else alertDanger(respone.message);
                     }
                 }
             }
         });
+    }
+
+    const isPictureExtension = function(extension){
+        var fileExtension = ['jpeg', 'jpg', 'png', 'gif'];
+        if ($.inArray(extension.split('.').pop().toLowerCase(), fileExtension) == -1) {
+            return false;
+        }
+        else return true;
     }
 
     $(document).ready(function () {

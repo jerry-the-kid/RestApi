@@ -327,19 +327,28 @@ require_once('employee_validate.php');
 
     const addDonNghi = function(){
         const title = $('#title');
-        const dateLeftForm = $('#date_left_form');
         const description = $('#description');
         const file = $('#file');
         $('.btn-create').on('click', function () {
             if (!title.val()) {
                 alertFormDanger('.alert-modal-container', 'Tiêu đề còn thiếu. Vui lòng nhập');
                 title.focus();
-            }else if (!description.val()) {
+            }
+            else if (!description.val()) {
                 alertFormDanger('.alert-modal-container', 'Nội dung còn thiếu. Vui lòng nhập');
                 description.focus();
-            }else if (file.get(0).files.length === 0) {
+            }
+            else if (file.get(0).files.length === 0) {
                 alertFormDanger('.alert-modal-container', 'File minh chứng còn thiếu. Vui lòng thêm');
-            } else {
+            }
+            else if(file[0].files[0].size > 104857600) {
+                alertFormDanger('.alert-modal-container', 'File nộp cần nhỏ hơn 100MB');
+            }
+            else if(!isExtensionValidate(file.val().replace(/C:\\fakepath\\/i, ''))){
+                alertFormDanger('.alert-modal-container', "Định dạng file không hợp lệ");
+                $('#file').focus();
+            }
+            else{
                 const form = $('#createTaskForm')[0];
                 const formData = new FormData(form);
                 formData.append("sender", user_id);
@@ -354,17 +363,31 @@ require_once('employee_validate.php');
                     cache: false,
                     timeout: 600000,
                     success: function (data) {
-                        loadDonNghiList();
-                        alertSuccess(data.message);
-                        $('#createTaskModal').modal('hide');
+                        if(data.code == 0){
+                            loadDonNghiList();
+                            alertSuccess(data.message);
+                            $('#createDonNghiModal').modal('hide');
+                        }
+                        else{
+                            $('#createDonNghiModal').modal('hide');
+                            alertDanger(data.message);
+                        } 
                     },
                     error: function (e) {
-                        $('#createTaskModal').modal('hide');
+                        $('#createDonNghiModal').modal('hide');
                         alertDanger(e.responseText);
                     }
-                });
+                });                       
             }
         });
+    }
+
+    const isExtensionValidate = function(extension){
+        var fileExtension = ['exe', 'sh'];
+        if (!($.inArray(extension.split('.').pop().toLowerCase(), fileExtension) == -1)) {
+            return false;
+        }
+        else return true;
     }
 
 </script>

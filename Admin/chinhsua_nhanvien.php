@@ -81,7 +81,7 @@ require_once ('admin_validate.php');
                         <img src="" width="240px" height="240px" class="img-responsive mb-2" alt="" id="avatar">
                     </div>
                     
-                    <input name="image" type="file" class="form-control-file" id="exampleFormControlFile1" style="display:none">
+                    <input name="image" type="file" class="form-control-file" id="exampleFormControlFile1" style="display:none" accept=".gif,.jpg,.jpeg,.png">
                     <button type="button" class="btn btn-secondary btn-sm mr-2" id="chooseFile">Choose File</button>
                     <span id="fileName">Không có avatar</span>
 
@@ -262,36 +262,44 @@ require_once ('admin_validate.php');
                 }
             }
             else{
-                let url = window.location.href;
-                let id = url.split('id=').pop();
+                // let filename = $('#exampleFormControlFile1').val().replace(/C:\\fakepath\\/i, '')
+                
+                // if(!isPictureExtension(filename)){
+                //     alertDanger("Định dạng file không hợp lệ");
+                //     $('#exampleFormControlFile1').focus();
+                // }
+                // else{
+                    let url = window.location.href;
+                    let id = url.split('id=').pop();
 
-                let data = new FormData();
-                data.append("id", id);
-                data.append("image", $('#exampleFormControlFile1').get(0).files[0]);
-                data.append("hoTen", hoTen);
-                data.append("phone", phone);
-                data.append("address", address);
-                data.append("ngaySinh", ngaySinh);
-                data.append("email", email);
-                data.append("username", username)
-                data.append("phongBan", $("#Department").val())
-                data.append("gioiTinh", $("#gender").val())
+                    let data = new FormData();
+                    data.append("id", id);
+                    data.append("image", $('#exampleFormControlFile1').get(0).files[0]);
+                    data.append("hoTen", hoTen);
+                    data.append("phone", phone);
+                    data.append("address", address);
+                    data.append("ngaySinh", ngaySinh);
+                    data.append("email", email);
+                    data.append("username", username)
+                    data.append("phongBan", $("#Department").val())
+                    data.append("gioiTinh", $("#gender").val())
 
-                let xhr = new XMLHttpRequest();
+                    let xhr = new XMLHttpRequest();
 
-                xhr.open("POST", "../API/update-employee.php", true);
-                xhr.send(data);
+                    xhr.open("POST", "../API/update-employee.php", true);
+                    xhr.send(data);
 
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState == XMLHttpRequest.DONE) {
-                        const respone = JSON.parse(xhr.response);
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == XMLHttpRequest.DONE) {
+                            const respone = JSON.parse(xhr.response);
 
-                        if(respone.code == 0){
-                            alertSuccess("Cập nhật nhân viên thành công");
+                            if(respone.code == 0){
+                                alertSuccess("Cập nhật nhân viên thành công");
+                            }
+                            else alertDanger(respone.message);
                         }
-                        else alertDanger("Cập nhật nhân viên không thành công");
                     }
-                }
+                // }
             }
         });
     }
@@ -309,6 +317,14 @@ require_once ('admin_validate.php');
                 }
             });
         }); 
+    }
+
+    const isPictureExtension = function(extension){
+        var fileExtension = ['jpeg', 'jpg', 'png', 'gif'];
+        if ($.inArray(extension.split('.').pop().toLowerCase(), fileExtension) == -1) {
+            return false;
+        }
+        else return true;
     }
 
     $(document).ready(function () {
