@@ -1,5 +1,5 @@
 <?php
-require_once ('admin_validate.php');
+require_once('admin_validate.php');
 ?>
     <!doctype html>
     <html lang="en">
@@ -10,7 +10,8 @@ require_once ('admin_validate.php');
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous">
 
         <title>Đơn Nghỉ</title>
         <link rel="stylesheet" href="../styles.css">
@@ -28,20 +29,17 @@ require_once ('admin_validate.php');
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php">Nhân viên</a>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.php">Task</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="phong_ban_list.php">Phòng ban</a>
+                        <a class="nav-link" href="cancel_task_list.php">Canceled Task</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="truong_phong.php">Trưởng phòng</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="taikhoan.php">Tài khoản</a>
+                        <a class="nav-link" href="completed_task_list.php">Completed Task</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="don_nghi_list.php">Đơn nghỉ <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="don_nghi_list.php">Đơn nghỉ<span class="sr-only">(current)</span></a>
                     </li>
                 </ul>
                 <div class="dropdown show ml-auto">
@@ -51,7 +49,7 @@ require_once ('admin_validate.php');
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="#">Thông tin</a>
+                        <a class="dropdown-item" href="user_info.php">Thông tin</a>
                         <a class="dropdown-item text-danger" href="../logout.php">Đăng xuất</a>
                     </div>
                 </div>
@@ -64,31 +62,38 @@ require_once ('admin_validate.php');
     <div class="container">
         <div class="row mb-2 flex-column-reverse flex-md-row">
             <div class="col-md-6 col-12 mb-4 align-items-center justify-content-end">
-                <h2 class="font-weight-bold text-left" id="tieu_de"></h2>
+                <h2 class="font-weight-bold text-left" id="tieu_de">Testing sản phẩm</h2>
             </div>
             <div class="col-md-6 col-12 mb-4 d-flex justify-content-end">
-                <button class="btn btn-light">Trở về danh sách</button>
+                <a class="btn btn-light" href="don_nghi_list.php">Trở về danh sách</a>
             </div>
         </div>
         <div class="row p-4 bg-light rounded">
-            <div class="col-12 d-flex align-items-center justify-content-between">
-                <p class="mb-0">NV<span id="ma_nv"></span> - <span id="ho_ten"></span> • <span id="date_create"></span></p>
-                <span id="trang_thai"></span>
+            <div class="col-12 d-flex align-items-center justify-content-between badge__container">
+                <p class="mb-0"><span id="info_sender">NV1 - Người gửi • 18/12</span></p>
             </div>
             <div style="margin : 30px 16px; border-bottom: 1px solid black; width: 100%"></div>
             <div class="col-12">
-                Số ngày nghỉ đề cập : <span id="so_ngay_nghi"></span></p>
+                Số ngày nghỉ đề cập : <span id="day">3</span> ngày</p>
             </div>
             <div class="col-12">
-                Nội dung: <span id="noi_dung"></span>
+                Nội dung: <span id="des">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime
+                numquam
+                quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam
+                voluptates! Distinctio nisi omnis recusandae. Aperiam atque ea, eius est minus molestiae, nobis officiis
+                praesentium provident quas qui quisquam, ratione suscipit vitae.
+                </span>
             </div>
             <div class="mt-4 col-md-8 col-lg-6 ml-auto">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between align-items-center" id="minh_chung">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span id="ten_file" class="badge badge-secondary p-2">minhchung.ppt</span>
+                        <a id="download_link" href="#" class="btn btn-primary btn-sm">Download</a>
                     </li>
                 </ul>
             </div>
-            <div class="mt-4 col-12 ml-auto d-flex justify-content-end">
+            <div class="mt-4 col-12 ml-auto d-flex justify-content-end btn_container">
                 <button class="btn-success btn" data-toggle="modal" data-target="#approvedModal">Approved</button>
                 <button class="btn-danger btn ml-2" data-toggle="modal" data-target="#refusedModal">Refused</button>
             </div>
@@ -96,7 +101,8 @@ require_once ('admin_validate.php');
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="approvedModal" tabindex="-1" role="dialog" aria-labelledby="approvedModalLabel" aria-hidden="true">
+    <div class="modal fade" id="approvedModal" tabindex="-1" role="dialog" aria-labelledby="approvedModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -106,11 +112,11 @@ require_once ('admin_validate.php');
                     </button>
                 </div>
                 <div class="modal-body">
-                   <p>Bạn đồng ý duyệt đơn nghỉ này ?</p>
+                    <p>Bạn đồng ý duyệt đơn nghỉ này ?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary">Duyệt đơn</button>
+                    <button type="button" class="btn btn-primary btn-ok">Duyệt đơn</button>
                 </div>
             </div>
         </div>
@@ -118,7 +124,8 @@ require_once ('admin_validate.php');
 
 
     <!-- Modal -->
-    <div class="modal fade" id="refusedModal" tabindex="-1" role="dialog" aria-labelledby="refusedModalLabel" aria-hidden="true">
+    <div class="modal fade" id="refusedModal" tabindex="-1" role="dialog" aria-labelledby="refusedModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -132,12 +139,11 @@ require_once ('admin_validate.php');
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-danger">Từ chối</button>
+                    <button type="button" class="btn btn-danger btn-not-ok">Từ chối</button>
                 </div>
             </div>
         </div>
     </div>
-
 
 
     <!-- Optional JavaScript -->
@@ -149,9 +155,8 @@ require_once ('admin_validate.php');
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
-
     <script>
-        const idnghi = <?php echo $_GET['madonnghi'] ?>;
+        const dn = <?php echo $_GET['madonnghi'] ?>;
 
         const createDateFormat = function (date, options) {
             const locale = navigator.language;
@@ -161,35 +166,58 @@ require_once ('admin_validate.php');
             ).format(new Date(date));
         }
 
-        const renderStatus = function (status) {
-            if (status === 'waiting') return "<span class = 'badge badge-warning p-2'>waiting</span>";
-            if (status === 'refused') return "<span class = 'badge badge-secondary p-2'>refused</span>";
-            if (status === 'approved') return "<span class = 'badge badge-success p-2'>approved</span>";
+        const statusBadge = function (status){
+            if(status === 'waiting'){
+                return '<span class="badge badge-warning p-2">Waiting</span>';
+            } else if(status === 'approved') {
+                return '<span class="badge badge-success p-2">Approved</span>';
+            } else if(status === 'refused'){
+                return '<span class="badge badge-secondary p-2">Refused</span>';
+            }
         }
 
+
         $(document).ready(function () {
-            $.get('../api/get_chi_tiet_don_nghi_tlead.php', {id: idnghi}).done(function (response) {
-                console.log(response);
-                const task = response.data[0];
-                $('#tieu_de').text(task.TIEU_DE);
-                $('#ma_nv').text(task.MA_NV);
-                $('#ho_ten').text(task.HO_TEN);
-                $('#date_create').text(createDateFormat(task.NGAY_LAM_DON, {
+            const tieu_de = $('#tieu_de');
+            const sender = $('#info_sender');
+            const date = $('#day');
+            const description = $('#des');
+
+            $('.btn-ok').on('click', function (){
+                $.post('../api/update_don_nghi_status.php', {status : 'approved', dn : dn}).done(function (res){
+                    location.reload();
+                });
+            });
+
+            $('.btn-not-ok').on('click', function (){
+                $.post('../api/update_don_nghi_status.php', {status : 'refused', dn : dn}).done(function (res){
+                    location.reload();
+                });
+            });
+
+            $.getJSON('../api/get_details_don_nghi.php', {dn : dn}).done(function (res){
+                const data = res.data[0];
+                console.log(data);
+                tieu_de.text(data.TIEU_DE);
+                sender.text(`NV${data.MA_NV} - ${data.HO_TEN} • ${createDateFormat(data.NGAY_LAM_DON, {
                     day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
-                }));
-                $('#noi_dung').text(task.NOI_DUNG)
-                $('#trang_thai').append(renderStatus(task.TRANG_THAI));
-                $('#so_ngay_nghi').text(task.SO_NGAY);
-                $('#minh_chung').append(`<p class="p-2 badge badge-secondary card-text mb-0">${task.MINH_CHUNG?.split('/').slice(-1)}</p>
-            <a href="../api/download.php?file=${task.MINH_CHUNG}" class="btn btn-primary btn-sm">Download</a>`);
+                    month: 'numeric',
+                })}`);
+                date.text(data.SO_NGAY);
+                description.text(data.NOI_DUNG);
+                $('.badge__container').append(statusBadge(data.TRANG_THAI));
+                $('#ten_file').text(data.MINH_CHUNG?.split('/').pop());
+                $('#download_link').attr('href', `../api/download.php?file=${data.MINH_CHUNG}`);
+                if(data.TRANG_THAI !== 'waiting') {
+                    console.log('Hello');
+                    $('.btn_container').removeClass('d-flex');
+                    $('.btn_container').addClass('d-none');
+                }
             });
         });
 
     </script>
-
     </body>
 
-
     </html>
+<?php

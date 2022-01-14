@@ -364,7 +364,7 @@ require_once ('admin_validate.php');
                     alertSuccess(response.message);
                     loadData();
                 } else if (response.code === 4) {
-                    return;
+                    alertDanger(response.message);
                 } else {
                     alertDanger(response.message);
                 }

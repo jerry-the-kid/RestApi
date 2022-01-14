@@ -18,4 +18,4 @@ if($data == 1) {
     success_response($id,"Phòng ban $pb đã được sửa trưởng phòng thành công" );
 }
 
-error_response(4, 'Phòng ban vẫn giữ nguyên, trưởng phòng không thay đổi.');
+error_response(4, 'Không thể thay đổi, trưởng phòng còn task giao cho nhân viên.');

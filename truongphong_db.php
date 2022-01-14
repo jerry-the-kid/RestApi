@@ -106,7 +106,8 @@ function getDonNghiTlead(){
     $sql = 'SELECT `don_nghi`.`TIEU_DE`, `don_nghi`.`NOI_DUNG`, `don_nghi`.`MA_NGHI`, `chi_tiet_don_nghi`.`MA_NV`, `user`.`HO_TEN`, `don_nghi`.`SO_NGAY`, `don_nghi`.`TRANG_THAI`
             FROM `don_nghi`, `chi_tiet_don_nghi`, `user`, `user_info`, `truong_phong`
             WHERE `chi_tiet_don_nghi`.`MA_NV` = `truong_phong`.`MA_NV` AND `chi_tiet_don_nghi`.`MA_NGHI` = `don_nghi`.`MA_NGHI` AND
-                `user`.`MA_USER` = `user_info`.`MA_USER` AND `user_info`.`MA_NV` = `truong_phong`.`MA_NV`';
+                `user`.`MA_USER` = `user_info`.`MA_USER` AND `user_info`.`MA_NV` = `truong_phong`.`MA_NV`
+            order by TRANG_THAI desc';
     $stm = $coon->prepare($sql);
     if (!$stm->execute()) {
         return 0;

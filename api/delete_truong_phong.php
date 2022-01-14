@@ -17,4 +17,4 @@ if($data === 1) {
     return success_response($pb, "Xóa trưởng phòng của $pb thành công");
 }
 
-error_response(3, 'Xóa thất bại');
+error_response(3, 'Xóa thất bại! Trưởng phòng đang còn task giao cho nhân viên.');

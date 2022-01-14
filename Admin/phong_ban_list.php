@@ -1,5 +1,5 @@
 <?php
-require_once ('admin_validate.php');
+require_once('admin_validate.php');
 ?>
 <!doctype html>
 <html lang="en">
@@ -71,8 +71,8 @@ require_once ('admin_validate.php');
     <div class="row">
         <div class="col-12 col-md-8 mb-md-0 mb-2">
             <form class="form-group mb-0 d-flex flex-sm-row flex-column">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm theo tên phòng ban" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
             </form>
         </div>
         <div class="col-12 col-md-4 d-flex align-items-center justify-content-end">
@@ -92,7 +92,7 @@ require_once ('admin_validate.php');
                 </tr>
                 </thead>
                 <tbody id="table-body">
-                    <!-- data goes here -->
+                <!-- data goes here -->
                 </tbody>
             </table>
 
@@ -112,7 +112,8 @@ require_once ('admin_validate.php');
                 </button>
             </div>
             <div class="modal-body">
-                <p>Bạn có chắc muốn xóa phòng ban tên <span class="font-weight-bold deletedModal__tenPb" id="">Phòng giáo dục</span> ?</p>
+                <p>Bạn có chắc muốn xóa phòng ban tên <span class="font-weight-bold deletedModal__tenPb" id="">Phòng giáo dục</span>
+                    ?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Thoát</button>
@@ -178,11 +179,6 @@ require_once ('admin_validate.php');
                         <label for="modal-update__maphong" class="col-form-label">Tên phòng ban:</label>
                         <input class="form-control" id="modal-update__maphong"/>
                     </div>
-
-                    <!--                        <div class="form-group col-6">-->
-                    <!--                            <label for="modal-update__mapb" class="col-form-label">Mã phòng ban:</label>-->
-                    <!--                            <input type="text" class="form-control" id="modal-update__mapb">-->
-                    <!--                        </div>-->
                     <div class="form-group">
                         <label for="modal-update__sophong" class="col-form-label">Số phòng:</label>
                         <input type="text" class="form-control" id="modal-update__sophong">
@@ -191,11 +187,13 @@ require_once ('admin_validate.php');
                         <label for="message-text" class="col-form-label">Mô tả:</label>
                         <textarea class="form-control" id="message-text"></textarea>
                     </div>
+                    <div class="form-group" id="modal-update__alert">
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Thoát</button>
-                <button type="button" class="btn btn-success">Cập nhật</button>
+                <button type="button" class="btn btn-success btn-modal__update">Cập nhật</button>
             </div>
         </div>
     </div>
@@ -211,6 +209,38 @@ require_once ('admin_validate.php');
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 <script>
+    let currentUpdate;
+    let searchData = [];
+
+    function removeVietnameseTones(str) {
+        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a");
+        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
+        str = str.replace(/ì|í|ị|ỉ|ĩ/g,"i");
+        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o");
+        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u");
+        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y");
+        str = str.replace(/đ/g,"d");
+        str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+        str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+        str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+        str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+        str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+        str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+        str = str.replace(/Đ/g, "D");
+        // Some system encode vietnamese combining accent as individual utf-8 characters
+        // Một vài bộ encode coi các dấu mũ, dấu chữ như một kí tự riêng biệt nên thêm hai dòng này
+        str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // ̀ ́ ̃ ̉ ̣  huyền, sắc, ngã, hỏi, nặng
+        str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // ˆ ̆ ̛  Â, Ê, Ă, Ơ, Ư
+        // Remove extra spaces
+        // Bỏ các khoảng trắng liền nhau
+        str = str.replace(/ + /g," ");
+        str = str.trim();
+        // Remove punctuations
+        // Bỏ dấu câu, kí tự đặc biệt
+        str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g," ");
+        return str;
+    }
+
 
     const alertSuccess = function (message) {
         const alert = `<div class="alert alert-success" role="alert">
@@ -247,6 +277,7 @@ require_once ('admin_validate.php');
                         <a href="phong_ban_info.php?id=${info.MA_PHONG_BAN}" class="text-primary" style="text-decoration: none">Chi tiết</a>
                         |
                         <button href="#" class="text-primary" data-id="${info.MA_PHONG_BAN}"
+                                onclick="updateDepartment(this)"
                                 type="button" data-toggle="modal" data-target="#updatedModal"
                                 style="border: none; background-color: inherit; cursor: pointer">Cập nhật
                         </button>
@@ -268,8 +299,21 @@ require_once ('admin_validate.php');
         $.get('../API/get_all_departments.php').done(function (respone) {
             const {data} = respone;
             renderTable(data);
+            searchData = data;
         });
     }
+
+    const updateDepartment = function (e) {
+        const id = e.dataset.id;
+        currentUpdate = id;
+        $.post('../api/get_dp_info.php', {pb: id}).done(function (res) {
+            const data = res.data[0];
+            $('#modal-update__maphong').val(data.TEN_PB);
+            $('#modal-update__sophong').val(data.SO_PHONG);
+            $('#message-text').val(data.MO_TA);
+        });
+    };
+
 
     const alertFormDanger = function (container, message) {
         $(container).append(`<div class="alert alert-danger alert-dismissible fade show" role="alert" id="modal-alert">
@@ -285,12 +329,47 @@ require_once ('admin_validate.php');
         const maPhongAdding = $('#modal-add__maphong');
         const soPhongAdding = $('#modal-add__sophong');
         const motaAdding = $('#modal-add__mota');
+
+
         loadData();
 
-        [maPhongAdding, soPhongAdding, motaAdding].forEach(el => {
+        [maPhongAdding, soPhongAdding, motaAdding, $('#modal-update__maphong'), $('#modal-update__sophong'), $('#message-text')].forEach(el => {
             el.on('input', function () {
                 $('#modal-alert').alert('close');
             });
+        });
+
+
+        $('.btn-modal__update').on('click', function () {
+            if (!$('#modal-update__maphong').val()) {
+                alertFormDanger('#modal-update__alert', 'Tên phòng ban còn thiếu.Vui lòng nhập.');
+                $('#modal-update__maphong').focus();
+            } else if (!$('#modal-update__sophong').val()) {
+                alertFormDanger('#modal-update__alert', 'Số phòng ban còn thiếu. Vui lòng nhập.');
+                $('#modal-update__sophong').focus();
+            } else if (!$('#message-text').val()) {
+                alertFormDanger('#modal-update__alert', 'Mô tả phòng ban còn thiếu. Vui lòng nhập.');
+                $('#message-text').focus();
+            } else {
+                const data = {
+                    id : currentUpdate,
+                    ten: $('#modal-update__maphong').val(),
+                    phong: $('#modal-update__sophong').val(),
+                    mota: $('#message-text').val()
+                };
+
+                $.post('../API/update_dp.php', data).done(function (response) {
+                    if (response.code === 0) {
+                        alertSuccess(response.message);
+                        $('#updatedModal').modal('hide');
+                        loadData();
+                        clearElementInput($('#modal-update__maphong'), $('#modal-update__sophong'), $('#message-text'));
+                    } else {
+                        alertDanger(response.message);
+                        $('#updatedModal').modal('hide');
+                    }
+                });
+            }
         });
 
 
@@ -326,27 +405,35 @@ require_once ('admin_validate.php');
 
         });
 
-
-        $('.deletedModal__delete').on('click', function (){
-           $.post('http://localhost/final/API/delete_db.php', {id : currentDeleteDp}).done(function (response){
-               if (response.code === 0) {
-                   alertSuccess(response.message);
-                   $('#deletedModal').modal('hide');
-                   loadData();
-               } else {
-                   alertDanger(response.message);
-                   $('#deletedModal').modal('hide');
-               }
-           });
+        $("input[type='search']").on('input', function (e){
+            const value = removeVietnameseTones(e.target.value);
+            const foundData = searchData.filter(function (el){
+                return removeVietnameseTones(el.TEN_PB.toLowerCase()).includes(value.toLowerCase());
+            });
+            renderTable(foundData);
         });
 
-        $('#table-body').on('click', function (e){
+
+        $('.deletedModal__delete').on('click', function () {
+            $.post('http://localhost/final/API/delete_db.php', {id: currentDeleteDp}).done(function (response) {
+                if (response.code === 0) {
+                    alertSuccess(response.message);
+                    $('#deletedModal').modal('hide');
+                    loadData();
+                } else {
+                    alertDanger(response.message);
+                    $('#deletedModal').modal('hide');
+                }
+            });
+        });
+
+        $('#table-body').on('click', function (e) {
             const btn = e.target.closest('.btn-delete');
-            if(!btn) return;
-            const {id,ten} = btn.dataset;
-            if($(btn).hasClass('btn-delete')){
-               $('.deletedModal__tenPb').text(ten);
-               currentDeleteDp = id;
+            if (!btn) return;
+            const {id, ten} = btn.dataset;
+            if ($(btn).hasClass('btn-delete')) {
+                $('.deletedModal__tenPb').text(ten);
+                currentDeleteDp = id;
             }
         });
     });
