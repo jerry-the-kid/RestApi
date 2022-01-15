@@ -323,4 +323,43 @@
         }
         return 0;
     }
+
+    function any_inprogress_task($id){
+        $conn = getConnection();
+        $sql = "SELECT task_info.*
+                FROM task_info
+                WHERE task_info.MA_NGUOI_NHAN = $id AND task_info.STATUS = 'In progress'";
+        $stm = $conn->prepare($sql);
+        if (!$stm->execute()) {
+            return 0;
+        }
+        $result = $stm->get_result();
+
+        if($result->num_rows > 0){
+            return TRUE;
+        }
+        else return FALSE;
+    }
+
+    function delete_chi_tiet_don_nghi($id){
+        $conn = getConnection();
+        $sql = "DELETE FROM chi_tiet_don_nghi WHERE chi_tiet_don_nghi.MA_NV = $id";
+        $stm = $conn->prepare($sql);
+        $stm->execute();
+        if ($stm->affected_rows > 1) {
+            return 1;
+        }
+        return 0;
+    }
+
+    function delete_task_info($id){
+        $conn = getConnection();
+        $sql = "DELETE FROM task_info WHERE task_info.MA_NGUOI_NHAN = $id";
+        $stm = $conn->prepare($sql);
+        $stm->execute();
+        if ($stm->affected_rows > 1) {
+            return 1;
+        }
+        return 0;
+    }
 ?>

@@ -22,6 +22,12 @@
 
         $user_info = getUserInfoAndAvatarPathById($id)[0];
 
+        if(any_inprogress_task($user_info["MA_NV"])){
+            error_response(2, "Nhân viên còn task đang làm không thể xóa");
+        }
+
+        delete_chi_tiet_don_nghi($user_info["MA_NV"]);
+        delete_task_info($user_info["MA_NV"]);
         delete_user_info($user_info["MA_NV"]);
         delete_user($user_info["MA_NV"]);
         delete_account($user_info["USER_NAME"]);

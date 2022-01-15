@@ -169,18 +169,22 @@ require_once ('admin_validate.php');
     }
 
     const alertSuccess = function (message) {
+        $('#alert-container').html('');
         const alert = `<div class="alert alert-success" role="alert">
          ${message}
          </div>`;
         $('#alert-container').append(alert);
+        $('#alert-container').focus();
         $('.alert-success').fadeOut(3500);
     }
 
     const alertDanger = function (message) {
+        $('#alert-container').html('');
         const alert = `<div class="alert alert-danger" role="alert">
          ${message}
          </div>`;
         $('#alert-container').append(alert);
+        $('#alert-container').focus();
         $('.alert-danger').fadeOut(3500);
     }
 
