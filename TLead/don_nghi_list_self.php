@@ -198,7 +198,7 @@ require_once('tlead_validate.php');
 </body>
 
 <script type="application/javascript">
-    let dateUsed, dateLeft;
+    let dateUsed = 0, dateLeft;
     let storedData = [];
     let searchData = [];
 
@@ -312,8 +312,12 @@ require_once('tlead_validate.php');
 
     const loadDate = function () {
         $.get('../api/get_ngay_nghi_trong_nam_tlead.php', {id: id}).done(function (res) {
+            console.log(res);
             const data = res.data;
-            dateUsed = data.reduce((el, el_1) => el.SO_NGAY + el_1.SO_NGAY);
+            data.forEach(el =>{
+                dateUsed += +el.SO_NGAY;
+            });
+
             $('#date-used').text(dateUsed);
             dateLeft = 15 - dateUsed;
             $('#date-left').text(dateLeft);
@@ -323,8 +327,8 @@ require_once('tlead_validate.php');
             }
             if (dateLeft === 0) {
                 $('.btn-add').attr('disabled', true);
-            }
-            ;
+                $('.btn-add').text('Bạn vừa mới làm đơn nghỉ');
+            };
         });
     }
 
@@ -339,6 +343,7 @@ require_once('tlead_validate.php');
 
             if (sevenDayBlock) {
                 $('.btn-add').attr('disabled', true);
+                $('.btn-add').text('Bạn vừa mới làm đơn nghỉ');
             }
             storedData = data;
             renderByValue();

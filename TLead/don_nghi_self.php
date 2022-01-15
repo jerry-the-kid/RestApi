@@ -65,7 +65,7 @@ require_once('tlead_validate.php');
             <div class="col-md-6 col-12 mb-4 align-items-center justify-content-end">
                 <h2 class="font-weight-bold text-left" id="tieu_de">Testing sản phẩm</h2>
             </div>
-            <div class="col-md-6 col-12 mb-4 d-flex justify-content-end">
+            <div class="col-md-6 col-12 mb-4 d-flex justify-content-end align-items-center">
                 <a class="btn btn-light ali" href="don_nghi_list_self.php">Trở về danh sách</a>
             </div>
         </div>
@@ -91,7 +91,7 @@ require_once('tlead_validate.php');
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <span class="badge badge-secondary p-2">minhchung.ppt</span>
-                        <button class="btn btn-primary btn-sm">Download</button>
+                        <a class="btn btn-primary btn-sm" id="download_link">Download</a>
                     </li>
                 </ul>
             </div>
