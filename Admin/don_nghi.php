@@ -29,17 +29,20 @@ require_once('admin_validate.php');
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="index.php">Task</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php">Nhân viên</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="cancel_task_list.php">Canceled Task</a>
+                        <a class="nav-link" href="phong_ban_list.php">Phòng ban</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="completed_task_list.php">Completed Task</a>
+                        <a class="nav-link" href="truong_phong.php">Trưởng phòng</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="taikhoan.php">Tài khoản</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="don_nghi_list.php">Đơn nghỉ<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="don_nghi_list.php">Đơn nghỉ</a>
                     </li>
                 </ul>
                 <div class="dropdown show ml-auto">
