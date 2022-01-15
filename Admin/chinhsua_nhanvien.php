@@ -320,7 +320,7 @@ require_once ('admin_validate.php');
     }
 
     const isPictureExtension = function(extension){
-        var fileExtension = ['jpeg', 'jpg', 'png', 'gif'];
+        const fileExtension = ['jpeg', 'jpg', 'png', 'gif'];
         if ($.inArray(extension.split('.').pop().toLowerCase(), fileExtension) == -1) {
             return false;
         }

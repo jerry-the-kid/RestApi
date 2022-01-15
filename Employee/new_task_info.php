@@ -80,7 +80,7 @@ require_once ('employee_validate.php');
             Mô tả : <span id="mota"></span>
         </div>
         <div class="mt-4 col-md-8 col-lg-6">
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush" id="supportfile__container">
                 <li class="list-group-item d-flex justify-content-between align-items-center"><span
                             id="supportfile"></span>
                     <a href="#" class="btn btn-primary btn-sm link-download">Download</a>
@@ -139,7 +139,7 @@ require_once ('employee_validate.php');
 
 
     function loadProduct() {
-        $.post("http://localhost/final/api/get_new_task_detail.php", {id: taskId}, function (data) {
+        $.post("../api/get_new_task_detail.php", {id: taskId}, function (data) {
             let task = data.data[0];
             const tieude = document.getElementById('tieude');
             tieude.innerHTML = task.TIEU_DE;
@@ -162,8 +162,12 @@ require_once ('employee_validate.php');
             const mota = document.getElementById('mota');
             mota.innerHTML = task.MO_TA;
             const supportfile = document.getElementById('supportfile');
-            supportfile.innerHTML = shortcut(task.SUPPORT_FOLDER_PATH);
-            $('.link-download').attr('href', `../api/download.php?file=${task.SUPPORT_FOLDER_PATH}`);
+            if(task.SUPPORT_FOLDER_PATH){
+                supportfile.innerHTML = shortcut(task.SUPPORT_FOLDER_PATH);
+                $('.link-download').attr('href', `../api/download.php?file=${task.SUPPORT_FOLDER_PATH}`);
+            } else {
+                $('#supportfile__container').html('');
+            }
         }, "json");
     }
 
@@ -171,8 +175,7 @@ require_once ('employee_validate.php');
         if (file == null) {
             return "Empty File";
         } else {
-            let text = file;
-            const myArray = text.split("/");
+            const myArray = file.split("/");
             return myArray[3];
         }
     }

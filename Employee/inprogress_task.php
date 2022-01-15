@@ -81,7 +81,7 @@ require_once ('employee_validate.php');
             Mô tả : <span id="mota"></span>
         </div>
         <div class="mt-4 col-md-8 col-lg-6">
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush" id="supportfile__container">
                 <li class="list-group-item d-flex justify-content-between align-items-center"><span
                             id="supportfile"></span>
                     <a id="link-download" href="#" class="btn btn-primary btn-sm">Download</a>
@@ -266,8 +266,12 @@ require_once ('employee_validate.php');
                 const mota = document.getElementById('mota');
                 mota.innerHTML = task.MO_TA;
                 const supportfile = document.getElementById('supportfile');
-                supportfile.innerHTML = shortcut(task.SUPPORT_FOLDER_PATH);
-                $('#link-download').attr('href', `../api/download.php?file=${task.SUPPORT_FOLDER_PATH}`);
+                if(task.SUPPORT_FOLDER_PATH){
+                    supportfile.innerHTML = shortcut(task.SUPPORT_FOLDER_PATH);
+                    $('.link-download').attr('href', `../api/download.php?file=${task.SUPPORT_FOLDER_PATH}`);
+                } else {
+                    $('#supportfile__container').html('');
+                }
             })
         }, "json");
     }

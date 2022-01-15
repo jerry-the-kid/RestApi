@@ -416,7 +416,7 @@ require_once('admin_validate.php');
 
 
         $('.deletedModal__delete').on('click', function () {
-            $.post('http://localhost/final/API/delete_db.php', {id: currentDeleteDp}).done(function (response) {
+            $.post('../API/delete_db.php', {id: currentDeleteDp}).done(function (response) {
                 if (response.code === 0) {
                     alertSuccess(response.message);
                     $('#deletedModal').modal('hide');
