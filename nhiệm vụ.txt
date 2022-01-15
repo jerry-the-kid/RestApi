@@ -77,5 +77,19 @@ Search, Chuyển trang khi sai task
 Trang thông tin, Đổi mật khẩu
 
 
+___________________________________________________________________________________________________________________________________
+- qua han task (BAD / OK)
+- Bao loi xoa nhan vien
+- Admin sai navbar
 
 
+
+- Download trong inprogress.
+- Hien thi ngay nghi teamlead
+- Sua button tlead
+- Sap xep theo deadline
+
+- Chuyen trang 
+
+lam roi - chuyen trang (index)
+Sau docker : - Sua cap nhat anh
