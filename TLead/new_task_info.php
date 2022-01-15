@@ -269,7 +269,7 @@ require_once('tlead_validate.php');
             $.post('../api/cancel_task.php', {id: taskId}).done(function (response) {
                 console.log(response);
                 $('#cancelModal').modal('hide');
-                document.location.href = 'task_list.php';
+                document.location.href = 'index.php';
             });
         });
 

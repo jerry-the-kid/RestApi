@@ -91,8 +91,8 @@ require_once ('tlead_validate.php');
                     <option value="1">All</option>
                     <option value="2">New Tasks</option>
                     <option value="3">In progress Tasks</option>
-                    <option selected value="4">Waiting tasks</option>
-                    <option selected value="5">Rejected tasks</option>
+                    <option value="4">Waiting tasks</option>
+                    <option value="5">Rejected tasks</option>
                 </select>
             </div>
         </div>
