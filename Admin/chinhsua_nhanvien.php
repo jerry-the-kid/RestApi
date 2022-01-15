@@ -262,13 +262,13 @@ require_once ('admin_validate.php');
                 }
             }
             else{
-                // let filename = $('#exampleFormControlFile1').val().replace(/C:\\fakepath\\/i, '')
+                let filename = $('#exampleFormControlFile1').val().replace(/C:\\fakepath\\/i, '')
                 
-                // if(!isPictureExtension(filename)){
-                //     alertDanger("Định dạng file không hợp lệ");
-                //     $('#exampleFormControlFile1').focus();
-                // }
-                // else{
+                if(!isPictureExtension(filename)){
+                    alertDanger("Định dạng file không hợp lệ");
+                    $('#exampleFormControlFile1').focus();
+                }
+                else{
                     let url = window.location.href;
                     let id = url.split('id=').pop();
 
@@ -299,7 +299,7 @@ require_once ('admin_validate.php');
                             else alertDanger(respone.message);
                         }
                     }
-                // }
+                }
             }
         });
     }
