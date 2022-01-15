@@ -11,8 +11,10 @@ if($_SERVER['REQUEST_METHOD'] != 'POST'){
 
 $message = isset($_POST['message']) ? $_POST['message'] : null;
 $id_task = isset($_POST['id_task']) ? $_POST['id_task'] : null;
+$submit_date = isset($_POST['submit_date']) ? $_POST['submit_date'] : null;
 
-if(!$message || !$id_task)
+
+if(!$message || !$id_task || !$submit_date)
     error_response(1, 'Thông tin input còn thiếu');
 
 $filePath = '';
@@ -46,6 +48,6 @@ if(isset($_FILES['file'])){
 }
 
 
-$data = updateTaskToWaiting($id_task, $filePath, $message);
+$data = updateTaskToWaiting($id_task, $filePath, $message, $submit_date);
 if($data === 1) success_response($id_task, 'Submit task thành công');
 error_response(3, 'Submit task thất bại');

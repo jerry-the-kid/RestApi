@@ -321,6 +321,7 @@ require_once ('employee_validate.php');
             data.append("file", $('#inputGroupFile01').get(0).files[0]);
             data.append("id", taskId);
             data.append("employeeMessage", $("#message-text").val());
+            data.append('submitDate', dateFormatForAjax(new Date($.now())));
 
             let xhr = new XMLHttpRequest();
 
@@ -342,6 +343,19 @@ require_once ('employee_validate.php');
                 }
             }
         });
+    }
+
+    function dateFormatForAjax(date){
+        let dateObj = new Date(date);
+        let month = dateObj.getMonth() + 1;
+        let day = dateObj.getDate();
+        let year = dateObj.getUTCFullYear();
+        let hours = ("0" + dateObj.getHours()).slice(-2);
+        let minute = ("0" + dateObj.getMinutes()).slice(-2);
+        let seconds = ("0" + dateObj.getSeconds()).slice(-2);
+
+        let newdate = year + "-" + month + "-" + day + " " + hours + ":" + minute + ":" + seconds;
+        return newdate;
     }
 
     $(document).ready(function () {

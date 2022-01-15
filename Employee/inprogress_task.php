@@ -185,6 +185,7 @@ require_once ('employee_validate.php');
 
 
     $(document).ready(function () {
+        console.log(dateFormatForAjax(new Date($.now())));
         const content = {
             fileName: '',
             message: '',
@@ -228,6 +229,7 @@ require_once ('employee_validate.php');
             const form =  $('#form_submit')[0];
             const data = new FormData(form);
             data.append('id_task', task_id);
+            data.append('submit_date', dateFormatForAjax(new Date($.now())));
 
             $.ajax({
                 type: "POST",
@@ -268,7 +270,7 @@ require_once ('employee_validate.php');
                 const supportfile = document.getElementById('supportfile');
                 if(task.SUPPORT_FOLDER_PATH){
                     supportfile.innerHTML = shortcut(task.SUPPORT_FOLDER_PATH);
-                    $('.link-download').attr('href', `../api/download.php?file=${task.SUPPORT_FOLDER_PATH}`);
+                    $('#link-download').attr('href', `../api/download.php?file=${task.SUPPORT_FOLDER_PATH}`);
                 } else {
                     $('#supportfile__container').html('');
                 }
@@ -284,6 +286,19 @@ require_once ('employee_validate.php');
             const readable_date = new Date(date).toLocaleDateString();
             return readable_date;
         }
+    }
+
+    function dateFormatForAjax(date){
+        let dateObj = new Date(date);
+        let month = dateObj.getMonth() + 1;
+        let day = dateObj.getDate();
+        let year = dateObj.getUTCFullYear();
+        let hours = ("0" + dateObj.getHours()).slice(-2);
+        let minute = ("0" + dateObj.getMinutes()).slice(-2);
+        let seconds = ("0" + dateObj.getSeconds()).slice(-2);
+
+        let newdate = year + "-" + month + "-" + day + " " + hours + ":" + minute + ":" + seconds;
+        return newdate;
     }
 
     function shortcut(file) {

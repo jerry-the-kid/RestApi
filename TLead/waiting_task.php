@@ -91,7 +91,8 @@ require_once ('tlead_validate.php');
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Phần nộp công việc</h5>
-                    <p class="card-text" id="messageEmployee">Không có lời nhắn</p>
+                    <h6>Ngày nộp: <span id="submitDate"></span></h3>
+                    <p class="card-text">Lời nhắn: <span id="messageEmployee">Không có</span></p>
                     <div class="d-flex justify-content-between">
                         <p class="p-2 badge badge-secondary card-text mb-0" id="submitFolder">Không thấy file</p>
                         <a id="downloadSubmitFile" class="text-light btn btn-primary btn-sm" download>Download</a>
@@ -167,9 +168,9 @@ require_once ('tlead_validate.php');
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Đánh giá</label>
                         <select class="form-control" id="exampleFormControlSelect1">
-                            <option>Good</option>
-                            <option>Bad</option>
-                            <option>OK</option>
+                            <option id="good">Good</option>
+                            <option id="bad">Bad</option>
+                            <option id="ok">OK</option>
                         </select>
                     </div>
                 </form>
@@ -252,6 +253,15 @@ require_once ('tlead_validate.php');
         $('.alert-danger').fadeOut(3500);
     }
 
+    function deadlineCheck(submitDate, deadline){
+        if(new Date(submitDate) > new Date(deadline)){
+            let good = "good";
+            let ok = "ok"
+            $("#exampleFormControlSelect1 option[id=" + good + "]").hide();
+            $("#exampleFormControlSelect1 option[id="+ ok + "]").attr("selected",true);
+        }
+    }
+
     const fillData = function(){
         let taskId = getUrlParameter('task');
 
@@ -263,6 +273,9 @@ require_once ('tlead_validate.php');
             $("#dateCreate").text("Ngày tạo: " + dateFormatForCreate(taskInfo.DATE_CREATE));
             $("#deadline").text("Hạn nộp: " + dateFormatForDeadLine(taskInfo.DEADLINE));
             $("#description").append(taskInfo.MO_TA);
+            $("#submitDate").text(taskInfo.SUBMIT_DATE)
+
+            deadlineCheck(taskInfo.SUBMIT_DATE, taskInfo.DEADLINE);
 
             if(taskInfo.message_employee){
                 $("#messageEmployee").text(taskInfo.message_employee);

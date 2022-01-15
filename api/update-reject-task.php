@@ -9,9 +9,10 @@
     }
     
     
-    if (isset($_POST['id']) && isset($_POST['employeeMessage'])) {
+    if (isset($_POST['id']) && isset($_POST['employeeMessage']) && isset($_POST['submitDate'])) {
         $taskId = $_POST['id'];
         $employeeMessage = $_POST['employeeMessage'];
+        $submitDate = $_POST['submitDate'];
 
         if (!is_dir('../file_nop')) {
             mkdir('../file_nop');
@@ -39,7 +40,7 @@
         mkdir(dirname($filePath));
 
         if (move_uploaded_file($_FILES["file"]["tmp_name"], $filePath)) {
-            update_reject_task($taskId, $employeeMessage, $filePath);
+            update_reject_task($taskId, $employeeMessage, $filePath, $submitDate);
             success_response($taskId, "Task đã được cập nhật thành công");
         } else {
             http_response_code(400);
