@@ -106,20 +106,20 @@ CREATE TABLE `don_nghi` (
 --
 
 INSERT INTO `don_nghi` (`MA_NGHI`, `TIEU_DE`, `MINH_CHUNG`, `SO_NGAY`, `TRANG_THAI`, `NGAY_LAM_DON`, `NOI_DUNG`) VALUES
-(1, 'Đi khám nghĩa vụ quân sự', '../minh_chung/vA064njj/minh_chung.pdf', 3, 'waiting', '2022-01-11', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
-(2, 'Về quê thăm gia đình', '../minh_chung/ZsIoH9w7/MV01.pdf', 4, 'approved', '2021-01-08', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
-(3, 'Bệnh tiểu đường ', '../minh_chung/1LMs1IPK/minh_chung.png', 2, 'refused', '2021-01-24', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
-(4, 'Đi thi Toeic', '../minh_chung/fLNYu5hT/minh_chung.pdf', 3, 'waiting', '2022-01-07', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
-(5, 'Không lý do', '../minh_chung/pocPIiAO/minh_chung.pdf', 4, 'refused', '2022-01-01', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
-(6, 'Bị nghi ngờ là F0 covid', '../minh_chung/JqXHFKKi/minh_chung.pdf', 7, 'approved', '2022-01-06', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
-(7, 'Họp đồng hương', '../minh_chung/bpauaiqT/minh_chung.docx', 2, 'refused', '2022-01-01', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
-(8, 'Đi khám nghĩa vụ quân sự', '../minh_chung/LO1mErFj/minh_chung.png', 5, 'waiting', '2022-01-12', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
-(9, 'Về quê thăm gia đình', '../minh_chung/o91EURSW/minh_chung.pdf', 4, 'refused', '2022-01-08', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
-(10, 'Bệnh tiểu đường ', '../minh_chung/bgeE9VMa/minh_chung.png', 6, 'approved', '2022-01-01', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
-(11, 'Đi thi Toeic', '../minh_chung/hcCFOSzQ/minh_chung.pdf', 1, 'waiting', '2022-01-13', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
-(12, 'Không lý do', '../minh_chung/FDAbVUqW/minh_chung.pdf', 2, 'refused', '2022-01-01', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. '),
-(13, 'Bị nghi ngờ là F0 covid', '../minh_chung/y6aUF33P/minh_chung.txt', 5, 'approved', '2022-01-02', 'Lorem ipsum dolor sit amet'),
-(14, 'Họp đồng hương', '../minh_chung/bwMv5X7U/minh_chung.ppt', 4, 'refused', '2022-01-01', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deserunt magni maxime numquam quae soluta suscipit tenetur vero. Commodi debitis dolor nam. Aut distinctio hic neque quaerat quam voluptates! Distinctio nisi omnis recusandae. ');
+(1, 'Đi khám nghĩa vụ quân sự', '../minh_chung/vA064njj/minh_chung.pdf', 1, 'waiting', '2022-01-15', 'Em chào sếp, phường em đưa giấy triệu tập đi khám nghĩa vụ quân sự nên ngày 15 này em xin nghỉ để đi ạ. Mong sếp duyệt giúp em, em cảm ơn sếp nhiều.'),
+(2, 'Về quê thăm gia đình', '../minh_chung/ZsIoH9w7/MV01.pdf', 4, 'approved', '2022-01-08', 'Em chào sếp, sếp cho em xin nghỉ vài ngày về quê thăm gia đình của em ạ, em nghe bảo dạo này trái gió nên mẹ em không được khỏe nên em rất lo, mong sếp duyệt giúp em, em cảm ơn sếp.'),
+(3, 'Đi khám bệnh', '../minh_chung/1LMs1IPK/minh_chung.png', 1, 'approved', '2022-01-07', 'Chào sếp, em có lịch hẹn đi khám bệnh nên xin sếp duyệt cho em nghỉ hôm đó đi khám nha sếp. Em cảm ơn sếp.'),
+(4, 'Đi thi Toeic', '../minh_chung/fLNYu5hT/minh_chung.pdf', 1, 'waiting', '2022-01-10', 'Em chào sếp đẹp trai, sếp cho em xin off 1 bữa đi thi lấy cái chứng chỉ tiếng anh nha sếp. Yêu sếp !!!'),
+(5, 'Nhà có đám cưới', '../minh_chung/pocPIiAO/minh_chung.pdf', 3, 'refused', '2022-01-01', 'Chào sếp, con trai nhà họ hàng xa bên ngoại em có đám cưới nên sếp cho em xin nghỉ đi đám cưới nha sếp.'),
+(6, 'Nghi ngờ mắc covid', '../minh_chung/JqXHFKKi/minh_chung.pdf', 7, 'approved', '2022-01-06', 'Chào sếp ạ, xin lỗi sếp vì đã làm phiền sếp giờ này nhưng có vẻ em cảm giác cảm sốt và mất vị giác nên sáng mai em sẽ test và báo sếp sau. Sếp cho em xin off 1 tuần, có thể em làm remote ở nhà cũng được ạ. Mong sếp duyệt giúp, cảm ơn sếp ạ.'),
+(7, 'Họp đồng hương Bến Tre', '../minh_chung/bpauaiqT/minh_chung.docx', 1, 'refused', '2022-01-01', 'Chào sếp, mong sếp có ngày tốt lành, sếp duyệt giúp cho em off 1 ngày để đi họp đồng hương ạ. Cảm ơn sếp.'),
+(8, 'Đi khám nghĩa vụ quân sự', '../minh_chung/LO1mErFj/minh_chung.png', 1, 'waiting', '2022-01-12', 'Em chào sếp, phường em đưa giấy triệu tập đi khám nghĩa vụ quân sự nên ngày 15 này em xin nghỉ để đi ạ. Mong sếp duyệt giúp em, em cảm ơn sếp nhiều.'),
+(9, 'Đi Đà Lạt', '../minh_chung/o91EURSW/minh_chung.pdf', 5, 'refused', '2022-01-08', 'Em muốn xả stress và đi đâu đó chơi ạ.'),
+(10, 'Đi nhổ răng khôn', '../minh_chung/bgeE9VMa/minh_chung.png', 2, 'approved', '2022-01-01', 'Chào sếp, dạo này răng em nhức nhối với đau quá, sếp cho em xin nghỉ để em đi nhổ răng ạ. Cảm ơn sếp.'),
+(11, 'Đi dự hội thảo khoa học', '../minh_chung/hcCFOSzQ/minh_chung.pdf', 1, 'waiting', '2022-01-13', 'Em chào anh, mấy bữa nữa có cuộc hội thảo khoa học nên sếp duyệt giúp em đi nha sếp. Em cảm ơn sếp ạ.'),
+(12, 'Xem đất mua nhà', '../minh_chung/FDAbVUqW/minh_chung.pdf', 1, 'refused', '2022-01-01', 'Chào sếp, em tính đi mua nhà nên em xin off 1 ngày để đi xem đất ạ.'),
+(13, 'Đi du lịch cùng gia đình', '../minh_chung/y6aUF33P/minh_chung.txt', 6, 'approved', '2022-01-02', 'Em chào sếp, dạo này công việc khá áp lực nên sếp cho em xin vài ngày off để đi chơi với gia đình ạ. Em cảm ơn sếp.'),
+(14, 'Hưởng tuần trăng mật cùng vợ', '../minh_chung/bwMv5X7U/minh_chung.ppt', 7, 'approved', '2022-01-01', 'Em chào sếp, dạo này thời công việc khá bận rộn nên sau đám cưới em chưa đưa vợ em đi đâu đó chơi được. Em xin sếp cho em nghỉ 1 tuần em đưa vợ đi hưởng trăng mật ạ. Em cảm ơn sếp nhiều ạ.');
 
 -- --------------------------------------------------------
 
@@ -326,19 +326,19 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`MA_USER`, `HO_TEN`, `AVATAR_PATH`, `ADDRESS`, `PHONE`, `ngay_sinh`, `gioi_tinh`, `email`) VALUES
 (1, 'Tân Kim', '../image/1vSole7m/tankim.jpg', '404, Thôn 1, Phường 56, Huyện Thịnh Thụy\nHà Tĩnh', '0186018571', '1990-06-01', '1', 'inguy@diep.info.vn'),
-(2, 'Quỳnh Vũ', NULL, '479 Phố Đoàn Tâm Yến, Ấp Hiếu Bích, Quận Nhân\nĐà Nẵng', '8465085261', '1995-12-09', '0', 'hanh89@gmail.com'),
-(3, 'Quang Võ', NULL, '74 Phố Quang, Phường Hiền, Quận Trung Khu\nBắc Giang', '0283935612', '1980-09-16', '1', 'klu@phung.info.vn\n'),
-(4, 'Thịnh Nguyễn', NULL, '79, Thôn Lạc Sang, Ấp Chiêu Hảo, Quận 2\nĐắk Lắk', '0166196042', '1980-08-01', '1', 'vung@dang.gov.vn'),
-(5, 'Nga Mỹ', NULL, '22, Ấp Sỹ Lạc, Xã 8, Huyện Phượng\nKon Tum', '8425734083', '1986-03-12', '0', 'thuy.luong@can.com'),
-(6, 'Thế Nam', NULL, '1107 Phố Âu Anh Duy, Phường Khoa, Quận Thu Ý\nLai Châu', '8424037119', '1975-02-01', '1', 'hung.ong@ong.biz'),
-(7, 'Long Trọng', NULL, '3842, Thôn Vân, Phường Nghị, Huyện Bùi Điền\nKhánh Hòa', '0163844090', '2000-06-03', '1', 'ttrung@hotmail.com'),
-(8, 'Phúc Sỹ', NULL, '8083 Phố Lò Duyên Cát, Phường Trang, Quận Đài\nSơn La', '0156878658', '1985-06-08', '1', 'can.hoa@gmail.com'),
-(9, 'Bá Huy', NULL, '05 Phố Phí Hảo Huy, Phường Quỳnh Khu, Huyện Thanh Trân\nBắc Giang', '0943777267', '1999-02-04', '1', 'tra.phi@vo.com'),
-(10, 'Việt Lý', NULL, '0 Phố Chiêm Bình Thụy, Xã Hà, Huyện Đoàn\nĐắk Lắk', '0589777870', '1986-07-12', '1', 'nhan75@trang.com'),
-(11, 'Anh Khoa', NULL, '20 Thôn Bình Lục, Xã Vĩnh Kí, Huyện Lâm Đồng', '0209888128', '2001-05-21', '1', 'khoanguyen@.com'),
-(12, 'Phú Thành', NULL, '9 Phố Hàng Mã, Quận Hà Thanh, Thành Phố Hà Nội', '0372198562', '1990-02-08', '1', 'thanhphu82@trang.com'),
-(13, 'Thảo Nguyên', NULL, '981 Đường Cách Mạng Tháng 8, Phường Tân Bình, Thành Phố Hồ Chí Minh', '0811200121', '2001-11-08', '1', 'nguyenthao811@trang.com'),
-(14, 'Trung Hiếu', NULL, '377 Thôn An Vĩnh, Xã Hà Thiên, Huyện Phú Yên', '0971180256', '1998-01-12', '1', 'hieu12@trang.com'),
+(2, 'Quỳnh Vũ', '../image/dAOFcclA/quynhvu.jpg', '479 Phố Đoàn Tâm Yến, Ấp Hiếu Bích, Quận Nhân\nĐà Nẵng', '8465085261', '1995-12-09', '0', 'hanh89@gmail.com'),
+(3, 'Quang Võ', '../image/VdQDbfgS/quangvo.jpg', '74 Phố Quang, Phường Hiền, Quận Trung Khu\nBắc Giang', '0283935612', '1980-09-16', '1', 'klu@phung.info.vn\n'),
+(4, 'Thịnh Nguyễn', '../image/IXtahr0A/thinhnguyen.jpg', '79, Thôn Lạc Sang, Ấp Chiêu Hảo, Quận 2\nĐắk Lắk', '0166196042', '1980-08-01', '1', 'vung@dang.gov.vn'),
+(5, 'Nga Mỹ', '../image/dc0wtf1M/ngamy.jpg', '22, Ấp Sỹ Lạc, Xã 8, Huyện Phượng\nKon Tum', '8425734083', '1986-03-12', '0', 'thuy.luong@can.com'),
+(6, 'Thế Nam', '../image/R0cwZdlf/thenam.jpg', '1107 Phố Âu Anh Duy, Phường Khoa, Quận Thu Ý\nLai Châu', '8424037119', '1975-02-01', '1', 'hung.ong@ong.biz'),
+(7, 'Long Trọng', '../image/PIZR1Lzb/longtrong.jpg', '3842, Thôn Vân, Phường Nghị, Huyện Bùi Điền\nKhánh Hòa', '0163844090', '2000-06-03', '1', 'ttrung@hotmail.com'),
+(8, 'Phúc Sỹ', '../image/4DpmqEEm/phusyjpg.jpg', '8083 Phố Lò Duyên Cát, Phường Trang, Quận Đài\nSơn La', '0156878658', '1985-06-08', '1', 'can.hoa@gmail.com'),
+(9, 'Bá Huy', '../image/FjAvHHlG/bahuy.jpg', '05 Phố Phí Hảo Huy, Phường Quỳnh Khu, Huyện Thanh Trân\nBắc Giang', '0943777267', '1999-02-04', '1', 'tra.phi@vo.com'),
+(10, 'Việt Lý', '../image/5R5naMUj/vietly.jpg', '0 Phố Chiêm Bình Thụy, Xã Hà, Huyện Đoàn\nĐắk Lắk', '0589777870', '1986-07-12', '1', 'nhan75@trang.com'),
+(11, 'Anh Khoa', '../image/XZ0FDSHK/anhkhoa.jpg', '20 Thôn Bình Lục, Xã Vĩnh Kí, Huyện Lâm Đồng', '0209888128', '2001-05-21', '1', 'khoanguyen@.com'),
+(12, 'Phú Thành', '../image/Xkbl9Q7g/thanhnguyen.jpg', '9 Phố Hàng Mã, Quận Hà Thanh, Thành Phố Hà Nội', '0372198562', '1990-02-08', '1', 'thanhphu82@trang.com'),
+(13, 'Thảo Nguyên', '../image/Zk44UN1W/thaonguyen.jpg', '981 Đường Cách Mạng Tháng 8, Phường Tân Bình, Thành Phố Hồ Chí Minh', '0811200121', '2001-11-08', '1', 'nguyenthao811@trang.com'),
+(14, 'Trung Hiếu', '../image/U0pwstOg/trunghieu.jpg', '377 Thôn An Vĩnh, Xã Hà Thiên, Huyện Phú Yên', '0971180256', '1998-01-12', '1', 'hieu12@trang.com'),
 (15, 'test', NULL, '377 Thôn An Vĩnh, Xã Hà Thiên, Huyện Phú Yên', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
