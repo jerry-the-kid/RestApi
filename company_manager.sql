@@ -163,8 +163,7 @@ CREATE TABLE `task` (
   `SUBMIT_FOLDER_PATH` text DEFAULT NULL,
   `message_employee` text DEFAULT NULL,
   `message_tlead` text DEFAULT NULL,
-  `DATE_CREATE` date DEFAULT current_timestamp(),
-  `SUBMIT_DATE` datetime DEFAULT NULL
+  `DATE_CREATE` date DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
