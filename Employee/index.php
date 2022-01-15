@@ -81,10 +81,10 @@ require_once ('employee_validate.php');
                 </div>
                 <select class="custom-select" id="statusSelect">
                     <option selected value="1">All</option>
-                    <option value="2">New Tasks</option>
-                    <option value="3">Rejected tasks</option>
-                    <option value="4">Cancel Tasks</option>
-                    <option value="5">Waiting tasks</option>
+                    <option value="2">New</option>
+                    <option value="3">Inprogress</option>
+                    <option value="4">Waiting</option>
+                    <option value="5">Rejected</option>
                 </select>
             </div>
         </div>

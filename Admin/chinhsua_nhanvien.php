@@ -109,8 +109,8 @@ require_once ('admin_validate.php');
                     <div class="form-group col-md-2 col-6">
                         <label for="gender">Giới tính</label>
                         <select name="gioiTinh" class="form-control" id="gender">
-                            <option>Male</option>
-                            <option>Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                         </select>
                     </div>
                     <div class="form-group col-md-6">
