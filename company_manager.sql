@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jan 12, 2022 at 09:39 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.11
+-- Host: mysql-server
+-- Generation Time: Jan 15, 2022 at 01:46 PM
+-- Server version: 8.0.1-dmr
+-- PHP Version: 7.4.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `company_manager`
 --
+CREATE DATABASE IF NOT EXISTS `company_manager` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `company_manager`;
 
 -- --------------------------------------------------------
 
@@ -30,7 +32,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `account` (
   `USER_NAME` char(150) NOT NULL,
   `PASSWORD` varchar(150) DEFAULT NULL,
-  `ACTIVE` int(11) DEFAULT 0
+  `ACTIVE` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -47,8 +49,7 @@ INSERT INTO `account` (`USER_NAME`, `PASSWORD`, `ACTIVE`) VALUES
 ('phucmapyoutuber', '$2y$10$Wl/zHoqcsWSrsNjfIFo/8OC13Ue3H8rJvoxWz1mLoCC5tAejolMzG', 0),
 ('quangit', '$2y$10$yt5m79aYeG3Bo.ZkKy4DlOwPMXaK0L.JHDDvnEeCDRfZG5KCkJ4J2', 1),
 ('quynhxinhdep123', '$2y$10$DHXF6wQNolPnvDoZTTePFuH2F69PaVTeNA5pSk2a68plBelVoZiN6', 1),
-('tankimcokhi', '$2y$10$7AWoqWRyMYUR6Yf78iTcgeboMQDZPZ5nj6FJlVtmOHH.RF2sl9UH6', 0),
-('test', NULL, 0),
+('tankimcokhi', '$2y$10$iGZogZ72HYkFIbxERsDjCe6ZOZCorqwTn.ThRI76/lUXGcCvOI75O', 0),
 ('thanhnguyen', '$2y$10$sXGYDxQ82cTbAvmlXoZIY.Y1AErg5DdFGV9BZOddfk7VYSzalSVM2', 1),
 ('thaonguyen811', '$2y$10$P95wzBtuVWJETuSFQ3041eo4TcqpbdyAaRJ7HuMRmBKlHko6V5wra', 0),
 ('thinhnguyen', '$2y$10$YyY.sxvZHEiu2qkwuVdOMeifkGeSYTZ940DU/V0gFdGOCdu1nZFS2', 0),
@@ -73,17 +74,17 @@ INSERT INTO `chi_tiet_don_nghi` (`MA_NGHI`, `MA_NV`) VALUES
 (1, 1),
 (2, 1),
 (3, 1),
-(4, 14),
-(5, 14),
-(6, 14),
-(7, 14),
+(12, 2),
+(13, 2),
+(14, 2),
 (8, 3),
 (9, 3),
 (10, 3),
 (11, 3),
-(12, 2),
-(13, 2),
-(14, 2);
+(4, 14),
+(5, 14),
+(6, 14),
+(7, 14);
 
 -- --------------------------------------------------------
 
@@ -93,12 +94,12 @@ INSERT INTO `chi_tiet_don_nghi` (`MA_NGHI`, `MA_NV`) VALUES
 
 CREATE TABLE `don_nghi` (
   `MA_NGHI` int(11) NOT NULL,
-  `TIEU_DE` text DEFAULT NULL,
-  `MINH_CHUNG` text DEFAULT NULL,
+  `TIEU_DE` text,
+  `MINH_CHUNG` text,
   `SO_NGAY` int(11) DEFAULT NULL,
   `TRANG_THAI` enum('approved','refused','waiting') DEFAULT 'waiting',
-  `NGAY_LAM_DON` date DEFAULT curdate(),
-  `NOI_DUNG` text DEFAULT NULL
+  `NGAY_LAM_DON` datetime DEFAULT CURRENT_TIMESTAMP,
+  `NOI_DUNG` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -106,20 +107,20 @@ CREATE TABLE `don_nghi` (
 --
 
 INSERT INTO `don_nghi` (`MA_NGHI`, `TIEU_DE`, `MINH_CHUNG`, `SO_NGAY`, `TRANG_THAI`, `NGAY_LAM_DON`, `NOI_DUNG`) VALUES
-(1, 'Đi khám nghĩa vụ quân sự', '../minh_chung/vA064njj/minh_chung.pdf', 1, 'waiting', '2022-01-15', 'Em chào sếp, phường em đưa giấy triệu tập đi khám nghĩa vụ quân sự nên ngày 15 này em xin nghỉ để đi ạ. Mong sếp duyệt giúp em, em cảm ơn sếp nhiều.'),
-(2, 'Về quê thăm gia đình', '../minh_chung/ZsIoH9w7/MV01.pdf', 4, 'approved', '2022-01-08', 'Em chào sếp, sếp cho em xin nghỉ vài ngày về quê thăm gia đình của em ạ, em nghe bảo dạo này trái gió nên mẹ em không được khỏe nên em rất lo, mong sếp duyệt giúp em, em cảm ơn sếp.'),
-(3, 'Đi khám bệnh', '../minh_chung/1LMs1IPK/minh_chung.png', 1, 'approved', '2022-01-07', 'Chào sếp, em có lịch hẹn đi khám bệnh nên xin sếp duyệt cho em nghỉ hôm đó đi khám nha sếp. Em cảm ơn sếp.'),
-(4, 'Đi thi Toeic', '../minh_chung/fLNYu5hT/minh_chung.pdf', 1, 'waiting', '2022-01-10', 'Em chào sếp đẹp trai, sếp cho em xin off 1 bữa đi thi lấy cái chứng chỉ tiếng anh nha sếp. Yêu sếp !!!'),
-(5, 'Nhà có đám cưới', '../minh_chung/pocPIiAO/minh_chung.pdf', 3, 'refused', '2022-01-01', 'Chào sếp, con trai nhà họ hàng xa bên ngoại em có đám cưới nên sếp cho em xin nghỉ đi đám cưới nha sếp.'),
-(6, 'Nghi ngờ mắc covid', '../minh_chung/JqXHFKKi/minh_chung.pdf', 7, 'approved', '2022-01-06', 'Chào sếp ạ, xin lỗi sếp vì đã làm phiền sếp giờ này nhưng có vẻ em cảm giác cảm sốt và mất vị giác nên sáng mai em sẽ test và báo sếp sau. Sếp cho em xin off 1 tuần, có thể em làm remote ở nhà cũng được ạ. Mong sếp duyệt giúp, cảm ơn sếp ạ.'),
-(7, 'Họp đồng hương Bến Tre', '../minh_chung/bpauaiqT/minh_chung.docx', 1, 'refused', '2022-01-01', 'Chào sếp, mong sếp có ngày tốt lành, sếp duyệt giúp cho em off 1 ngày để đi họp đồng hương ạ. Cảm ơn sếp.'),
-(8, 'Đi khám nghĩa vụ quân sự', '../minh_chung/LO1mErFj/minh_chung.png', 1, 'waiting', '2022-01-12', 'Em chào sếp, phường em đưa giấy triệu tập đi khám nghĩa vụ quân sự nên ngày 15 này em xin nghỉ để đi ạ. Mong sếp duyệt giúp em, em cảm ơn sếp nhiều.'),
-(9, 'Đi Đà Lạt', '../minh_chung/o91EURSW/minh_chung.pdf', 5, 'refused', '2022-01-08', 'Em muốn xả stress và đi đâu đó chơi ạ.'),
-(10, 'Đi nhổ răng khôn', '../minh_chung/bgeE9VMa/minh_chung.png', 2, 'approved', '2022-01-01', 'Chào sếp, dạo này răng em nhức nhối với đau quá, sếp cho em xin nghỉ để em đi nhổ răng ạ. Cảm ơn sếp.'),
-(11, 'Đi dự hội thảo khoa học', '../minh_chung/hcCFOSzQ/minh_chung.pdf', 1, 'waiting', '2022-01-13', 'Em chào anh, mấy bữa nữa có cuộc hội thảo khoa học nên sếp duyệt giúp em đi nha sếp. Em cảm ơn sếp ạ.'),
-(12, 'Xem đất mua nhà', '../minh_chung/FDAbVUqW/minh_chung.pdf', 1, 'refused', '2022-01-01', 'Chào sếp, em tính đi mua nhà nên em xin off 1 ngày để đi xem đất ạ.'),
-(13, 'Đi du lịch cùng gia đình', '../minh_chung/y6aUF33P/minh_chung.txt', 6, 'approved', '2022-01-02', 'Em chào sếp, dạo này công việc khá áp lực nên sếp cho em xin vài ngày off để đi chơi với gia đình ạ. Em cảm ơn sếp.'),
-(14, 'Hưởng tuần trăng mật cùng vợ', '../minh_chung/bwMv5X7U/minh_chung.ppt', 7, 'approved', '2022-01-01', 'Em chào sếp, dạo này thời công việc khá bận rộn nên sau đám cưới em chưa đưa vợ em đi đâu đó chơi được. Em xin sếp cho em nghỉ 1 tuần em đưa vợ đi hưởng trăng mật ạ. Em cảm ơn sếp nhiều ạ.');
+(1, 'Đi khám nghĩa vụ quân sự', '../minh_chung/vA064njj/minh_chung.pdf', 1, 'waiting', '2022-01-15 00:00:00', 'Em chào sếp, phường em đưa giấy triệu tập đi khám nghĩa vụ quân sự nên ngày 15 này em xin nghỉ để đi ạ. Mong sếp duyệt giúp em, em cảm ơn sếp nhiều.'),
+(2, 'Về quê thăm gia đình', '../minh_chung/ZsIoH9w7/MV01.pdf', 4, 'approved', '2022-01-08 00:00:00', 'Em chào sếp, sếp cho em xin nghỉ vài ngày về quê thăm gia đình của em ạ, em nghe bảo dạo này trái gió nên mẹ em không được khỏe nên em rất lo, mong sếp duyệt giúp em, em cảm ơn sếp.'),
+(3, 'Đi khám bệnh', '../minh_chung/1LMs1IPK/minh_chung.png', 1, 'approved', '2022-01-07 00:00:00', 'Chào sếp, em có lịch hẹn đi khám bệnh nên xin sếp duyệt cho em nghỉ hôm đó đi khám nha sếp. Em cảm ơn sếp.'),
+(4, 'Đi thi Toeic', '../minh_chung/fLNYu5hT/minh_chung.pdf', 1, 'waiting', '2022-01-10 00:00:00', 'Em chào sếp đẹp trai, sếp cho em xin off 1 bữa đi thi lấy cái chứng chỉ tiếng anh nha sếp. Yêu sếp !!!'),
+(5, 'Nhà có đám cưới', '../minh_chung/pocPIiAO/minh_chung.pdf', 3, 'refused', '2022-01-01 00:00:00', 'Chào sếp, con trai nhà họ hàng xa bên ngoại em có đám cưới nên sếp cho em xin nghỉ đi đám cưới nha sếp.'),
+(6, 'Nghi ngờ mắc covid', '../minh_chung/JqXHFKKi/minh_chung.pdf', 7, 'approved', '2022-01-06 00:00:00', 'Chào sếp ạ, xin lỗi sếp vì đã làm phiền sếp giờ này nhưng có vẻ em cảm giác cảm sốt và mất vị giác nên sáng mai em sẽ test và báo sếp sau. Sếp cho em xin off 1 tuần, có thể em làm remote ở nhà cũng được ạ. Mong sếp duyệt giúp, cảm ơn sếp ạ.'),
+(7, 'Họp đồng hương Bến Tre', '../minh_chung/bpauaiqT/minh_chung.docx', 1, 'refused', '2022-01-01 00:00:00', 'Chào sếp, mong sếp có ngày tốt lành, sếp duyệt giúp cho em off 1 ngày để đi họp đồng hương ạ. Cảm ơn sếp.'),
+(8, 'Đi khám nghĩa vụ quân sự', '../minh_chung/LO1mErFj/minh_chung.png', 1, 'waiting', '2022-01-12 00:00:00', 'Em chào sếp, phường em đưa giấy triệu tập đi khám nghĩa vụ quân sự nên ngày 15 này em xin nghỉ để đi ạ. Mong sếp duyệt giúp em, em cảm ơn sếp nhiều.'),
+(9, 'Đi Đà Lạt', '../minh_chung/o91EURSW/minh_chung.pdf', 5, 'refused', '2022-01-08 00:00:00', 'Em muốn xả stress và đi đâu đó chơi ạ.'),
+(10, 'Đi nhổ răng khôn', '../minh_chung/bgeE9VMa/minh_chung.png', 2, 'approved', '2022-01-01 00:00:00', 'Chào sếp, dạo này răng em nhức nhối với đau quá, sếp cho em xin nghỉ để em đi nhổ răng ạ. Cảm ơn sếp.'),
+(11, 'Đi dự hội thảo khoa học', '../minh_chung/hcCFOSzQ/minh_chung.pdf', 1, 'waiting', '2022-01-13 00:00:00', 'Em chào anh, mấy bữa nữa có cuộc hội thảo khoa học nên sếp duyệt giúp em đi nha sếp. Em cảm ơn sếp ạ.'),
+(12, 'Xem đất mua nhà', '../minh_chung/FDAbVUqW/minh_chung.pdf', 1, 'refused', '2022-01-01 00:00:00', 'Chào sếp, em tính đi mua nhà nên em xin off 1 ngày để đi xem đất ạ.'),
+(13, 'Đi du lịch cùng gia đình', '../minh_chung/y6aUF33P/minh_chung.txt', 6, 'approved', '2022-01-02 00:00:00', 'Em chào sếp, dạo này công việc khá áp lực nên sếp cho em xin vài ngày off để đi chơi với gia đình ạ. Em cảm ơn sếp.'),
+(14, 'Hưởng tuần trăng mật cùng vợ', '../minh_chung/bwMv5X7U/minh_chung.ppt', 7, 'approved', '2022-01-01 00:00:00', 'Em chào sếp, dạo này thời công việc khá bận rộn nên sau đám cưới em chưa đưa vợ em đi đâu đó chơi được. Em xin sếp cho em nghỉ 1 tuần em đưa vợ đi hưởng trăng mật ạ. Em cảm ơn sếp nhiều ạ.');
 
 -- --------------------------------------------------------
 
@@ -130,7 +131,7 @@ INSERT INTO `don_nghi` (`MA_NGHI`, `TIEU_DE`, `MINH_CHUNG`, `SO_NGAY`, `TRANG_TH
 CREATE TABLE `phong_ban` (
   `MA_PHONG_BAN` int(11) NOT NULL,
   `TEN_PB` varchar(200) CHARACTER SET utf8 DEFAULT NULL,
-  `MO_TA` text DEFAULT NULL,
+  `MO_TA` text,
   `SO_PHONG` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -145,8 +146,7 @@ INSERT INTO `phong_ban` (`MA_PHONG_BAN`, `TEN_PB`, `MO_TA`, `SO_PHONG`) VALUES
 (4, 'Phòng Nhân Sự', 'Lập kế hoạch và triển khai công tác tuyển dụng nhằm đáp ứng nhu cầu hoạt động của doanh nghiệp. Tiếp cận các kênh truyền thông để đưa thông tin tuyển dụng đến gần hơn với ứng viên tiềm năng và tạo mối liên kết với các nguồn cung ứng nhân lực như trường đại học, cao đẳng, đơn vị đào tạo nghề… ', 'L3.001'),
 (5, 'Phòng Marketing', 'Xây dựng và quản lý hệ thống chăm sóc khách hàng tốt nhất. Thiết kế chương trình khuyến mãi và bảo hành sản phẩm cho khách hàng và tham gia tài trợ các hoạt động xã hội để quảng bá hình ảnh thương hiệu.', 'L1.001'),
 (6, 'Phòng Kinh Doanh', 'Nghiên cứu và thực hiện các công việc tiếp cận thị trường, đưa ra các chiến lược giới thiệu sản phẩm và việc mở rộng phát triển thị trường và lên kế hoạch tổ chức và thực hiện các hoạt động kinh doanh cũng như tính toán báo cáo về giá thành để tạo hợp đồng với khách.', 'L1.002'),
-(7, 'Phòng Nghiên cứu và phát triển Sản phẩm', 'Nghiên cứu định hướng và phát triển sản phẩm, cải tiến công nghệ sản xuất, nghiên cứu và thay thế dần các vật liệu và công nghệ nhằm nâng cao chất lượng sản phẩm và nghiên cứu nội địa hóa một số nguyên liệu nhằm tăng giá trị và chủ động trong sản xuất với chi phí hợp lý hơn.', 'L4.002'),
-(9, 'Phòng Giáo Dục', NULL, NULL);
+(7, 'Phòng Nghiên cứu và phát triển Sản phẩm', 'Nghiên cứu định hướng và phát triển sản phẩm, cải tiến công nghệ sản xuất, nghiên cứu và thay thế dần các vật liệu và công nghệ nhằm nâng cao chất lượng sản phẩm và nghiên cứu nội địa hóa một số nguyên liệu nhằm tăng giá trị và chủ động trong sản xuất với chi phí hợp lý hơn.', 'L4.002');
 
 -- --------------------------------------------------------
 
@@ -157,63 +157,63 @@ INSERT INTO `phong_ban` (`MA_PHONG_BAN`, `TEN_PB`, `MO_TA`, `SO_PHONG`) VALUES
 CREATE TABLE `task` (
   `TASK_ID` int(11) NOT NULL,
   `TIEU_DE` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
-  `MO_TA` text DEFAULT NULL,
+  `MO_TA` text,
   `DEADLINE` datetime DEFAULT NULL,
-  `SUPPORT_FOLDER_PATH` text DEFAULT NULL,
-  `SUBMIT_FOLDER_PATH` text DEFAULT NULL,
-  `message_employee` text DEFAULT NULL,
-  `message_tlead` text DEFAULT NULL,
-  `DATE_CREATE` date DEFAULT current_timestamp()
+  `SUPPORT_FOLDER_PATH` text,
+  `SUBMIT_FOLDER_PATH` text,
+  `message_employee` text,
+  `message_tlead` text,
+  `DATE_CREATE` datetime DEFAULT CURRENT_TIMESTAMP,
+  `SUBMIT_DATE` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `task`
 --
 
-INSERT INTO `task` (`TASK_ID`, `TIEU_DE`, `MO_TA`, `DEADLINE`, `SUPPORT_FOLDER_PATH`, `SUBMIT_FOLDER_PATH`, `message_employee`, `message_tlead`, `DATE_CREATE`) VALUES
-(1, 'Kế hoạch dự án công nghệ thông tin cho công ty', 'Trong kế hoạch phải cho thấy hiểu rõ mục tiêu, chi phí làm việc cũng như nguồn nhân lực cho phòng công nghệ thông tin cần bổ sung', '2022-01-10 15:00:00', '../file_gui/kg8I5lFSnN/huongdanne.txt', '', '', NULL, '2022-01-01'),
-(2, 'Thống kê báo cáo doanh thu', 'Trong báo cáo phải có phân tích nghiệp vụ và đồ thị doanh thu trong năm 2021', NULL, NULL, NULL, NULL, NULL, '2021-11-19'),
-(3, 'Bảng kế hoạch công việc năm 2022', 'Trong bảng kế hoạch phải có chi tiết thời gian, địa điểm và xây dựng trước kịch bản công việc', NULL, NULL, NULL, NULL, NULL, '2021-12-16'),
-(4, 'Thống kê nhân sự mới của các trường đại học', 'Nghiên cứu, phân tích kĩ những sinh viên có thành tích tốt và các dự án sinh viên đó tham gia', '2022-01-07 08:00:00', '../file_gui/yanYfyHe3M/data.csv', NULL, NULL, NULL, '2021-01-05'),
-(5, 'Kế hoạch tiếp thị sản phẩm', 'Có kế hoạch cụ thể cho dự án tiếp thị sản phẩm mới, lên ý tưởng cụ thể', NULL, NULL, NULL, NULL, NULL, '2022-01-01'),
-(6, 'Bảng phân tích thị trường năm 2022', 'Thu thập thông tin tình hình các doanh nghiệp khác và ngành nào hay sản phẩm nào đang có xu hướng phát triển mạnh mẽ trong năm nay', NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
-(7, 'Ứng dụng điểm danh bằng Trí Tuệ Nhân Tạo', 'Nhận diện khuôn mặt và ghi nhận điểm danh cho nhân viên công ty', NULL, NULL, NULL, NULL, NULL, '2021-12-23'),
-(8, 'Tạo trang web tiếp thị sản phẩm', 'Trang web có phân quyền truy cập cho nhân viên và cho khách hàng riêng', '2022-01-08 15:00:00', '../file_gui/9CWtqp2XsH/demo.zip', '', '', NULL, '2022-01-04'),
-(9, 'Phiếu thu chi trong ngày của việc marketing', 'Phải có thông tin chi tiết những khoảng chi tiêu cho việc marketing trong ngày', NULL, NULL, NULL, NULL, NULL, '2021-12-02'),
-(10, 'Thống kê lại các văn bản pháp luật của công ty', 'Trong bản thống kê phải có ghi rõ ngày tháng cũng như chi tiết từng loại văn bản', NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
-(11, 'Bảng kế hoạch tuyển dụng', 'Có ngày tháng, địa điểm tuyển dụng rõ ràng và cả chi phí cụ thể cho ngày tuyển dụng', '2022-01-05 11:59:00', '../file_gui/A3kynytwAq/baoCao.docx', '', '', NULL, '2022-01-04'),
-(12, 'Báo cáo công việc tiếp thị tháng 12', 'Chỉ chú trọng kết quả', NULL, NULL, NULL, NULL, NULL, '2021-12-02'),
-(13, 'Bảng phân tích thị trường năm 2022', 'Thu thập thông tin tình hình các doanh nghiệp khác và ngành nào hay sản phẩm nào đang có xu hướng phát triển mạnh mẽ trong năm nay', NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
-(14, 'Nghiên cứu mô hình đề xuất sản phẩm', 'Đề xuất sản phẩm theo đánh giá của người dùng', NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
-(15, 'Xây dựng ứng dụng di động để bán sản phẩm', 'Ứng dụng dễ nhìn, đầy đủ các chức năng', '2022-02-10 12:00:00', '../file_gui/3e636mEz02/test.js', NULL, NULL, NULL, '2022-01-04'),
-(16, 'Bảng phát lương cho nhân viên', 'Chỉ cần có tên nhân viên, số tiền họ nhận được và tiền thưởng', NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
-(17, 'Làm một bảng hợp đồng buôn bán ở lề đường', 'Yêu cầu có đầy đủ thông tin theo quy định của phường, xã', NULL, NULL, NULL, NULL, NULL, '2022-01-01'),
-(18, 'Lên danh sách nhân sự có nhu cầu nghỉ việc', 'Có đầy đủ thông tin, lí do họ muốn nghỉ việc', '2022-01-20 15:00:00', '../file_gui/A3kynytwAq/baoCao.docx', NULL, NULL, NULL, '2022-01-04'),
-(19, 'Lên kế hoạch cho chương trình tiếp thị sản phẩm ng', 'Có địa điểm cụ thể, lí do chọn địa điểm đó và kế hoạch hoàn chỉnh cho chương trình tiếp thị', NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
-(20, 'Lên kế hoạch buôn bán ngoài lề đường cho bộ phận t', 'Nêu rõ cách thức bán hàng, văn phong cũng như kiến nghị địa điểm bán hàng.', NULL, NULL, NULL, NULL, NULL, '2022-01-01'),
-(21, 'Nghiên cứu mã vạch riêng cho sản phẩm công ty', 'Mã vạch phải rõ ràng, dễ quét để trích xuất thông tin', NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
-(22, 'Kế hoạch dự án công nghệ thông tin tháng 1', 'Trong kế hoạch phải cho thấy hiểu rõ mục tiêu, chi phí làm việc cũng như nguồn nhân lực cho phòng công nghệ thông tin cần bổ sung', '2022-01-01 08:33:31', '../file_gui/AuM2eW7ygj/baocao.docx', '../file_nop/Lsmzh1u6wQ/Bacon.zip', NULL, NULL, '2022-01-03'),
-(23, 'Thống kê báo cáo doanh thu tháng 12', 'Trong báo cáo phải có phân tích nghiệp vụ và đồ thị doanh thu tháng 12', NULL, NULL, NULL, NULL, NULL, '2022-01-01'),
-(24, 'Bảng kế hoạch công việc cho tháng 1', 'Trong bảng kế hoạch phải có chi tiết thời gian, địa điểm và xây dựng trước kịch bản công việc', NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
-(25, 'Thống kê nhân sự mới vào công ty', 'Nghiên cứu, phân tích kĩ những sinh viên có thành tích tốt và các dự án sinh viên đó tham gia', '2022-02-20 15:30:00', '../file_gui/IaYAlpc84n/document.pdf', '../file_nop/F4UYIr02D8/Lab01.zip', NULL, NULL, '2022-01-03'),
-(26, 'Kế hoạch tiếp thị sản phẩm tháng 1', 'Có kế hoạch cụ thể cho dự án tiếp thị sản phẩm mới, lên ý tưởng cụ thể', NULL, '', NULL, NULL, NULL, '2022-01-04'),
-(27, 'Bảng phân tích thị trường tháng 1', 'Thu thập thông tin tình hình các doanh nghiệp khác và ngành nào hay sản phẩm nào đang có xu hướng phát triển mạnh mẽ trong năm nay', NULL, NULL, NULL, NULL, NULL, '2022-01-01'),
-(28, 'Ứng dụng trao đổi văn bản riêng cho công ty', 'Có đầy đủ chức năng như zalo', NULL, NULL, NULL, NULL, NULL, '2022-01-01'),
-(29, 'Ứng dụng xử lí tự động đóng gói hàng hóa', 'Chương trình phải biết phân biệt các mặt hàng khác nhau.', '2022-01-04 15:00:00', '../file_gui/XIaKJYV81g/test_1.zip+../file_gui/C1rXOk2stK/huongdanne.txt', '../file_nop/9Neey26yUL/MC001.zip', NULL, NULL, '2022-12-23'),
-(30, 'Báo cáo kinh phí của dự án ứng dụng xử lí tự động ', 'Trong báo cáo phải có chi tiết việc thu phí cho nhân viên, điện và cả các máy móc', NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
-(31, 'Làm giấy tờ mua đất làm nhà máy công nghiệp', 'Chỉ cần có đầy đủ thông tin theo quy định pháp luật', NULL, NULL, NULL, NULL, NULL, '2021-12-16'),
-(32, 'Báo cáo nhân sự đi thực tập ở nước ngoài', 'Nêu thành tích, khả năng phát triển cũng như các dự án mà nhân sự đó tham gia', '2022-04-06 00:00:00', '../file_gui/isUPVSCAiE/demo.rar', '../file_nop/WuedeDYo8O/baocao.docx', NULL, NULL, '2021-12-18'),
-(33, 'Báo cáo chương trình tiếp thị tháng 12', 'Có thông tin cụ thể của dự án tiếp thị sản phẩm, ý tưởng cụ thể và kết quả đạt được', NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
-(34, 'Báo cáo kế hoạch kinh doanh mặt hàng tiêu dùng', 'Đầy đủ thông tin và đặt biệt kết quả đạt được, lợi nhuận', NULL, NULL, NULL, NULL, NULL, '2021-12-11'),
-(35, 'Nghiên cứu kĩ thuật bảo quản mặt hàng tiêu dùng', 'Tuân thủ theo quy định của Bộ y tế', NULL, NULL, NULL, NULL, NULL, '2022-12-02'),
-(36, 'Kế hoạch dự án công nghệ thông tin tháng 12', 'Trong kế hoạch phải cho thấy hiểu rõ mục tiêu, chi phí làm việc cũng như nguồn nhân lực cho phòng công nghệ thông tin cần bổ sung', '2022-01-20 23:59:00', '../file_gui/Dhwh2w1xjl/baoCao.pdf', '../file_nop/gu2aWSSR6z/Lab02.zip', 'Hoàn thành ngày sớm', 'Ủa em', '2022-01-04'),
-(37, 'Thống kê báo cáo doanh thu tháng 11', 'Trong báo cáo phải có phân tích nghiệp vụ và đồ thị doanh thu tháng 11', NULL, NULL, NULL, NULL, NULL, '2022-12-02'),
-(38, 'Bảng kế hoạch công việc cho tháng 12', 'Trong bảng kế hoạch phải có chi tiết thời gian, địa điểm và xây dựng trước kịch bản công việc', NULL, NULL, NULL, NULL, NULL, '2021-12-15'),
-(39, 'Thống kê nhân sự xuất sắc tháng 11', 'Số dự án mà nhân sự đó tham gia cũng như lợi ích mà nó đem lại', '2022-01-02 08:00:51', '../file_gui/9K9uulMJRu/danhsach.csv', '../file_nop/HGz2MDHWqm/seven11.zip', NULL, NULL, '2022-01-04'),
-(40, 'Kế hoạch tiếp thị sản phẩm tháng 12', 'Có kế hoạch cụ thể cho dự án tiếp thị sản phẩm mới, lên ý tưởng cụ thể', NULL, NULL, NULL, NULL, NULL, '2021-12-01'),
-(41, 'Bảng phân tích thị trường tháng 12', 'Thu thập thông tin tình hình các doanh nghiệp khác và ngành nào hay sản phẩm nào đang có xu hướng phát triển mạnh mẽ trong năm nay', NULL, NULL, NULL, NULL, NULL, '2022-01-04'),
-(42, 'Nghiên cứu cách đo lường hạn sử dụng cho sản phẩm', 'Áp dụng các công nghệ hiện đại để nghiên cứu và có một bài phân tích cho công ty mang lên báo nghiên cứu khoa học', NULL, NULL, NULL, NULL, NULL, '2022-12-03'),
-(58, 'Nộp cuối kì', 'task _ 1 ', '2022-01-15 12:00:00', '../file_gui/H19Rdlrs/Final.pdf', NULL, NULL, NULL, '2022-01-04');
+INSERT INTO `task` (`TASK_ID`, `TIEU_DE`, `MO_TA`, `DEADLINE`, `SUPPORT_FOLDER_PATH`, `SUBMIT_FOLDER_PATH`, `message_employee`, `message_tlead`, `DATE_CREATE`, `SUBMIT_DATE`) VALUES
+(1, 'Kế hoạch dự án công nghệ thông tin cho công ty', 'Trong kế hoạch phải cho thấy hiểu rõ mục tiêu, chi phí làm việc cũng như nguồn nhân lực cho phòng công nghệ thông tin cần bổ sung', '2022-01-10 15:00:00', '../file_gui/kg8I5lFSnN/huongdanne.txt', '', '', NULL, '2022-01-01 00:00:00', NULL),
+(2, 'Thống kê báo cáo doanh thu', 'Trong báo cáo phải có phân tích nghiệp vụ và đồ thị doanh thu trong năm 2021', '2022-01-03 00:00:00', NULL, NULL, NULL, NULL, '2021-11-19 00:00:00', NULL),
+(3, 'Bảng kế hoạch công việc năm 2022', 'Trong bảng kế hoạch phải có chi tiết thời gian, địa điểm và xây dựng trước kịch bản công việc', '2022-01-10 15:00:00', NULL, NULL, NULL, NULL, '2021-12-16 00:00:00', NULL),
+(4, 'Thống kê nhân sự mới của các trường đại học', 'Nghiên cứu, phân tích kĩ những sinh viên có thành tích tốt và các dự án sinh viên đó tham gia', '2022-01-07 08:00:00', '../file_gui/yanYfyHe3M/data.csv', NULL, NULL, NULL, '2021-01-05 00:00:00', NULL),
+(5, 'Kế hoạch tiếp thị sản phẩm', 'Có kế hoạch cụ thể cho dự án tiếp thị sản phẩm mới, lên ý tưởng cụ thể', '2022-01-10 15:00:00', NULL, NULL, NULL, NULL, '2022-01-01 00:00:00', NULL),
+(6, 'Bảng phân tích thị trường năm 2022', 'Thu thập thông tin tình hình các doanh nghiệp khác và ngành nào hay sản phẩm nào đang có xu hướng phát triển mạnh mẽ trong năm nay', '2022-01-03 00:00:00', NULL, NULL, NULL, NULL, '2022-01-02 00:00:00', NULL),
+(7, 'Ứng dụng điểm danh bằng Trí Tuệ Nhân Tạo', 'Nhận diện khuôn mặt và ghi nhận điểm danh cho nhân viên công ty', '2022-01-03 00:00:00', NULL, NULL, NULL, NULL, '2021-12-23 00:00:00', NULL),
+(8, 'Tạo trang web tiếp thị sản phẩm', 'Trang web có phân quyền truy cập cho nhân viên và cho khách hàng riêng', '2022-01-08 15:00:00', '../file_gui/9CWtqp2XsH/demo.zip', '', '', NULL, '2022-01-04 00:00:00', NULL),
+(9, 'Phiếu thu chi trong ngày của việc marketing', 'Phải có thông tin chi tiết những khoảng chi tiêu cho việc marketing trong ngày', '2022-01-15 19:02:49', NULL, NULL, NULL, NULL, '2021-12-02 00:00:00', NULL),
+(10, 'Thống kê lại các văn bản pháp luật của công ty', 'Trong bản thống kê phải có ghi rõ ngày tháng cũng như chi tiết từng loại văn bản', '2022-01-03 00:00:00', NULL, NULL, NULL, NULL, '2022-01-01 00:00:00', NULL),
+(11, 'Bảng kế hoạch tuyển dụng', 'Có ngày tháng, địa điểm tuyển dụng rõ ràng và cả chi phí cụ thể cho ngày tuyển dụng', '2022-01-05 11:59:00', '../file_gui/A3kynytwAq/baoCao.docx', '', '', NULL, '2022-01-04 00:00:00', NULL),
+(12, 'Báo cáo công việc tiếp thị tháng 12', 'Chỉ chú trọng kết quả', '2022-01-07 08:00:00', NULL, NULL, NULL, NULL, '2021-12-02 00:00:00', NULL),
+(13, 'Bảng phân tích thị trường năm 2022', 'Thu thập thông tin tình hình các doanh nghiệp khác và ngành nào hay sản phẩm nào đang có xu hướng phát triển mạnh mẽ trong năm nay', '2022-01-15 19:02:45', NULL, NULL, NULL, NULL, '2022-01-04 00:00:00', NULL),
+(14, 'Nghiên cứu mô hình đề xuất sản phẩm', 'Đề xuất sản phẩm theo đánh giá của người dùng', '2022-01-03 00:00:00', NULL, NULL, NULL, NULL, '2022-01-01 00:00:00', NULL),
+(15, 'Xây dựng ứng dụng di động để bán sản phẩm', 'Ứng dụng dễ nhìn, đầy đủ các chức năng', '2022-02-10 12:00:00', '../file_gui/3e636mEz02/test.js', NULL, NULL, NULL, '2022-01-04 00:00:00', NULL),
+(16, 'Bảng phát lương cho nhân viên', 'Chỉ cần có tên nhân viên, số tiền họ nhận được và tiền thưởng', '2022-01-15 19:02:51', NULL, NULL, NULL, NULL, '2022-01-04 00:00:00', NULL),
+(17, 'Làm một bảng hợp đồng buôn bán ở lề đường', 'Yêu cầu có đầy đủ thông tin theo quy định của phường, xã', '2022-01-15 19:02:53', NULL, NULL, NULL, NULL, '2022-01-01 00:00:00', NULL),
+(18, 'Lên danh sách nhân sự có nhu cầu nghỉ việc', 'Có đầy đủ thông tin, lí do họ muốn nghỉ việc', '2022-01-20 15:00:00', '../file_gui/A3kynytwAq/baoCao.docx', NULL, NULL, NULL, '2022-01-04 00:00:00', NULL),
+(19, 'Lên kế hoạch cho chương trình tiếp thị sản phẩm ng', 'Có địa điểm cụ thể, lí do chọn địa điểm đó và kế hoạch hoàn chỉnh cho chương trình tiếp thị', '2022-01-15 19:02:55', NULL, NULL, NULL, NULL, '2022-01-04 00:00:00', NULL),
+(20, 'Lên kế hoạch buôn bán ngoài lề đường cho bộ phận t', 'Nêu rõ cách thức bán hàng, văn phong cũng như kiến nghị địa điểm bán hàng.', '2022-01-07 08:00:00', NULL, NULL, NULL, NULL, '2022-01-01 00:00:00', NULL),
+(21, 'Nghiên cứu mã vạch riêng cho sản phẩm công ty', 'Mã vạch phải rõ ràng, dễ quét để trích xuất thông tin', '2022-01-15 19:02:57', NULL, NULL, NULL, NULL, '2022-01-04 00:00:00', NULL),
+(22, 'Kế hoạch dự án công nghệ thông tin tháng 1', 'Trong kế hoạch phải cho thấy hiểu rõ mục tiêu, chi phí làm việc cũng như nguồn nhân lực cho phòng công nghệ thông tin cần bổ sung', '2022-01-10 08:33:31', '../file_gui/AuM2eW7ygj/baocao.docx', '../file_nop/Lsmzh1u6wQ/Bacon.zip', NULL, NULL, '2022-01-03 00:00:00', NULL),
+(23, 'Thống kê báo cáo doanh thu tháng 12', 'Trong báo cáo phải có phân tích nghiệp vụ và đồ thị doanh thu tháng 12', '2022-01-15 19:03:02', NULL, '../file_nop/faaOcx44/thong_ke.csv', NULL, NULL, '2022-01-01 00:00:00', NULL),
+(24, 'Bảng kế hoạch công việc cho tháng 1', 'Trong bảng kế hoạch phải có chi tiết thời gian, địa điểm và xây dựng trước kịch bản công việc', '2022-01-10 15:00:00', NULL, '../file_nop/NgZKfoEk/ke_hoach.zip', NULL, NULL, '2022-01-04 00:00:00', NULL),
+(25, 'Thống kê nhân sự mới vào công ty', 'Nghiên cứu, phân tích kĩ những sinh viên có thành tích tốt và các dự án sinh viên đó tham gia', '2022-02-20 15:30:00', '../file_gui/IaYAlpc84n/document.pdf', '../file_nop/F4UYIr02D8/Lab01.zip', NULL, NULL, '2022-01-03 00:00:00', NULL),
+(26, 'Kế hoạch tiếp thị sản phẩm tháng 1', 'Có kế hoạch cụ thể cho dự án tiếp thị sản phẩm mới, lên ý tưởng cụ thể', '2022-01-03 00:00:00', '', '../file_nop/gxpjh1dM/bao_cao.ppt', NULL, NULL, '2022-01-04 00:00:00', NULL),
+(27, 'Bảng phân tích thị trường tháng 1', 'Thu thập thông tin tình hình các doanh nghiệp khác và ngành nào hay sản phẩm nào đang có xu hướng phát triển mạnh mẽ trong năm nay', '2022-01-15 19:03:00', NULL, '../file_nop/0QgDMBZ8/bao_cao.ppt', NULL, NULL, '2022-01-01 00:00:00', NULL),
+(28, 'Ứng dụng trao đổi văn bản riêng cho công ty', 'Có đầy đủ chức năng như zalo', '2022-01-03 00:00:00', NULL, '../file_nop/JOHJtZhA/bao_cao.docx', NULL, NULL, '2022-01-01 00:00:00', NULL),
+(29, 'Ứng dụng xử lí tự động đóng gói hàng hóa', 'Chương trình phải biết phân biệt các mặt hàng khác nhau.', '2022-01-04 15:00:00', '../file_gui/XIaKJYV81g/test_1.zip+../file_gui/C1rXOk2stK/huongdanne.txt', '../file_nop/9Neey26yUL/MC001.zip', 'Đã hoàn thành', 'Làm sai hướng dẫn. Cần tìm hiểu thêm', '2022-12-23 00:00:00', '2022-12-15 18:52:49'),
+(30, 'Báo cáo kinh phí của dự án ứng dụng xử lí tự động ', 'Trong báo cáo phải có chi tiết việc thu phí cho nhân viên, điện và cả các máy móc', '2022-01-10 18:55:40', NULL, '../file_nop/EtNKU6Kc/bao_cao.docx', 'Báo cáo hoàn thành', 'Dặt tên file sai quy dịnh', '2022-01-04 00:00:00', '2022-01-06 18:53:12'),
+(31, 'Làm giấy tờ mua đất làm nhà máy công nghiệp', 'Chỉ cần có đầy đủ thông tin theo quy định pháp luật', '2021-12-12 18:56:01', NULL, '../file_nop/H8Yw9TWX/submit.rar', 'Đã hoàn thành', 'Cần tìm hiểu kỹ lại giấy tờ', '2021-12-04 00:00:00', '2021-12-15 18:53:27'),
+(32, 'Báo cáo nhân sự đi thực tập ở nước ngoài', 'Nêu thành tích, khả năng phát triển cũng như các dự án mà nhân sự đó tham gia', '2022-04-06 00:00:00', '../file_gui/isUPVSCAiE/demo.rar', '../file_nop/WuedeDYo8O/baocao.docx', 'Báo cáo hoàn thành', 'Chi phí phát sinh còn thiếu nhiều', '2021-12-18 00:00:00', '2022-12-18 18:53:43'),
+(33, 'Báo cáo chương trình tiếp thị tháng 12', 'Có thông tin cụ thể của dự án tiếp thị sản phẩm, ý tưởng cụ thể và kết quả đạt được', '2022-01-10 18:56:44', NULL, '../file_nop/VVJlmtuo/bao_cao.zip', 'Đã hoàn thành', 'Báo cáo sai lỗi đánh máy ở trang 12', '2022-01-04 00:00:00', '2022-01-04 18:53:56'),
+(34, 'Báo cáo kế hoạch kinh doanh mặt hàng tiêu dùng', 'Đầy đủ thông tin và đặt biệt kết quả đạt được, lợi nhuận', '2022-04-03 18:57:42', NULL, '../file_nop/RTqVnotd/ke_hoach.ppt', 'Báo cáo hoàn thành', 'Dặt tên file sai quy dịnh', '2021-12-11 00:00:00', '2021-12-17 18:54:07'),
+(35, 'Nghiên cứu kĩ thuật bảo quản mặt hàng tiêu dùng', 'Tuân thủ theo quy định của Bộ y tế', '2022-01-17 00:00:00', NULL, '../file_nop/Rwf7BsT8/bao_cao.docx', 'Đã hoàn thành', 'Làm sai hướng dẫn. Cần tìm hiểu thêm', '2022-12-02 00:00:00', '2022-01-15 18:57:57'),
+(36, 'Kế hoạch dự án công nghệ thông tin tháng 12', 'Trong kế hoạch phải cho thấy hiểu rõ mục tiêu, chi phí làm việc cũng như nguồn nhân lực cho phòng công nghệ thông tin cần bổ sung', '2022-01-20 23:59:00', '../file_gui/Dhwh2w1xjl/baoCao.pdf', '../file_nop/gu2aWSSR6z/Lab02.zip', 'Hoàn thành sớm', 'Ủa em. Làm sai đề bài.', '2022-01-04 00:00:00', '2022-01-25 18:58:46'),
+(37, 'Thống kê báo cáo doanh thu tháng 11', 'Trong báo cáo phải có phân tích nghiệp vụ và đồ thị doanh thu tháng 11', '2022-12-31 18:59:27', NULL, '../file_nop/GUnCoAKZ/thong_ke.csv', 'Đã hoàn thành', 'Đầy đủ yêu cầu', '2022-12-02 00:00:00', '2022-12-30 18:59:15'),
+(38, 'Bảng kế hoạch công việc cho tháng 12', 'Trong bảng kế hoạch phải có chi tiết thời gian, địa điểm và xây dựng trước kịch bản công việc', '2022-01-15 18:59:37', NULL, '../file_nop/NZNsAznI/bao_cao.ppt', 'Đã hoàn thành', 'Hoàn thành tốt', '2021-12-15 00:00:00', '2022-01-14 18:59:41'),
+(39, 'Thống kê nhân sự xuất sắc tháng 11', 'Số dự án mà nhân sự đó tham gia cũng như lợi ích mà nó đem lại', '2022-01-10 08:00:51', '../file_gui/9K9uulMJRu/danhsach.csv', '../file_nop/HGz2MDHWqm/seven11.zip', 'Đã hoàn thành', 'Đầy đủ yêu cầu', '2022-01-04 00:00:00', '2022-01-21 19:00:02'),
+(40, 'Kế hoạch tiếp thị sản phẩm tháng 12', 'Có kế hoạch cụ thể cho dự án tiếp thị sản phẩm mới, lên ý tưởng cụ thể', '2022-01-05 19:00:11', NULL, '../file_nop/N5EC2AIP/bao_cao.csv', 'Đã hoàn thành', 'Nhầm công ti tiếp thị theo yêu cầu. Cần tìm hiểu công ty lĩnh vực gì', '2021-12-01 00:00:00', '2022-01-10 19:00:19'),
+(41, 'Bảng phân tích thị trường tháng 12', 'Thu thập thông tin tình hình các doanh nghiệp khác và ngành nào hay sản phẩm nào đang có xu hướng phát triển mạnh mẽ trong năm nay', '2022-01-10 00:00:00', NULL, '../file_nop/uJ3HuF2K/bao_cao.zip', 'Đã hoàn thành', 'Chưa đúng yêu cầu đề ra. Cần làm lại theo như ví dụ 2', '2022-01-04 00:00:00', '2022-01-08 19:00:52'),
+(42, 'Nghiên cứu cách đo lường hạn sử dụng cho sản phẩm', 'Áp dụng các công nghệ hiện đại để nghiên cứu và có một bài phân tích cho công ty mang lên báo nghiên cứu khoa học', '2022-12-15 19:00:58', NULL, '../file_nop/s2Bd3QR8/bao_cao.zip', 'Hoàn thành sớm', 'Hoàn thành tốt', '2022-12-03 00:00:00', '2022-12-13 19:01:12');
 
 -- --------------------------------------------------------
 
@@ -275,8 +275,7 @@ INSERT INTO `task_info` (`TASK_ID`, `MA_NGUOI_GIAO`, `MA_NGUOI_NHAN`, `STATUS`, 
 (39, 3, 14, 'Completed', 'Ok'),
 (40, 6, 13, 'Completed', 'Bad'),
 (41, 11, 8, 'Completed', 'Bad'),
-(42, 9, 7, 'Completed', 'Good'),
-(58, 3, 14, 'New', NULL);
+(42, 9, 7, 'Completed', 'Good');
 
 -- --------------------------------------------------------
 
@@ -294,14 +293,13 @@ CREATE TABLE `truong_phong` (
 --
 
 INSERT INTO `truong_phong` (`MA_PHONG_BAN`, `MA_NV`) VALUES
-(1, 3),
-(2, 5),
-(3, 4),
 (4, 2),
+(1, 3),
+(3, 4),
+(2, 5),
 (5, 6),
-(6, 11),
 (7, 9),
-(9, 15);
+(6, 11);
 
 -- --------------------------------------------------------
 
@@ -312,7 +310,7 @@ INSERT INTO `truong_phong` (`MA_PHONG_BAN`, `MA_NV`) VALUES
 CREATE TABLE `user` (
   `MA_USER` int(11) NOT NULL,
   `HO_TEN` varchar(200) CHARACTER SET utf8 DEFAULT NULL,
-  `AVATAR_PATH` text DEFAULT NULL,
+  `AVATAR_PATH` text,
   `ADDRESS` varchar(200) CHARACTER SET utf8 DEFAULT NULL,
   `PHONE` varchar(15) DEFAULT NULL,
   `ngay_sinh` date DEFAULT NULL,
@@ -325,7 +323,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`MA_USER`, `HO_TEN`, `AVATAR_PATH`, `ADDRESS`, `PHONE`, `ngay_sinh`, `gioi_tinh`, `email`) VALUES
-(1, 'Tân Kim', '../image/1vSole7m/tankim.jpg', '404, Thôn 1, Phường 56, Huyện Thịnh Thụy\nHà Tĩnh', '0186018571', '1990-06-01', '1', 'inguy@diep.info.vn'),
+(1, 'Tân Kim', '../image/deCOCJkm/trunghieu.jpg', '404, Thôn 1, Phường 56, Huyện Thịnh ThụyHà Tĩnh', '0186018571', '1990-06-01', '1', 'inguy@diep.info.vn'),
 (2, 'Quỳnh Vũ', '../image/dAOFcclA/quynhvu.jpg', '479 Phố Đoàn Tâm Yến, Ấp Hiếu Bích, Quận Nhân\nĐà Nẵng', '8465085261', '1995-12-09', '0', 'hanh89@gmail.com'),
 (3, 'Quang Võ', '../image/VdQDbfgS/quangvo.jpg', '74 Phố Quang, Phường Hiền, Quận Trung Khu\nBắc Giang', '0283935612', '1980-09-16', '1', 'klu@phung.info.vn\n'),
 (4, 'Thịnh Nguyễn', '../image/IXtahr0A/thinhnguyen.jpg', '79, Thôn Lạc Sang, Ấp Chiêu Hảo, Quận 2\nĐắk Lắk', '0166196042', '1980-08-01', '1', 'vung@dang.gov.vn'),
@@ -338,8 +336,7 @@ INSERT INTO `user` (`MA_USER`, `HO_TEN`, `AVATAR_PATH`, `ADDRESS`, `PHONE`, `nga
 (11, 'Anh Khoa', '../image/XZ0FDSHK/anhkhoa.jpg', '20 Thôn Bình Lục, Xã Vĩnh Kí, Huyện Lâm Đồng', '0209888128', '2001-05-21', '1', 'khoanguyen@.com'),
 (12, 'Phú Thành', '../image/Xkbl9Q7g/thanhnguyen.jpg', '9 Phố Hàng Mã, Quận Hà Thanh, Thành Phố Hà Nội', '0372198562', '1990-02-08', '1', 'thanhphu82@trang.com'),
 (13, 'Thảo Nguyên', '../image/Zk44UN1W/thaonguyen.jpg', '981 Đường Cách Mạng Tháng 8, Phường Tân Bình, Thành Phố Hồ Chí Minh', '0811200121', '2001-11-08', '1', 'nguyenthao811@trang.com'),
-(14, 'Trung Hiếu', '../image/U0pwstOg/trunghieu.jpg', '377 Thôn An Vĩnh, Xã Hà Thiên, Huyện Phú Yên', '0971180256', '1998-01-12', '1', 'hieu12@trang.com'),
-(15, 'test', NULL, '377 Thôn An Vĩnh, Xã Hà Thiên, Huyện Phú Yên', NULL, NULL, NULL, NULL);
+(14, 'Trung Hiếu', '../image/U0pwstOg/trunghieu.jpg', '377 Thôn An Vĩnh, Xã Hà Thiên, Huyện Phú Yên', '0971180256', '1998-01-12', '1', 'hieu12@trang.com');
 
 -- --------------------------------------------------------
 
@@ -373,8 +370,7 @@ INSERT INTO `user_info` (`MA_NV`, `USER_NAME`, `MA_PHONG_BAN`, `CHUC_VU`, `MA_US
 (11, 'akaichi21', 6, 'employee', 11),
 (12, 'thanhnguyen', 3, 'employee', 12),
 (13, 'thaonguyen811', 5, 'employee', 13),
-(14, 'hieutran795', 1, 'employee', 14),
-(15, 'test', 9, NULL, 15);
+(14, 'hieutran795', 1, 'employee', 14);
 
 --
 -- Indexes for dumped tables
