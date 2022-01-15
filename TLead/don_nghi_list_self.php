@@ -314,9 +314,13 @@ require_once('tlead_validate.php');
         $.get('../api/get_ngay_nghi_trong_nam_tlead.php', {id: id}).done(function (res) {
             console.log(res);
             const data = res.data;
-            data.forEach(el =>{
-                dateUsed += +el.SO_NGAY;
-            });
+            if(data){
+                data.forEach(el =>{
+                    dateUsed += +el.SO_NGAY;
+                });
+            } else {
+                dateUsed = 0;
+            }
 
             $('#date-used').text(dateUsed);
             dateLeft = 15 - dateUsed;
@@ -337,15 +341,18 @@ require_once('tlead_validate.php');
         $.getJSON('../api/get_don_nghi_self_list.php', {id: id}).done(function (res) {
             const now = new Date();
             const data = res.data;
-            let sevenDayBlock = data.some(function (el) {
-                return now.getTime() - Date.parse(el.NGAY_LAM_DON) < 604800000;
-            });
+            if(data){
+                let sevenDayBlock = data.some(function (el) {
+                    return now.getTime() - Date.parse(el.NGAY_LAM_DON) < 604800000;
+                });
 
-            if (sevenDayBlock) {
-                $('.btn-add').attr('disabled', true);
-                $('.btn-add').text('Bạn vừa mới làm đơn nghỉ');
+                if (sevenDayBlock) {
+                    $('.btn-add').attr('disabled', true);
+                    $('.btn-add').text('Bạn vừa mới làm đơn nghỉ');
+                }
+                storedData = data;
             }
-            storedData = data;
+
             renderByValue();
         });
     }
